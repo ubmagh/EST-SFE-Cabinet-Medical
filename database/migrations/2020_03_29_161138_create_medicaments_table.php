@@ -1,0 +1,42 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateMedicamentsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('medicaments', function (Blueprint $table) {
+            $table->id();
+            $table->string('Nom',100);
+            $table->string('Prise',30);
+            $table->string('Periode',20)->nullable(); ///Duree \
+            $table->integer('NbrParJour');
+            $table->string('Dosage',30);
+            $table->string('Quand',20);
+        $table->longText( 'Remarques')->nullable();
+        $table->bigInteger( 'OrdonnanceId')->unsigned();
+
+        $table->foreign('OrdonnanceId')->references('id')->on('ordonnances')->onDeletes('cascade');
+        
+            
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('medicaments');
+    }
+}
