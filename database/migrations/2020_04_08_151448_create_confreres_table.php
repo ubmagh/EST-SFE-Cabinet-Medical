@@ -23,6 +23,7 @@ class CreateConfreresTable extends Migration
             $table->string("adresse",50);
             $table->string("Ville",40);
             $table->string("Specialite",50);
+            $table->timestamp("date_ajout");
         });
     }
 

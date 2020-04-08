@@ -15,10 +15,11 @@ class CreateCouriersTable extends Migration
     {
         Schema::create('couriers', function (Blueprint $table) {
             $table->id();
+            $table->string('Email_Ext',100);///  1->email de destinateur    2-> email de destinataire
+            $table->bigInteger('SecretaireID')->unsigned()->nullable(); /// 1-> celui est null    2->id secretiare
             $table->string('Nom',60);
             $table->string('Objet',60);
             $table->longText('Message');
-            $table->string('Email',100);
             $table->timestamp('Date')->useCurrent();
             $table->longText('Fichiers')->nullable();
         });

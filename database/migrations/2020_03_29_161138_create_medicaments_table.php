@@ -22,9 +22,6 @@ class CreateMedicamentsTable extends Migration
             $table->string('Dosage',30);
             $table->string('Quand',20);
         $table->longText( 'Remarques')->nullable();
-        $table->bigInteger( 'OrdonnanceId')->unsigned();
-
-        $table->foreign('OrdonnanceId')->references('id')->on('ordonnances')->onDeletes('cascade');
         
             
         });
