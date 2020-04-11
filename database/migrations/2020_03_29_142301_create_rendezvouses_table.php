@@ -20,7 +20,7 @@ class CreateRendezvousesTable extends Migration
             $table->bigInteger('PatientId')->unsigned();
             $table->string('Description')->nullable();
             $table->bigInteger('SecretaireId')->unsigned();
-            $table->string('Status',30);
+            $table->string('Statut',30);
             
             $table->foreign('PatientId')->references('id')->on('Patients')->onDelete('cascade');
             $table->foreign('SecretaireId')->references('id')->on('Secretaires')->onDelete('cascade');
