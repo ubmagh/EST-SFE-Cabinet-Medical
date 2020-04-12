@@ -22,6 +22,9 @@ class CreateCouriersTable extends Migration
             $table->longText('Message');
             $table->timestamp('Date')->useCurrent();
             $table->longText('Fichiers')->nullable();
+
+            $table->foreign('SecretaireID')->references('id')->on('secretaires')->onDeletes('cascade');
+
         });
     }
 

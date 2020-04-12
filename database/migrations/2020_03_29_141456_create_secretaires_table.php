@@ -19,7 +19,7 @@ class CreateSecretairesTable extends Migration
             $table->string('Prenom',30);
             $table->string('Adresse',50)->nullable();
             $table->string('Tel',14);
-            $table->string('Email',100);
+            $table->string('Email',100)->unique();
             $table->string('Pseudo',20)->unique();
             $table->text('PwD');
             $table->text('Token')->nullable();

@@ -21,7 +21,7 @@ class CreateMedcinsTable extends Migration
             $table->string('Adresse',50)->nullable();
             $table->string('Signature',255);
             $table->string('Tel',14);
-            $table->string('Email',100);
+            $table->string('Email',100)->unique();
             $table->string('Pseudo',20)->unique();
             $table->text('PwD');
             $table->text('Token')->nullable();
