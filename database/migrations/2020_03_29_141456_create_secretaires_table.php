@@ -21,8 +21,9 @@ class CreateSecretairesTable extends Migration
             $table->string('Tel',14);
             $table->string('Email',100)->unique();
             $table->string('Pseudo',20)->unique();
-            $table->text('PwD');
+            $table->text('password');
             $table->text('Token')->nullable();
+            $table->text('remember_token')->nullable();
             $table->timestamp('DernierLog')->nullable();
             $table->timestamp('created_at')->useCurrent();
         });

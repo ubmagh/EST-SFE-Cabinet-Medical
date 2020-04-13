@@ -39,16 +39,45 @@
                   </div>
                 </div>
                 
-              <form class="pt-3" method="POST" action="{{{ url('login/Secretary') }}}">
+              <form class="pt-3" method="POST" action="{{{ url('/Secretaire') }}}">
 
                 {{ csrf_field() }}  
 
-                  <div class="form-group">
-                    <input type="email" name="pseudo" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Votre Pseudo">
+                  <div class="form-group ">
+                    <input type="text" name="pseudo" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Votre Pseudo">
+                    @if( $errors->has('pseudo') )
+                      <div class="alert alert-danger alert-dismissible fade show mt-n5" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                          <span class="sr-only">Close</span>
+                        </button>
+                        {{$errors->first('pseudo')}}
+                      </div>
+                    @endisset
                   </div>
-                  <div class="form-group">
+                 
+                <div class="form-group">
                     <input type="password" name="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Mot de passe">
+                    @if( $errors->has('password') )
+                      <div class="alert alert-danger alert-dismissible fade show mt-n5" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                          <span class="sr-only">Close</span>
+                        </button>
+                        {{$errors->first('password')}}
+                      </div>
+                      @else
+                        @if ($message = Session::get('error'))
+                          <div class="alert alert-danger alert-block">
+                          <button type="button" class="close" data-dismiss="alert">×</button>
+                          <strong>{{ $message }}</strong>
+                          </div>
+                        @endif
+
+                    @endisset
+                    
                   </div>
+                  
                   <div class="mt-3">
                     <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" > <i class="fas fa-sign-in-alt fa-lg"></i> Se Connecter </button>
                   </div>
@@ -59,7 +88,7 @@
                         Rester Connecté(e)
                       </label>
                     </div>
-                    <a href="#" class="auth-link text-black">Mot de passe oublié?</a>
+                    <a href="#" class="auth-link text-black">Mot de passe/pseudo oublié?</a>
                   </div>
                   <div class="mb-2">
                   <a href="{{url('/')}}" class="btn btn-block btn-google auth-form-btn">

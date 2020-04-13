@@ -18,8 +18,20 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
+
+        /// lorsque vous vous connecter avec l'existance d'une session
+
+        if ($guard == "admin" && Auth::guard($guard)->check()) {
+            return redirect('/admin');
+        }
+        if ($guard == "secretaire" && Auth::guard($guard)->check()) {
+            return redirect('/secretaire');
+        }
+        if ($guard == "medcin" && Auth::guard($guard)->check()) {
+            return redirect('/medcin');
+        }
         if (Auth::guard($guard)->check()) {
-            return redirect(RouteServiceProvider::HOME);
+            return redirect('/home');
         }
 
         return $next($request);

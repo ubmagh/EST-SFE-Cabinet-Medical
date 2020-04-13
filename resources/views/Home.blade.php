@@ -32,13 +32,13 @@
                 
             
                 <div class="mt-4 mb-4">
-                    <a href="{{url('/login/Secretaire')}}" class="btn btn-block btn-primary auth-form-btn  py-3">
+                    <a href="{{url('/Secretaire')}}" class="btn btn-block btn-primary auth-form-btn  py-3">
                      <span class="display-4">   <i class="fas fa-user-nurse fa-lg"></i>  Se Connecter comme Secretaire </span>
                       </a>
                 </div>
 
                 <div class="mb-4 mt-4">
-                    <a href="{{url('/login/Medcin')}}" class="btn btn-block btn-success auth-form-btn  py-3">
+                    <a href="{{url('/Medcin')}}" class="btn btn-block btn-success auth-form-btn  py-3">
                         <span class="display-4">    <i class="fas fa-user-md fa-lg"></i>  Se Connecter comme Medcin</span>
                       </a>
                 </div>

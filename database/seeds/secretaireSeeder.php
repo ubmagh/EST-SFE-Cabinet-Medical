@@ -22,8 +22,9 @@ class secretaireSeeder extends Seeder
             'Tel'   =>  '0696857415',
             'Email' =>  'Secretaire1@localhost.com',
             'Pseudo'    => 'secretaire' ,
-            'PwD'   => Hash::make("password") ,
+            'password'   => Hash::make("password") ,
             'Token' =>  null,
+            'remember_token'    =>  null,
             'DernierLog'    =>  null,
             'created_at'    => date('Y-m-d H:m:s')
         ]);

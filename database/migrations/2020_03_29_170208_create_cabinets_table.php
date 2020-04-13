@@ -24,9 +24,10 @@ class CreateCabinetsTable extends Migration
             $table->string('Email',100)->nullable();
             $table->string('Fax',14)->nullable();
             $table->string('AdminPseudo',20);
-            $table->longText('AdminPwD');
+            $table->longText('password');
             $table->string('AdminEmail',100);
-            $table->longText('AdminToken');
+            $table->longText('AdminToken')->nullable();
+            $table->text('remember_token')->nullable();
             $table->timestamp('AdminLastLogin')->nullable();
 
         });

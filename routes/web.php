@@ -17,15 +17,14 @@ Route::get('/', function () {
     return view('Home');
 });
 
+Route::post('/Secretaire','loginControllers\SecretaireLogin@CheckLogin');
 
-Route::get('/login/Secretaire',function(){ 
-    return view('login.Secretaire');
+Route::get('/Secretaire',function(){ 
+    return view('Secretaire.login');
 });
 
-Route::post('/login/Secretaire','SecretaireController@CheckLogin');
-
-Route::get('/login/Medcin',function(){ 
-    return view('login.Medcin');
+Route::get('/Medcin',function(){ 
+    return view('Medcin.login');
 });
 
 // Route::get('/', function () {
