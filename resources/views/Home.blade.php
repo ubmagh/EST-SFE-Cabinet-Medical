@@ -8,9 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Login</title>
   <!-- plugins:css -->
-<link rel="stylesheet" href="{{ asset('vendors/iconfonts/ti-icons/css/themify-icons.css') }}">
-<link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.base.css') }}">
-<link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.addons.css') }}">
+  <!-- deleted them none is used here -->
   <!-- endinject -->
   <!-- plugin css for this page -->
   <!-- End plugin css for this page -->

@@ -18,20 +18,7 @@ return [
         'passwords' => 'users',
     ],
 
-    'admins' => [
-        'driver' => 'eloquent',
-        'model' => App\Cabinet::class,
-    ],
-
-    'secretaires' => [
-        'driver' => 'eloquent',
-        'model' => App\Secretaire::class,
-    ],
-
-    'medcins' => [
-        'driver' => 'eloquent',
-        'model' => App\Medcin::class,
-    ],
+    
 
     /*
     |--------------------------------------------------------------------------

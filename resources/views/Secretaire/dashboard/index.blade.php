@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="FR">
 
 
 <!-- Mirrored from www.urbanui.com/justdo/template/demo/horizontal-default-light/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 03 Apr 2019 21:11:59 GMT -->
@@ -7,32 +7,23 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  {{-- title khas ikon dynamique --}}
-  <title>
-   
-    @yield('title')
-
-  </title>
+  <title> Secretaire : Acceuil </title>
   <!-- plugins:css -->
-  <link rel="stylesheet" href="vendors/iconfonts/ti-icons/css/themify-icons.css">
-  <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
-  <link rel="stylesheet" href="vendors/css/vendor.bundle.addons.css">
+<link rel="stylesheet" href="{{ asset('vendors/iconfonts/ti-icons/css/themify-icons.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.base.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.addons.css') }}">
   <!-- endinject -->
   <!-- plugin css for this page -->
   <!-- End plugin css for this page -->
   <!-- inject:css -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
   <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
+  <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" />
 </head>
 
 <body>
   <div class="container-scroller">
     <!-- partial:partials/_horizontal-navbar.html -->
-
-
-    {{-- had div katjm3 les 2 navbars likhas ikono fix f ga3 les pages --}}
     <div class="horizontal-menu">
       <nav class="navbar top-navbar col-lg-12 col-12 p-0">
         <div class="container">
@@ -42,16 +33,7 @@
           </div>
           <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
             <ul class="navbar-nav mr-lg-2">
-              <li class="nav-item nav-search d-none d-lg-block">
-                <div class="input-group">
-                  <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
-                    <span class="input-group-text" id="search">
-                      <i class="ti-search"></i>
-                    </span>
-                  </div>
-                  <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
-                </div>
-              </li>
+              
             </ul>
             <ul class="navbar-nav navbar-nav-right">
               <li class="nav-item dropdown mr-1">
@@ -153,11 +135,11 @@
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                   <a class="dropdown-item">
                     <i class="ti-settings text-primary"></i>
-                    Settings
+                    Paramètres
                   </a>
-                  <a class="dropdown-item">
+                <a class="dropdown-item" href="{{ url('logout') }}">
                     <i class="ti-power-off text-primary"></i>
-                    Logout
+                    Déconnexion
                   </a>
                 </div>
               </li>
@@ -402,9 +384,6 @@
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
-
-         @yield('content');
-
         <div class="content-wrapper">
           <div class="row">
             <div class="col-md-12 grid-margin">
@@ -1227,7 +1206,7 @@
               </div>
             </div>
           </div>
-        </div>   
+        </div>
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         <footer class="footer">
@@ -1245,7 +1224,6 @@
   <!-- container-scroller -->
 
   <!-- plugins:js -->
-
   <script src="vendors/js/vendor.bundle.base.js"></script>
   <script src="vendors/js/vendor.bundle.addons.js"></script>
   <!-- endinject -->
@@ -1260,10 +1238,6 @@
   <!-- endinject -->
   <!-- Custom js for this page-->
   <script src="js/dashboard.js"></script>
-
-     @yield('script');
-   
-
   <!--<script src="js/todolist.js"></script>-->
   <!-- End custom js for this page-->
 </body>

@@ -5,21 +5,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 
 class SecretaireLogin extends Controller
 {
     //
 
-
-
     /// where to redirecte after login
     protected $redirectTo = '/';
 
     public function __construct()
     {
-            $this->middleware('guest')->except('logout');
-            $this->middleware('guest:secretaire')->except('logout');
+        $this->middleware('guest:secretaire')->except('logout');
     }
 
     /**
@@ -55,13 +53,25 @@ class SecretaireLogin extends Controller
             'password'  =>  $request->input('password')
         );
         if(Auth::guard('secretaire')->attempt($user_creds,$saveLogin)){
-            return redirect('main/successlogin');
+            Auth::shouldUse('secretaire');
+            return redirect('/');
         }else{
             return back()->with('error', 'Pseudo ou mot de passe est erroné .');
         }
 
     }
     
+
+    protected function guard()
+    {
+        return Auth::guard('secretaire');
+    }
+
+    public function username()
+    {
+        return 'Pseudo';
+    }
+
     function logout()
     {
      Auth::logout();

@@ -8,13 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Secretaire: login</title>
   <!-- plugins:css -->
-<link rel="stylesheet" href="{{ asset('vendors/iconfonts/ti-icons/css/themify-icons.css') }}">
-<link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.base.css') }}">
-<link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.addons.css') }}">
   <!-- endinject -->
   <!-- plugin css for this page -->
   <!-- End plugin css for this page -->
   <!-- inject:css -->
+<link rel="stylesheet" href="{{ asset('vendors/iconfonts/ti-icons/css/themify-icons.css') }}">
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
   <!-- endinject -->
   <link rel="shortcut icon" href={{ asset("images/favicon.png") }} />
@@ -26,10 +24,10 @@
       <div class="main-panel">
         <div class="content-wrapper d-flex align-items-center auth px-0">
           <div class="row w-100 mx-0">
-            <div class="col-lg-4 mx-auto">
+            <div class="col-lg-5 mx-auto">
               <div class="auth-form-light text-left py-5 px-4 px-sm-5">
 
-                <div class="row w-100ml-1 mb-4 ">
+                <div class="row w-100 mb-4 ">
                   <div class="col-md-3 col-sm-12">
                     <img src="{{ asset('images/icons/secretary.png') }}" class="w-md-100 mx-sm-auto d-md-block d-sm-block ml-md-auto ml-lg-n3  ml-lg-0" style="max-height: 80px;" alt="Secretary login" />
                   </div>
@@ -88,7 +86,7 @@
                         Rester Connecté(e)
                       </label>
                     </div>
-                    <a href="#" class="auth-link text-black">Mot de passe/pseudo oublié?</a>
+                  <a href="{{ url('/Forgot') }}" class="auth-link text-black"><i class="fas fa-question-circle"></i>  Mot de passe/pseudo oublié?</a>
                   </div>
                   <div class="mb-2">
                   <a href="{{url('/')}}" class="btn btn-block btn-google auth-form-btn">
@@ -111,12 +109,9 @@
   <script src="{{ asset('vendors/js/vendor.bundle.addons.js') }} "></script>
   <!-- endinject -->
   <!-- inject:js -->
-  <script src="{{ asset('js/off-canvas.js') }}"></script>
   <script src="{{ asset('js/FontAwesomeAll.min.js') }}"></script>
   <script src="{{ asset('js/hoverable-collapse.js') }}"></script>
   <script src="{{ asset('js/template.js') }}"></script>
-  <script src="{{ asset('js/settings.js') }}"></script>
-  <script src="{{ asset('js/todolist.js') }}"></script>
   <!-- endinject -->
 </body>
 
