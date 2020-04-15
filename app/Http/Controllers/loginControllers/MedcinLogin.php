@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 
-class SecretaireLogin extends Controller
+class MedcinLogin extends Controller
 {
     //
 
@@ -17,7 +17,7 @@ class SecretaireLogin extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest:secretaire')->except('logout');
+        $this->middleware('guest:medcin')->except('logout');
     }
 
     /**
@@ -27,7 +27,7 @@ class SecretaireLogin extends Controller
      */
     public function showLoginForm()
     {
-        return view('Secretaire.login');
+        return view('Medcin.login');
     }
 
     public function CheckLogin(Request $request){
@@ -52,8 +52,8 @@ class SecretaireLogin extends Controller
             'Pseudo'  =>  $request->input('pseudo'),
             'password'  =>  $request->input('password')
         );
-        if(Auth::guard('secretaire')->attempt($user_creds,$saveLogin)){
-            Auth::shouldUse('secretaire');
+        if(Auth::guard('medcin')->attempt($user_creds,$saveLogin)){
+            Auth::shouldUse('medcin');
             return redirect('/');
         }else{
             return back()->with('error', 'Pseudo ou mot de passe est erroné .');
@@ -64,7 +64,7 @@ class SecretaireLogin extends Controller
 
     protected function guard()
     {
-        return Auth::guard('secretaire');
+        return Auth::guard('medcin');
     }
 
     public function username()
@@ -74,8 +74,8 @@ class SecretaireLogin extends Controller
 
     function logout()
     {
-    Auth::guard('secretaire')->logout();
-     return redirect('/');
+        Auth::guard('medcin')->logout();
+        return redirect('/');
     }
   
 }

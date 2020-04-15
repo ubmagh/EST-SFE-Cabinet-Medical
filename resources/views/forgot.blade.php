@@ -61,7 +61,7 @@
                   
                   <div class="mb-2">
                     <a href="{{url('/')}}" class="btn btn-block btn-google auth-form-btn">
-                      <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>  Plutot se-connecter
+                      <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i> Se-Connecter
                     </a>
                   </div>
 

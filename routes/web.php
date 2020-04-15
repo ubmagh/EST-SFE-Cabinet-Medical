@@ -14,13 +14,40 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/test', function () {
+    return view('dachboard.index');
+});
+
+
+
+
+
+
 Route::get('/', function () {
-    if( Auth::guard('secretaire')->check() )
-        return view('secretaire.dashboard.index');
+    if( Auth::guard('secretaire')->check() ){
+        $name= Auth::guard('secretaire')->user()->Nom.' '.Auth::guard('secretaire')->user()->Prenom;
+        return view('secretaire.dashboard.index')->with('name',$name);
+    }
+    if( Auth::guard('medcin')->check() ){
+        $name= Auth::guard('medcin')->user()->Nom.' '.Auth::guard('medcin')->user()->Prenom;
+        return view('medcin.dashboard.index')->with('name',$name);
+    }
     return view('Home');
 })->name('Homepage');
 
+
+/// Secretary login
 Route::post('/Secretaire','loginControllers\SecretaireLogin@CheckLogin');
+
+/// Medic login
+Route::post('/Medcin','loginControllers\MedcinLogin@CheckLogin');
 
 
 
@@ -44,19 +71,17 @@ Route::middleware(['guest:secretaire','guest:medcin'])->get('/Medcin',function()
 
 
 Route::get('/logout',function(){ 
-    Auth::guard('secretaire')->logout();
+    if( Auth::guard('secretaire')->check() )
+        return app()->call('App\Http\Controllers\loginControllers\SecretaireLogin@logout');
+    if( Auth::guard('medcin')->check() )
+        return app()->call('App\Http\Controllers\loginControllers\MedcinLogin@logout');
+    Auth::logout();
     return redirect('/');
 });
 
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
-Route::get('/test', function () {
-    return view('dachboard.index');
+Route::middleware('auth:secretaire')->get('Medicaments', function () {
+    $name= Auth::guard('secretaire')->user()->Nom.' '.Auth::guard('secretaire')->user()->Prenom;
+    return view('Secretaire.Medicaments.index',['name'=>$name]);
 });
-
-
-
-// ->middleware('auth:secretaire');

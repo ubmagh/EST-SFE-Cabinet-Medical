@@ -1,4 +1,4 @@
-@extends('Secretaire.Parts.pageLayout')
+@extends('Medcin.Parts.pageLayout')
 
 @section('title','Secretaire : Acceuil')
 

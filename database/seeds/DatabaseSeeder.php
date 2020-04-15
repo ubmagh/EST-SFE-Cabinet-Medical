@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(UserSeeder::class);
        Eloquent::unguard();
        $this->call(secretaireSeeder::class);
+       $this->call(medcinSeeder::class);
     }
 }
