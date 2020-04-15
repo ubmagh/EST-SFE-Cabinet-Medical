@@ -43,12 +43,14 @@ Route::get('/', function () {
 })->name('Homepage');
 
 
+
+#####
 /// Secretary login
 Route::post('/Secretaire','loginControllers\SecretaireLogin@CheckLogin');
 
 /// Medic login
 Route::post('/Medcin','loginControllers\MedcinLogin@CheckLogin');
-
+#####
 
 
 /// Login page for secretary member if already logged=> redirected to main page
@@ -81,7 +83,9 @@ Route::get('/logout',function(){
 
 
 
-Route::middleware('auth:secretaire')->get('Medicaments', function () {
-    $name= Auth::guard('secretaire')->user()->Nom.' '.Auth::guard('secretaire')->user()->Prenom;
-    return view('Secretaire.Medicaments.index',['name'=>$name]);
+#################################   Secretary Routes   #################################
+
+Route::group(['middleware' => ['auth:secretaire']], function () {
+    //
+    Route::get('Medicaments','MedicamentController@Index');
 });

@@ -1,6 +1,6 @@
 @extends('Medcin.Parts.pageLayout')
 
-@section('title','Secretaire : Acceuil')
+@section('title','Medcin : Acceuil')
 
 @section('content')
     <p>This is my body content.</p>

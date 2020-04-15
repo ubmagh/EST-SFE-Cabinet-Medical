@@ -1,3 +1,18 @@
+
+
+
+<!--
+/*
+
+les variables de ce template
+
+  - title
+  - css
+  - content
+  - script
+
+
+*/ -->
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -8,11 +23,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title> @yield('title') </title>
   <!-- plugins:css -->
-<link rel="stylesheet" href="{{ asset('vendors/iconfonts/ti-icons/css/themify-icons.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendors/iconfonts/ti-icons/css/themify-icons.css') }}">
   <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.base.css') }}">
   <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.addons.css') }}">
   <!-- endinject -->
   <!-- plugin css for this page -->
+  @yield('css')
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -421,7 +437,7 @@
   <script src="js/todolist.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
-  <script src="js/dashboard.js"></script>
+  @yield('script')
   <!--<script src="js/todolist.js"></script>-->
   <!-- End custom js for this page-->
 </body>
