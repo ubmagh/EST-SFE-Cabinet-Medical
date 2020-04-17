@@ -4,6 +4,7 @@ namespace App\Http\Controllers\loginControllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Secretaire;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -53,6 +54,17 @@ class SecretaireLogin extends Controller
             'password'  =>  $request->input('password')
         );
         if(Auth::guard('secretaire')->attempt($user_creds,$saveLogin)){
+            $now = date('Y-m-d H:i:s');
+
+            // Last Login feature
+            $secretaire = Secretaire::Find( Auth::guard('secretaire')->user()->id );
+            $lastlogin = json_decode( $secretaire->DernierLog );
+            $lastlogin->last = $lastlogin->first;
+            $lastlogin->first = $now;
+            Auth::guard('secretaire')->user()->DernierLog="".json_encode(['last'=>$lastlogin->last, 'first'=> $lastlogin->first]);
+            $secretaire->DernierLog = json_encode(['last'=>$lastlogin->last, 'first'=> $lastlogin->first]);
+            $secretaire->save();
+
             Auth::shouldUse('secretaire');
             return redirect('/');
         }else{

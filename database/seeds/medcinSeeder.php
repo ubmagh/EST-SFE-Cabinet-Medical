@@ -27,7 +27,7 @@ class medcinSeeder extends Seeder
             'Token' =>  null,
             'remember_token'    =>  null,
             'DernierLog'    =>  null,
-            'created_at'    => date('Y-m-d H:m:s')
+            'created_at'    => date('Y-m-d H:i:s')
         ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\loginControllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Medcin;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -53,6 +54,17 @@ class MedcinLogin extends Controller
             'password'  =>  $request->input('password')
         );
         if(Auth::guard('medcin')->attempt($user_creds,$saveLogin)){
+            $now = date('Y-m-d H:i:s');
+
+            // Last Login feature
+            $medcin = Medcin::Find( Auth::guard('medcin')->user()->id );
+            $lastlogin = json_decode( $medcin->DernierLog );
+            $lastlogin->last = $lastlogin->first;
+            $lastlogin->first = $now;
+            Auth::guard('medcin')->user()->DernierLog="".json_encode(['last'=>$lastlogin->last, 'first'=> $lastlogin->first]);
+            $medcin->DernierLog = json_encode(['last'=>$lastlogin->last, 'first'=> $lastlogin->first]);
+            $medcin->save();
+            
             Auth::shouldUse('medcin');
             return redirect('/');
         }else{

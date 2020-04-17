@@ -28,7 +28,7 @@ class CreateCabinetsTable extends Migration
             $table->string('AdminEmail',100);
             $table->longText('AdminToken')->nullable();
             $table->text('remember_token')->nullable();
-            $table->timestamp('AdminLastLogin')->nullable();
+            $table->json('AdminLastLogin')->nullable();
 
         });
     }

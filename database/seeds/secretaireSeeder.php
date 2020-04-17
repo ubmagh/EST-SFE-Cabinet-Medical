@@ -25,8 +25,8 @@ class secretaireSeeder extends Seeder
             'password'   => Hash::make("password") ,
             'Token' =>  null,
             'remember_token'    =>  null,
-            'DernierLog'    =>  null,
-            'created_at'    => date('Y-m-d H:m:s')
+            'DernierLog'    =>  json_encode(['last'=>'','first'=>'']) ,
+            'created_at'    => date('Y-m-d H:i:s')
         ]);
     }
 }

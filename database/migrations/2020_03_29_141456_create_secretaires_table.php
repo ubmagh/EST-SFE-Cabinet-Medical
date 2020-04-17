@@ -24,7 +24,7 @@ class CreateSecretairesTable extends Migration
             $table->text('password');
             $table->text('Token')->nullable();
             $table->text('remember_token')->nullable();
-            $table->timestamp('DernierLog')->nullable();
+            $table->json('DernierLog')->nullable();
             $table->timestamp('created_at')->useCurrent();
         });
     }
