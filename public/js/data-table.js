@@ -4,7 +4,7 @@
         $("#order-listing").DataTable({
             aLengthMenu: [
                 [5, 10, 15, -1],
-                [5, 10, 15, "All"],
+                [10, 15, 25, "All"],
             ],
             iDisplayLength: 10,
             columnDefs: dataTable_can_sort_columns__,

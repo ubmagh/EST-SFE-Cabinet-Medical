@@ -1,9 +1,6 @@
 
 
-
-<!--
-/*
-
+{{--
 les variables de ce template
 
   - title
@@ -12,7 +9,8 @@ les variables de ce template
   - script
 
 
-*/ -->
+--}}
+
 <!DOCTYPE html>
 <html lang="fr">
 

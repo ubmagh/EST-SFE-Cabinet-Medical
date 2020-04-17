@@ -87,5 +87,5 @@ Route::get('/logout',function(){
 
 Route::group(['middleware' => ['auth:secretaire']], function () {
     //
-    Route::get('Medicaments','MedicamentController@Index');
+    Route::resource('Medicaments', 'MedicamentController');
 });
