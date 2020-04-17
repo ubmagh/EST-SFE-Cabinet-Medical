@@ -25,5 +25,3 @@ class Cabinet extends Authenticatable
         'password', 'remember_token',
     ];
 }
-
-}

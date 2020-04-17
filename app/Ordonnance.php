@@ -10,6 +10,6 @@ class Ordonnance extends Model
     public $timestamps = false;
     public $table="ordonnances";
     protected $fillable = [
-        'Date', 'ConsultationId','Quand', 'Remarques','Periode', 'NbrParJour',  'Allergies', 'Antecedants',
+        'Date', 'ConsultationId','Quand',  'Allergies', 'Antecedants',
     ];
 }

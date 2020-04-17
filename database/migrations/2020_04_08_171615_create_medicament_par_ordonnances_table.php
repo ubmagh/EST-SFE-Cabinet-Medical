@@ -17,6 +17,9 @@ class CreateMedicamentParOrdonnancesTable extends Migration
             $table->id();
             $table->bigInteger( 'MedicamentId')->unsigned();
             $table->bigInteger( 'OrdonnanceId')->unsigned();
+            $table->string('Periode',20)->nullable(); ///Duree \
+            $table->integer('NbrParJour');
+            $table->longText( 'Remarques')->nullable();
 
         $table->foreign('MedicamentId')->references('id')->on('medicaments')->onDeletes('cascade');
         $table->foreign('OrdonnanceId')->references('id')->on('ordonnances');
