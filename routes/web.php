@@ -44,32 +44,15 @@ Route::get('/', function () {
 
 
 
-#####
+
+
+#################################   Login Routes   #################################
+
 /// Secretary login
 Route::post('/Secretaire','loginControllers\SecretaireLogin@CheckLogin');
 
 /// Medic login
 Route::post('/Medcin','loginControllers\MedcinLogin@CheckLogin');
-#####
-
-
-/// Login page for secretary member if already logged=> redirected to main page
-Route::middleware(['guest:secretaire','guest:medcin'])->get('/Secretaire',function(){ 
-    return view('Secretaire.login');
-});
-
-
-///  Forgotten username or password route for non member user, else is redirected to main page with middleware
-Route::middleware(['guest:secretaire','guest:medcin'])->get('/Forgot',function(){
-    return view('forgot');
-});
-
-
-/// Login page for medic member if already logged=> redirected to main page
-Route::middleware(['guest:secretaire','guest:medcin'])->get('/Medcin',function(){ 
-    return view('Medcin.login');
-});
-
 
 
 Route::get('/logout',function(){ 
@@ -80,6 +63,10 @@ Route::get('/logout',function(){
     Auth::logout();
     return redirect('/');
 });
+#################################   Login Routes End   ################################
+#-----------------------------------------------------------------------------------------#
+
+
 
 
 
@@ -89,3 +76,40 @@ Route::group(['middleware' => ['auth:secretaire']], function () {
     //
     Route::resource('Medicaments', 'MedicamentController');
 });
+
+#################################   Secretary Routes End   ################################
+
+
+#-----------------------------------------------------------------------------------------#
+
+
+#################################   Guest Routes   #################################
+/// etre non connecté pour y accéder
+
+Route::group(['middleware' => ['guest:secretaire','guest:medcin']], function () {
+    //
+    
+    /// Login page for medic member if already logged=> redirected to main page
+    Route::get('/Medcin',function(){ 
+        return view('Medcin.login');
+    });
+
+     /// Login page for secretary member if already logged=> redirected to main page
+     Route::get('/Secretaire',function(){ 
+        return view('Secretaire.login');
+    });
+
+    ///  Forgotten username or password route for non member user, else is redirected to main page with middleware
+    Route::get('/Forgot',function(){
+        return view('PasswordReset.forgot');
+    });
+
+    Route::post('/Forgot','loginControllers\ForgotController@Attempt');
+
+    Route::get('/Reset/{token?}','loginControllers\ForgotController@reset');
+
+    Route::post('/Reset','loginControllers\ForgotController@update');
+
+});
+
+#################################   Guest Routes End   ################################

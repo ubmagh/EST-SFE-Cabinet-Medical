@@ -51,7 +51,7 @@
                         </button>
                         {{$errors->first('pseudo')}}
                       </div>
-                    @endisset
+                    @endif
                   </div>
                  
                 <div class="form-group">
@@ -72,7 +72,7 @@
                           </div>
                         @endif
 
-                    @endisset
+                    @endif
                     
                   </div>
                   
