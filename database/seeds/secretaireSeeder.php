@@ -23,7 +23,6 @@ class secretaireSeeder extends Seeder
             'Email' =>  'Secretaire1@localhost.com',
             'Pseudo'    => 'secretaire' ,
             'password'   => Hash::make("password") ,
-            'Token' =>  null,
             'remember_token'    =>  null,
             'DernierLog'    =>  json_encode(['last'=>'','first'=>'']) ,
             'created_at'    => date('Y-m-d H:i:s')

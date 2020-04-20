@@ -24,7 +24,6 @@ class CreateMedcinsTable extends Migration
             $table->string('Email',100)->unique();
             $table->string('Pseudo',20)->unique();
             $table->text('password');
-            $table->text('Token')->nullable();
             $table->text('remember_token')->nullable();
             $table->json('DernierLog')->nullable();
             $table->timestamp('created_at')->useCurrent();

@@ -18,7 +18,7 @@ class Secretaire extends Authenticatable implements CanResetPassword
     public $timestamps = false;
     public $table="secretaires";
     protected $fillable = [
-        'Nom', 'Prenom', 'Adresse', 'Tel', 'Email', 'Pseudo', 'password', 'Token', 'DernierLog', 'created_at'
+        'Nom', 'Prenom', 'Adresse', 'Tel', 'Email', 'Pseudo', 'password', 'DernierLog', 'created_at'
     ];
     protected $hidden = [
         'password', 'remember_token',
