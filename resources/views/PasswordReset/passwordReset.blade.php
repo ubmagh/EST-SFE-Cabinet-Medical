@@ -32,71 +32,91 @@
 
                                 <div class="row w-100 mb-4 ">
                                     <div class="col-12">
-                                        <h1 class="h1 display-2 font-weight-light"> Reinitialiser votre mot de passe :
+                                        <h1 class="h1 display-2 font-weight-light">Reinitialiser votre mot de passe:
                                         </h1>
                                     </div>
                                 </div>
 
 
+                                    @if( $errors->has('res_Token') || $errors->has('res_email') )
 
+                                            <div class="py-3 px-4 w-100 my-3">
 
-                                    <form class="pt-3" method="POST"
-                                        action="{{{ url('/Reset') }}}">
-
-                                        {{ csrf_field() }}
-
-                                        <input type="hidden" name="res_Token" value="{{ $res_Token }}" />
-                                        <input type="hidden" name="res_email" value="{{ $res_email }}" />
-
-                                        <div class="form-group ">
-                                            <input type="password" name="password1" class="form-control form-control-lg mb-2"
-                                                id="pwd1" placeholder="Le nouveau mot de passe">
-                                            @if( $errors->has('password1') )
-                                                <div class="alert alert-danger alert-dismissible fade show mt-n5"
-                                                    role="alert">
-                                                    <button type="button" class="close" data-dismiss="alert"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                        <span class="sr-only">Close</span>
-                                                    </button>
-                                                    {{ $errors->first('password1') }}
+                                                <div class="alert alert-warning" role="alert">
+                                                    Les données fournies sont erronées, Veuillez réssayer plusTard !
                                                 </div>
-                                            @endif
-                                        </div>
 
+                                                <div class="my-2">
+                                                    <a href="{{ url('/') }}"
+                                                        class="btn btn-block btn-google auth-form-btn">
+                                                        <i class="fas fa-home fa-lg"></i> Acceuil
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                    @else 
+
+                                            
                                         
-                                        <div class="form-group ">
-                                            <input type="password" name="password2" class="form-control form-control-lg mb-2"
-                                                id="pwd2" placeholder="Confirmez-le ici">
-                                            @if( $errors->has('password2') )
-                                                <div class="alert alert-danger alert-dismissible fade show mt-n5"
-                                                    role="alert">
-                                                    <button type="button" class="close" data-dismiss="alert"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                        <span class="sr-only">Close</span>
-                                                    </button>
-                                                    {{ $errors->first('password2') }}
+
+
+                                            <form class="pt-3" method="POST"
+                                                action="{{{ url('/Reset') }}}">
+
+                                                {{ csrf_field() }}
+
+                                                <input type="hidden" name="res_Token" value="{{ $res_Token }}" />
+                                                <input type="hidden" name="res_email" value="{{ $res_email }}" />
+
+                                                <div class="form-group ">
+                                                    <input type="password" name="password1" class="form-control form-control-lg mb-2"
+                                                        id="pwd1" placeholder="Le nouveau mot de passe">
+                                                    @if( $errors->has('password1') )
+                                                        <div class="alert alert-danger alert-dismissible fade show mt-n5"
+                                                            role="alert">
+                                                            <button type="button" class="close" data-dismiss="alert"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                                <span class="sr-only">Close</span>
+                                                            </button>
+                                                            {{ $errors->first('password1') }}
+                                                        </div>
+                                                    @endif
                                                 </div>
-                                            @endif
-                                        </div>
+
+                                                
+                                                <div class="form-group ">
+                                                    <input type="password" name="password2" class="form-control form-control-lg mb-2"
+                                                        id="pwd2" placeholder="Confirmez-le ici">
+                                                    @if( $errors->has('password2') )
+                                                        <div class="alert alert-danger alert-dismissible fade show mt-n5"
+                                                            role="alert">
+                                                            <button type="button" class="close" data-dismiss="alert"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                                <span class="sr-only">Close</span>
+                                                            </button>
+                                                            {{ $errors->first('password2') }}
+                                                        </div>
+                                                    @endif
+                                                </div>
 
 
-                                        <div class="mt-3 mb-2">
-                                            <button type="submit"
-                                                class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">
-                                                <i class="fas fa-user-check fa-lg"></i> mettre-à-jour </button>
-                                        </div>
+                                                <div class="mt-3 mb-2">
+                                                    <button type="submit"
+                                                        class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">
+                                                        <i class="fas fa-user-check fa-lg"></i> mettre-à-jour </button>
+                                                </div>
 
-                                        <div class="mb-2">
-                                            <a href="{{ url('/') }}"
-                                                class="btn btn-block btn-google auth-form-btn">
-                                                <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i> Se-Connecter
-                                            </a>
-                                        </div>
+                                                <div class="mb-2">
+                                                    <a href="{{ url('/') }}"
+                                                        class="btn btn-block btn-google auth-form-btn">
+                                                        <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i> Se-Connecter
+                                                    </a>
+                                                </div>
 
-                                    </form>
-
+                                            </form>
+                                    @endif
                             </div>
                         </div>
                     </div>

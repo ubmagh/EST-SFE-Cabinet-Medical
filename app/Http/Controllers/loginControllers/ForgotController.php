@@ -9,12 +9,13 @@ use App\Secretaire;
 use Illuminate\Http\Request;
 use App\PasswordReset;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
-use function GuzzleHttp\_current_time;
 
 class ForgotController extends Controller
 {
@@ -55,8 +56,9 @@ class ForgotController extends Controller
     }
 
 
-    public function reset(Request $request,$token){
-
+    public function reset(Request $request,$token=""){
+        if ($token=="")
+            return view('PasswordReset.forgot');
         $email =  urldecode( $request->m);
         $validator =  Validator::make(['email'=>$email,'token'=>$token],
         ['email'=>'required|email', 'token'=>'required|min:64|max:64']
@@ -76,10 +78,7 @@ class ForgotController extends Controller
             'res_Token' =>  'required|min:64|max:64',
             'res_email' =>  'required|email',
             'password1'  =>  'required|min:6',
-            'password2'  =>  [
-                'required',
-                Rule::in([$request->only('password1')]),
-            ],
+            'password2'  =>  ['required',Rule::in([$request->input('password1')])],
         ],
         [
             'res_Token.min'=>'x',
@@ -94,10 +93,27 @@ class ForgotController extends Controller
         ]
         );
 
-
+        $password = $request->input('password1');
+        $email = $request->input('res_email');
+        $res_token = $request->input('res_Token');
         
+        if( count( PasswordReset::where('email',$email)->where('token',$res_token)->get() ) <=0 )
+            return view('errors.404');
+        
+        
+            $user = Secretaire::where('Email',$email)->first();
 
+            if(empty($user)){
+                $user = Medcin::where('Email',$email)->first();
+                if(empty($user))
+                return view('errors.404');
+            }
 
+            $user->password = Hash::make($password);
+            $user->save();
+            DB::delete("delete from password_resets where email = '".$email."' ");
+            
+            return view('PasswordReset.success');
     }
 
 
