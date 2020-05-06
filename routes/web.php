@@ -54,6 +54,8 @@ Route::post('/Secretaire','loginControllers\SecretaireLogin@CheckLogin');
 /// Medic login
 Route::post('/Medcin','loginControllers\MedcinLogin@CheckLogin');
 
+/// admin login
+Route::post('/admin','loginControllers\AdminLogin@CheckLogin');
 
 Route::get('/logout',function(){ 
     if( Auth::guard('secretaire')->check() )
@@ -110,6 +112,9 @@ Route::group(['middleware' => ['guest:secretaire','guest:medcin']], function () 
 
     Route::post('/Reset','loginControllers\ForgotController@update');
 
+    Route::get('/admin','loginControllers\AdminLogin@loginForm');
+
+   
 });
 
 #################################   Guest Routes End   ################################

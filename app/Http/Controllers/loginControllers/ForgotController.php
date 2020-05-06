@@ -40,18 +40,18 @@ class ForgotController extends Controller
     if(empty($user)){
         $user = Medcin::where('Email',$email)->first();
         if(empty($user))
-            return redirect()->back()->with(["Eroor"=>"Compte introuvable pour l'email : ".$email." ."]);  
+            return redirect()->back()->with(["Eroor"=>"Compte introuvable pour l'email : ".$email." ."]);
     }
     $token = Str::random(64);
-    
+
     $passwordreset = PasswordReset::create([
         'email' =>  $email,
         'token' =>  $token,
         'created_at'    =>  Carbon::now()
     ]);
-    
+
     $url = url('/Reset',$token)."?m=".urlencode($email);
-    Mail::to('email@email.com')->send( new CredsReset($user->Pseudo,$url) );
+    Mail::to($email)->send( new CredsReset($user->Pseudo,$url) );
     return redirect()->back()->with(['success'=>'done']);
     }
 
@@ -65,9 +65,9 @@ class ForgotController extends Controller
         );
         if($validator->fails())
             return view('errors.404');
-        
+
         return view('PasswordReset.passwordReset',['res_Token'=>$token,'res_email'=>$email]);
-    } 
+    }
 
 
     public function update(Request $request)
@@ -96,11 +96,11 @@ class ForgotController extends Controller
         $password = $request->input('password1');
         $email = $request->input('res_email');
         $res_token = $request->input('res_Token');
-        
+
         if( count( PasswordReset::where('email',$email)->where('token',$res_token)->get() ) <=0 )
             return view('errors.404');
-        
-        
+
+
             $user = Secretaire::where('Email',$email)->first();
 
             if(empty($user)){
@@ -112,7 +112,7 @@ class ForgotController extends Controller
             $user->password = Hash::make($password);
             $user->save();
             DB::delete("delete from password_resets where email = '".$email."' ");
-            
+
             return view('PasswordReset.success');
     }
 

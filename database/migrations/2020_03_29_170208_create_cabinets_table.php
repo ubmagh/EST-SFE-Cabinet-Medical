@@ -1,7 +1,9 @@
 <?php
 
+use App\Cabinet;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
 class CreateCabinetsTable extends Migration
@@ -29,8 +31,25 @@ class CreateCabinetsTable extends Migration
             $table->longText('AdminToken')->nullable();
             $table->text('remember_token')->nullable();
             $table->json('AdminLastLogin')->nullable();
-
         });
+
+        Cabinet::create([
+            'Nom'   =>  'Cabinet Alfarah',
+            'Adresse'   =>  null,
+            'logo'  =>  null,
+            'Specialites'   =>  null,
+            'Description'   =>  null,
+            'Tel'   =>  null,
+            'Email'   =>  null,
+            'Fax'   =>  null,
+            'AdminPseudo'   =>  'admin',
+            'password'   =>  Hash::make('pwd123'),
+            'AdminEmail'    =>  'admin@localhost.com',
+            'AdminToken'    =>  null,
+            'remember_token'    =>  null,
+            'AdminLastLogin'    =>  json_encode(['last'=>'','first'=>''])
+
+        ]);
     }
 
     /**

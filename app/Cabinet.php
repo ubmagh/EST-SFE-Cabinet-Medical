@@ -5,12 +5,13 @@ namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Notifications\Notifiable;
 
-class Cabinet extends Authenticatable
+class Cabinet extends Authenticatable implements CanResetPassword
 {
     //
-
+    use Notifiable;
     protected $guard = 'admin';
 
 

@@ -27,12 +27,11 @@ class RedirectIfAuthenticated
         if ( $guard === "medcin" && Auth::guard($guard)->check()) {
             return redirect('/');
         }
-        ## pas encore défini pour celui -la
-        // if ( $guard === "admin" && Auth::guard($guard)->check()) {
-        //     return redirect('/s');
-        // }
+         if ( $guard === "admin" && Auth::guard($guard)->check()) {
+             return redirect('/');
+         }
         if (Auth::guard($guard)->check()) {
-            return redirect('/s');
+            return redirect('/');
         }
 
         return $next($request);
