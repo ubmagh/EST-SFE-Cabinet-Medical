@@ -43,7 +43,7 @@ class CreateCabinetsTable extends Migration
             'Email'   =>  null,
             'Fax'   =>  null,
             'AdminPseudo'   =>  'admin',
-            'password'   =>  Hash::make('pwd123'),
+            'password'   =>  Hash::make('password'),
             'AdminEmail'    =>  'admin@localhost.com',
             'AdminToken'    =>  null,
             'remember_token'    =>  null,

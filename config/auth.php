@@ -96,7 +96,7 @@ return [
             'driver' => 'eloquent',
             'model' => App\Medcin::class,
         ],
-        'admins '=> [
+        'admins'=> [
             'driver' => 'eloquent',
             'model' => App\Cabinet::class,
         ],

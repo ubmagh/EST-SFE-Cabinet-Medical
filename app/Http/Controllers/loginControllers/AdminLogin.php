@@ -17,10 +17,16 @@ class AdminLogin extends Controller
     public function __construct()
     {
         //Auth::guard('admin')->logout();
-        //$this->middleware('guest:admin')->except('logout');
+        $this->middleware('guest:admin')->except('logout');
     }
 
-    public function loginForm(){
+    /**
+     * Show the application’s login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLoginForm()
+    {
         return view('Admin.login');
     }
  
@@ -49,7 +55,6 @@ class AdminLogin extends Controller
         );
         if( Auth::guard('admin')->attempt($user_creds,$saveLogin) ){
             $now = date('Y-m-d H:i:s');
-            return "sdgfsd";
             // Last Login feature
             $admin = Cabinet::Find( Auth::guard('admin')->user()->id );
             $AdminLastLogin = json_decode( $admin->DernierLog );

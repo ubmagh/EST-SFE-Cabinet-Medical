@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\loginControllers;
 
+use App\Cabinet;
 use App\Http\Controllers\Controller;
 use App\Mail\CredsReset;
 use App\Medcin;
@@ -40,6 +41,8 @@ class ForgotController extends Controller
     if(empty($user)){
         $user = Medcin::where('Email',$email)->first();
         if(empty($user))
+            $user = Cabinet::where('AdminEmail',$email)->first();
+        if(empty($user))
             return redirect()->back()->with(["Eroor"=>"Compte introuvable pour l'email : ".$email." ."]);
     }
     $token = Str::random(64);
@@ -49,9 +52,10 @@ class ForgotController extends Controller
         'token' =>  $token,
         'created_at'    =>  Carbon::now()
     ]);
-
+    
+    $pseudo = $user->Pseudo ? $user->Pseudo:$user->AdminPseudo;
     $url = url('/Reset',$token)."?m=".urlencode($email);
-    Mail::to($email)->send( new CredsReset($user->Pseudo,$url) );
+    Mail::to($email)->send( new CredsReset($pseudo,$url) );
     return redirect()->back()->with(['success'=>'done']);
     }
 
@@ -105,6 +109,8 @@ class ForgotController extends Controller
 
             if(empty($user)){
                 $user = Medcin::where('Email',$email)->first();
+                if(empty($user))
+                $user = Cabinet::where('AdminEmail',$email)->first();
                 if(empty($user))
                 return view('errors.404');
             }

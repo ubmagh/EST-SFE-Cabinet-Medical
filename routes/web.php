@@ -39,6 +39,10 @@ Route::get('/', function () {
         $name= Auth::guard('medcin')->user()->Nom.' '.Auth::guard('medcin')->user()->Prenom;
         return view('medcin.dashboard.index')->with('name',$name);
     }
+    if( Auth::guard('admin')->check() ){
+        $name= "Administrateur";
+        return view('admin.dashboard.index')->with('name',$name);
+    }
     return view('Home');
 })->name('Homepage');
 
@@ -62,6 +66,8 @@ Route::get('/logout',function(){
         return app()->call('App\Http\Controllers\loginControllers\SecretaireLogin@logout');
     if( Auth::guard('medcin')->check() )
         return app()->call('App\Http\Controllers\loginControllers\MedcinLogin@logout');
+    if( Auth::guard('admin')->check() )
+        return app()->call('App\Http\Controllers\loginControllers\AdminLogin@logout');
     Auth::logout();
     return redirect('/');
 });
@@ -88,7 +94,7 @@ Route::group(['middleware' => ['auth:secretaire']], function () {
 #################################   Guest Routes   #################################
 /// etre non connecté pour y accéder
 
-Route::group(['middleware' => ['guest:secretaire','guest:medcin']], function () {
+Route::group(['middleware' => ['guest:secretaire','guest:medcin','guest:admin']], function () {
     //
     
     /// Login page for medic member if already logged=> redirected to main page
@@ -112,7 +118,7 @@ Route::group(['middleware' => ['guest:secretaire','guest:medcin']], function () 
 
     Route::post('/Reset','loginControllers\ForgotController@update');
 
-    Route::get('/admin','loginControllers\AdminLogin@loginForm');
+    Route::get('/admin','loginControllers\AdminLogin@showLoginForm');
 
    
 });
