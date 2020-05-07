@@ -10,6 +10,6 @@ class Consultation extends Model
     public $timestamps = false;
     public $table="consultations";
     protected $fillable = [
-        'Date', 'Heure', 'Type', 'Description', 'PatientId', 'MedcinId', 'SecretaireId', 'Urgent', 'A_Rdv', 'AnalysesDemandees',
+        'Date', 'Type', 'Description', 'PatientId', 'MedcinId', 'SecretaireId', 'Urgent', 'A_Rdv', 'AnalysesDemandees',
     ];
 }
