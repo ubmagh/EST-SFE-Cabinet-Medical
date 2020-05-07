@@ -371,9 +371,9 @@
               </div>
             </li>
             <li class="nav-item">
-              <a href="{{ url('#') }}" class="nav-link">
-                <i class="ti-receipt menu-icon"></i>
-                <span class="menu-title">Documentation</span></a>
+              <a href="{{ url('/CabinetInfos') }}" class="nav-link">
+                <i class="ti-info-alt menu-icon"></i>
+                <span class="menu-title">Infos du Cabinet</span></a>
             </li>
           </ul>
         </div>

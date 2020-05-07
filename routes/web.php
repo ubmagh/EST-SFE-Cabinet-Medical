@@ -40,8 +40,7 @@ Route::get('/', function () {
         return view('medcin.dashboard.index')->with('name',$name);
     }
     if( Auth::guard('admin')->check() ){
-        $name= "Administrateur";
-        return view('admin.dashboard.index')->with('name',$name);
+        return view('admin.dashboard.index')->with('name',"Administrateur");
     }
     return view('Home');
 })->name('Homepage');
@@ -88,7 +87,26 @@ Route::group(['middleware' => ['auth:secretaire']], function () {
 #################################   Secretary Routes End   ################################
 
 
+
 #-----------------------------------------------------------------------------------------#
+
+
+
+#################################   Admin Routes   #################################
+
+
+Route::group(['middleware' => ['auth:admin']], function () {
+    //
+    Route::get('CabinetInfos', 'CabinetController@Cabinet_Infos_View');
+});
+
+#################################   Guest Routes End   ################################
+
+
+
+#-----------------------------------------------------------------------------------------#
+
+
 
 
 #################################   Guest Routes   #################################

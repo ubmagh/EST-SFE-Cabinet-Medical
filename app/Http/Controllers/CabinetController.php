@@ -11,4 +11,9 @@ class CabinetController extends Controller
     {
         $this->middleware('auth:admin');
     }
+
+    public function Cabinet_Infos_View(Request $request){
+        return view('Admin.Infos.index')->with('name',"Administrateur");
+    }
+
 }
