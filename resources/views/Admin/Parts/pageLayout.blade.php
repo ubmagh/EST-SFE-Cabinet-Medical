@@ -18,6 +18,8 @@
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
   <!-- endinject -->
   <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" />
+  @yield('css')
+
 </head>
 
 <body>
@@ -43,7 +45,7 @@
                   <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
                   <a class="dropdown-item preview-item">
                     <div class="preview-thumbnail">
-                        <img src="images/faces/face4.jpg" alt="image" class="profile-pic">
+                        <img src="{{ asset('images/faces/face4.jpg')}}" alt="image" class="profile-pic">
                     </div>
                     <div class="preview-item-content flex-grow">
                       <h6 class="preview-subject ellipsis font-weight-normal">David Grey
@@ -55,7 +57,7 @@
                   </a>
                   <a class="dropdown-item preview-item">
                     <div class="preview-thumbnail">
-                        <img src="images/faces/face2.jpg" alt="image" class="profile-pic">
+                        <img src="{{ asset('images/faces/face2.jpg')}}" alt="image" class="profile-pic">
                     </div>
                     <div class="preview-item-content flex-grow">
                       <h6 class="preview-subject ellipsis font-weight-normal">Tim Cook
@@ -67,7 +69,7 @@
                   </a>
                   <a class="dropdown-item preview-item">
                     <div class="preview-thumbnail">
-                        <img src="images/faces/face3.jpg" alt="image" class="profile-pic">
+                        <img src="{{ asset('images/faces/face3.jpg')}}" alt="image" class="profile-pic">
                     </div>
                     <div class="preview-item-content flex-grow">
                       <h6 class="preview-subject ellipsis font-weight-normal"> Johnson
@@ -408,20 +410,21 @@
   <!-- container-scroller -->
 
   <!-- plugins:js -->
-  <script src="vendors/js/vendor.bundle.base.js"></script>
-  <script src="vendors/js/vendor.bundle.addons.js"></script>
+  <script src="{{ asset('/vendors/js/vendor.bundle.base.js') }}"></script>
+  <script src="{{ asset('/vendors/js/vendor.bundle.addons.js') }}"></script>
   <!-- endinject -->
   <!-- Plugin js for this page-->
   <!-- End plugin js for this page-->
   <!-- inject:js -->
-  <script src="js/off-canvas.js"></script>
-  <script src="js/hoverable-collapse.js"></script>
-  <script src="js/template.js"></script>
-  <script src="js/settings.js"></script>
-  <script src="js/todolist.js"></script>
+  <script src="{{ asset('/js/off-canvas.js') }}"></script>
+  <script src="{{ asset('/js/hoverable-collapse.js') }}"></script>
+  <script src="{{ asset('/js/template.js') }}"></script>
+  <script src="{{ asset('/js/settings.js') }}"></script>
+  <script src="{{ asset('/js/todolist.js') }}"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
-  <script src="js/dashboard.js"></script>
+  @yield('script')
+  <script src="{{ asset('/js/FontAwesomeAll.min.js') }}"></script>
   <!--<script src="js/todolist.js"></script>-->
   <!-- End custom js for this page-->
 </body>

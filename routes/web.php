@@ -98,6 +98,8 @@ Route::group(['middleware' => ['auth:secretaire']], function () {
 Route::group(['middleware' => ['auth:admin']], function () {
     //
     Route::get('CabinetInfos', 'CabinetController@Cabinet_Infos_View');
+    Route::get('CabinetInfos/Modify', 'CabinetController@Get_Edit_Form');
+
 });
 
 #################################   Guest Routes End   ################################

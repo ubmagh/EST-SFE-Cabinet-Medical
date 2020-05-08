@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CabinetController extends Controller
 {
@@ -13,7 +14,14 @@ class CabinetController extends Controller
     }
 
     public function Cabinet_Infos_View(Request $request){
-        return view('Admin.Infos.index')->with('name',"Administrateur");
+        $cabinet = Auth::guard('admin')->user();
+        return view('Admin.InfosDeCabinet.index')->with(['name'=>"Administrateur",'cabinet'=>$cabinet]);
+    }
+
+
+    public function Get_Edit_Form(){
+        $cabinet = Auth::guard('admin')->user();
+        return view('Admin.InfosDeCabinet.Modify')->with(['name'=>"Administrateur",'cabinet'=>$cabinet]);
     }
 
 }

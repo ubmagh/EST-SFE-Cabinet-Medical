@@ -36,7 +36,7 @@ class CreateCabinetsTable extends Migration
         Cabinet::create([
             'Nom'   =>  'Cabinet Alfarah',
             'Adresse'   =>  null,
-            'logo'  =>  null,
+            'logo'  =>  'Cabinet-Default-logo.png',
             'Specialites'   =>  null,
             'Description'   =>  null,
             'Tel'   =>  null,
