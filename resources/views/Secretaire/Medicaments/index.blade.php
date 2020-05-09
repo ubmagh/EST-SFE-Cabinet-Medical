@@ -507,5 +507,4 @@ $('#DeleteModal').on('show.bs.modal', function (event) {
 
 </script>
 <script src=" {{ asset('js/data-table.js') }}"></script>
-<script src=" {{ asset('js/FontAwesomeAll.min.js') }}"></script>
 @endsection

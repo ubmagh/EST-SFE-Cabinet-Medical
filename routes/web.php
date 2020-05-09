@@ -101,6 +101,9 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('CabinetInfos/Modify', 'CabinetController@Get_Edit_Form');
     Route::post('CabinetInfos', 'CabinetController@SubmitChanges');
 
+    Route::get('users/secretaires', 'SecretaireController@Admin_Get_users_list');
+    Route::post('users/secretaires/create', 'SecretaireController@Create');
+    
 
 });
 

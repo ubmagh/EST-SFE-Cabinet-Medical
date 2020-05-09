@@ -360,15 +360,13 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="ti-package menu-icon"></i>
-                <span class="menu-title">Apps</span>
+                <i class="fas fa-users-cog menu-icon"></i>
+                <span class="menu-title">Utilisateurs</span>
                 <i class="menu-arrow"></i></a>
               <div class="submenu">
                 <ul class="submenu-item">
-                  <li class="nav-item"><a class="nav-link" href="pages/apps/email.html">Email</a></li>
-                  <li class="nav-item"><a class="nav-link" href="pages/apps/calendar.html">Calendar</a></li>
-                  <li class="nav-item"><a class="nav-link" href="pages/apps/todo.html">Todo List</a></li>
-                  <li class="nav-item"><a class="nav-link" href="pages/apps/gallery.html">Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('/users/secretaires') }}">Secretaires</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{{ url('/users/medcins') }}">Medcins</a></li>
                 </ul>
               </div>
             </li>
