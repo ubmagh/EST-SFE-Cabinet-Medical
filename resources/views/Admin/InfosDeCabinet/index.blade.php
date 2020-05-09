@@ -38,9 +38,19 @@
               <a class="btn btn-info py-2 px-5 text-white" href="{{ url('/CabinetInfos/Modify') }}" role="button"> <i class="fas fa-edit text-white"></i> Modifier </a>
             </div>
 
+            @if (session('edited'))
+                <div class="alert alert-success d-block w-75 mx-auto alert-dismissible fade show" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                  </button>
+                  Modifications Bien Enregistrés .
+                </div>
+            @endif
+
             <div class="row w-100 d-block mt-3 text-center">
-              <img src="{{ asset('/images/logo/Cabinet-Default-logo.png') }}" class="cabinetLogo rounded-circle d-block mx-auto " alt="">
-              <small class="text-muted mt-2"> Le logo de votre Cabinet </small>
+            <img src="{{ asset('/images/logo/').'/'.$cabinet->logo }}" class="cabinetLogo rounded-circle d-block mx-auto {{ $cabinet->logo==''? 'border border-secondary':'' }}" alt="">
+              <small class="text-muted mt-2"> Le logo du Cabinet </small>
             </div>
 
             <div class="row mx-auto w-75  mt-5 ">
@@ -129,6 +139,21 @@
               <div class="col text-left ">
                 <h4 class="h4 data">
                   {{ $cabinet->Adresse!=''? $cabinet->Adresse:'-'}}
+                </h4>
+              </div>
+            </div>
+
+            <div class="row w-75 mx-auto mt-3">
+              <div class="col text-left">
+                <div class="d-block ml-auto" style="width: fit-content;">
+                  <h4 class="h4 text-left">
+                  Description  :
+                  </h4>
+                </div>
+              </div>
+              <div class="col text-left ">
+                <h4 class="h4 data">
+                  {{ $cabinet->Description!=''? $cabinet->Description:'-'}}
                 </h4>
               </div>
             </div>

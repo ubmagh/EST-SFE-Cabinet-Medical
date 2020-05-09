@@ -99,6 +99,8 @@ Route::group(['middleware' => ['auth:admin']], function () {
     //
     Route::get('CabinetInfos', 'CabinetController@Cabinet_Infos_View');
     Route::get('CabinetInfos/Modify', 'CabinetController@Get_Edit_Form');
+    Route::post('CabinetInfos', 'CabinetController@SubmitChanges');
+
 
 });
 
