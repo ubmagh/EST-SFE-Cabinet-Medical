@@ -12,4 +12,13 @@ class Rendezvous extends Model
     protected $fillable = [
         'Date', 'Heure', 'PatientId', 'Description', 'SecretaireId', 'Statut'
     ];
+
+    public function sectetaire() 
+    {
+        return $this->BelongsTo('App\Secretaire' , 'SecretaireId');
+    }
+
+     public function patient(){
+        return $this->BelongsTo('App\Patient' , 'PatientId');
+     }
 }

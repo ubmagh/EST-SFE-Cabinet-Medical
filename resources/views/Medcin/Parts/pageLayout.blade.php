@@ -18,7 +18,6 @@
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
   <!-- endinject -->
   <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" />
-  @yeild('css')
 </head>
 
 <body>
@@ -372,9 +371,9 @@
               </div>
             </li>
             <li class="nav-item">
-              <a href="{{ url('#') }}" class="nav-link">
+              <a href="{{ url('/Consultation') }}" class="nav-link">
                 <i class="ti-receipt menu-icon"></i>
-                <span class="menu-title">Documentation</span></a>
+                <span class="menu-title">Consultation</span></a>
             </li>
           </ul>
         </div>

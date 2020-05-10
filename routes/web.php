@@ -71,6 +71,10 @@ Route::get('/logout',function(){
     return redirect('/');
 });
 #################################   Login Routes End   ################################
+
+
+
+
 #-----------------------------------------------------------------------------------------#
 
 
@@ -82,13 +86,47 @@ Route::get('/logout',function(){
 Route::group(['middleware' => ['auth:secretaire']], function () {
     //
     Route::resource('Medicaments', 'MedicamentController');
+    Route::resource('patient', 'PatientController');
+    Route::get('/Rendez-Vous', function () {
+        $name= Auth::guard('secretaire')->user()->Nom.' '.Auth::guard('secretaire')->user()->Prenom;
+        return view('Secretaire.Rendezvous.index')->with('name', $name); // hadi ztha hit ntoma katreturniw le nom mea lview
+         });
+    Route::resource('/rdv' ,'RendezvousController');//hadi api kan2afichi biha rdv f calendar/insert rdv f calendar/
+    Route::put('/rdv_update','RendezvousController@update');//update rdv f calendar
+    Route::get('autocomplete','RendezvousController@autocomplete_rdv_patient');
 });
 
 #################################   Secretary Routes End   ################################
 
 
 
+
+
 #-----------------------------------------------------------------------------------------#
+
+
+
+#################################   Medcin Routes start   ################################
+
+
+
+Route::group(['middleware' => ['auth:medcin']], function () {
+    //
+    Route::resource('Consultation', 'ConsultationController');
+
+});
+
+
+
+
+
+#################################   Medcin Routes End   ################################
+
+
+
+#-----------------------------------------------------------------------------------------#
+
+
 
 
 

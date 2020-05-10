@@ -19,6 +19,7 @@ les variables de ce template
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="csrf-token" content="{{ csrf_token() }}"></meta>
   <title> @yield('title') </title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="{{ asset('vendors/iconfonts/ti-icons/css/themify-icons.css') }}">
@@ -257,20 +258,10 @@ les variables de ce template
               </div>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="{{ url('/Rendez-Vous') }}" class="nav-link">
                 <i class="ti-clipboard menu-icon"></i>
-                <span class="menu-title">Forms</span>
-                <i class="menu-arrow"></i></a>
-              <div class="submenu">
-                <ul class="submenu-item">
-                  <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Basic Elements</a></li>
-                  <li class="nav-item"><a class="nav-link" href="pages/forms/advanced_elements.html">Advanced Elements</a></li>
-                  <li class="nav-item"><a class="nav-link" href="pages/forms/validation.html">Validation</a></li>
-                  <li class="nav-item"><a class="nav-link" href="pages/forms/wizard.html">Wizard</a></li>
-                  <li class="nav-item"><a class="nav-link" href="pages/forms/text_editor.html">Text Editor</a></li>
-                  <li class="nav-item"><a class="nav-link" href="pages/forms/code_editor.html">Code Editor</a></li>
-                </ul>
-              </div>
+                <span class="menu-title">Rendez-Vous</span>
+               </a>
             </li>
             <li class="nav-item mega-menu">
               <a href="#" class="nav-link">
@@ -371,18 +362,9 @@ les variables de ce template
               </div>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="ti-package menu-icon"></i>
-                <span class="menu-title">Apps</span>
-                <i class="menu-arrow"></i></a>
-              <div class="submenu">
-                <ul class="submenu-item">
-                  <li class="nav-item"><a class="nav-link" href="pages/apps/email.html">Email</a></li>
-                  <li class="nav-item"><a class="nav-link" href="pages/apps/calendar.html">Calendar</a></li>
-                  <li class="nav-item"><a class="nav-link" href="pages/apps/todo.html">Todo List</a></li>
-                  <li class="nav-item"><a class="nav-link" href="pages/apps/gallery.html">Gallery</a></li>
-                </ul>
-              </div>
+              <a href="{{ url('/patient') }}" class="nav-link">
+                <i class="ti-receipt menu-icon"></i>
+                <span class="menu-title">Patients</span></a>
             </li>
             <li class="nav-item">
               <a href="{{ url('/Medicaments') }}" class="nav-link">
@@ -436,6 +418,7 @@ les variables de ce template
   <!-- endinject -->
   <!-- Custom js for this page-->1
 <script src="{{ asset('/js/FontAwesomeAll.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   @yield('script')
   <!--<script src="js/todolist.js"></script>-->
   <!-- End custom js for this page-->

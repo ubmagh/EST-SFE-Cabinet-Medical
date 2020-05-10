@@ -10,6 +10,13 @@ class Patient extends Model
     public $timestamps = false;
     public $table="patients";
     protected $fillable = [
-        'email', 'password', 'UserType', 'LastLogin',  'CreatedAt', 'Activated',
+        'id_civile', 'Nom', 'Prenom',  'Tel', 'Email', 'Sexe' , 'adresse' 
+        , 'Ville' , 'DateNaissance' , 'Occupation' , 'Nationnalite'
+        , 'typeMutuel' ,  'ref_mutuel' 
     ];
+
+    public function patient()
+    {
+      return $this->hasMany('App\Rendezvous' , 'PatientId');
+    }
 }

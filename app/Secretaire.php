@@ -24,4 +24,9 @@ class Secretaire extends Authenticatable implements CanResetPassword
         'password', 'remember_token',
     ];
 
+    public function secretaire()
+    {
+      return $this->hasMany('App\Rendezvous' , 'SecretaireId');
+    }
+
 }

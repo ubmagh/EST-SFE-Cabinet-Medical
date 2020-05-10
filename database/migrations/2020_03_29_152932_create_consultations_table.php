@@ -15,7 +15,6 @@ class CreateConsultationsTable extends Migration
     {
         Schema::create('consultations', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('Date')->useCurrent();
             $table->string('Type',20);
             $table->longText('Description')->nullable();
             $table->bigInteger('PatientId')->unsigned();
