@@ -55,9 +55,11 @@
                                                     class="btn btn-info btn-sn"
                                                     data-id="{{ $secretaire['id'] }}"
                                                     data-Nom="{{ $secretaire['Nom'] }}"
-                                                    data-Dosage="{{ $secretaire['Dosage'] }}"
-                                                    data-Prise="{{ $secretaire['Prise'] }}"
-                                                    data-Quand="{{ $secretaire['Quand'] }}">
+                                                    data-Prenom="{{ $secretaire['Prenom'] }}"
+                                                    data-Pseudo="{{ $secretaire['Pseudo'] }}"
+                                                    data-Email="{{ $secretaire['Email'] }}"
+                                                    data-Adresse="{{ $secretaire['Adresse'] }}"
+                                                    data-Tel="{{ $secretaire['Tel'] }}">
                                                     <i class="far fa-edit"></i> Modifier
                                                 </button>
                                                 <button class="btn btn-outline-danger py-2 " role="button" type="button"
@@ -146,7 +148,7 @@
 
                     <div class="form-group mb-2">
                         <label for="password">Mot de passe : </label>
-                        <input name="password" id="password" type="password" 
+                        <input name="password" id="password" type="password" min="6" required
                             class="form-control" placeholder="">
                     </div>
                     <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
@@ -157,7 +159,7 @@
 
                     <div class="form-group mb-2">
                         <label for="Tel">Numéro de Téléphone : </label>
-                        <input name="Tel" id="Tel" type="text" minlength="9" maxlength="14" 
+                        <input name="Tel" id="Tel" type="text" minlength="9" maxlength="14" required
                             class="form-control" placeholder="Tel">
                     </div>
                     <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
@@ -204,10 +206,137 @@
 </div>
 <!-- -------------------- ENDZ Create Modal   ------------------------- -->
 
+
+
+<!-- -------------------- Create EDIT Modal  ------------------------- -->
+<div class="modal fade left" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog model-notify modal-md modal-right modal-info" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="EditModalLabel">Modifier un Secretaire :</h5>
+                <button type="button" id="closeEditModal" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" id="EditForm">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="id" id="id" value="">
+
+                    <div class="form-group mb-2">
+                        <label for="NomEdit">Nom : </label>
+                        <input name="Nom" id="NomEdit" type="text" minlength="2" maxlength="30" required
+                            class="form-control" placeholder="Nom de medicament">
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
+                        id="Edit_NomModal">
+                        <span id="EditNomError"></span>
+                    </div>
+
+
+                    <div class="form-group mb-2">
+                        <label for="prenom">Prenom : </label>
+                        <input name="Prenom" id="PrenomEdit" type="text" minlength="2" maxlength="30" required
+                            class="form-control" placeholder="Prenom">
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
+                        id="Edit_PrenomModal">
+                        <span id="EditPrenomError"></span>
+                    </div>
+
+
+                    <div class="form-group mb-2">
+                        <label for="EmailEdit">Email : </label>
+                        <input name="Email" id="EmailEdit" type="email" maxlength="100" required
+                            class="form-control" placeholder="Email">
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
+                        id="Edit_EmailModal">
+                        <span id="EditEmailError"></span>
+                    </div>
+
+
+                    <div class="form-group mb-2">
+                        <label for="PseudoEdit">Pseudo : </label>
+                        <input name="Pseudo" id="PseudoEdit" type="text" minlength="4" maxlength="20" required
+                            class="form-control" placeholder="Pseudo">
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
+                        id="Edit_PseudoModal">
+                        <span id="EditPseudoError"></span>
+                    </div>
+
+
+                    <div class="form-group mb-2">
+                        <label for="passwordEdit">Mot de passe : </label>
+                        <small class="text-muted text-warning"> Laissez ce champs vide, s'il n'est pas modifiable </small>
+                        <input name="password" id="passwordEdit" type="password" 
+                            class="form-control" placeholder="">
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
+                        id="Edit_passwordModal">
+                        <span id="EditpasswordError"></span>
+                    </div>
+
+
+                    <div class="form-group mb-2">
+                        <label for="TelEdit">Numéro de Téléphone : </label>
+                        <input name="Tel" id="TelEdit" type="text" minlength="9" maxlength="14" 
+                            class="form-control" placeholder="Tel">
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
+                        id="Edit_TelModal">
+                        <span id="EditTelError"></span>
+                    </div>
+
+
+                    <div class="form-group mb-2">
+                        <label for="AdresseEdit">Adresse : </label>
+                        <textarea name="Adresse" id="AdresseEdit"  maxlength="100" rows="3"
+                            class="form-control" placeholder="Adresse"></textarea>
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
+                        id="Edit_AdresseModal">
+                        <span id="EditAdresseError"></span>
+                    </div>
+
+
+                    <div class="row w-100">
+                        <div class="col">
+                            <button type="button" class="btn btn-danger text-white" data-dismiss="modal"
+                                id="DismissEditModal"> <i class="fas fa-times ml-n1 mr-1"></i>Annuler</button>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-info text-white d-block ml-auto mr-0"> <i
+                                    class="fas fa-save ml-n1 mr-1   "></i> Enregistrer </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="w-100 d-none" id="EditModal_ErrorSection">
+                    <div class="alert alert-danger" role="alert">
+                        <p> Une erreure Servenue! Ressayez plus-tard !</p>
+                        <p id="EditErrorMSG"></p>
+                    </div>
+                </div>
+                <div class="w-100 d-none" id="EditModal_SuccessSection">
+                    <div class="alert alert-success" role="alert">
+                        <p> Modifié avec succès !</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- -------------------- ENDZ EDIT Modal   ------------------------- -->
+
+
     @endsection
 
     @section('script')
     <script>
+
         const dataTable_Place_Holder = "secretaire";
         const dataTable_Search_label = "Chercher: ";
         const dataTable_nbr_lines_language = "Afficher _MENU_ lignes";
@@ -286,6 +415,88 @@ $('#createForm').submit(function (e) {
             }
         });
     });
+
+    ////  copyind data from datatable to modal fields
+    $('#EditModal').on('show.bs.modal', function (event) {
+        let button = $(event.relatedTarget);
+        const id = button.data('id');
+        const Nom = button.data('nom');
+        const Prenom = button.data('prenom');
+        const Email = button.data('email');
+        const Pseudo = button.data('pseudo');
+        const Tel = button.data('tel');
+        const Adresse = button.data('adresse');
+
+
+        let modal = $(this);
+        modal.find('.modal-body #id').val(id);
+        modal.find('.modal-body #NomEdit').val(Nom);
+        modal.find('.modal-body #PrenomEdit').val(Prenom);
+        modal.find('.modal-body #EmailEdit').val(Email);
+        modal.find('.modal-body #PseudoEdit').val(Pseudo);
+        modal.find('.modal-body #TelEdit').val(Tel);
+        modal.find('.modal-body #AdresseEdit').val(Adresse);
+    });
+
+    /// submit Edditing form
+    $('#EditForm').submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "PUT",
+            url: <?php echo '"'.url('users/secretaires/Modify').'"' ?>,
+            data: $(this).serialize(),
+            success: function (resp) {
+                if (resp.status === "OK") {
+                    $('#EditForm').hide();
+                    $("#EditModal_SuccessSection").removeClass('d-none').show();
+                    setTimeout(() => window.location.reload(), 1400);
+                } else {
+                    $("#EditForm").hide();
+                    $("#EditErrorMSG").html(resp);
+                    $("#EditModal_ErrorSection").removeClass('d-none').show();
+                }
+            },
+            error: function (error) {
+                const response = error.responseJSON;
+                const errors = response.errors;
+                if (error.responseJSON.errors) {
+                    if (errors.Nom[0]) {
+                        $('#EditNomError').html(error.responseJSON.errors.Nom);
+                        $('#Edit_NomModal').removeClass('d-none').addClass('show');
+                    }
+                    if (errors.Prenom[0]) {
+                        $('#EditPrenomError').html(error.responseJSON.errors.Prenom);
+                        $('#Edit_PrenomModal').removeClass('d-none').addClass('show');
+                    }
+                    if (errors.Email[0]) {
+                        $('#EditEmailError').html(error.responseJSON.errors.Email);
+                        $('#Edit_EmailModal').removeClass('d-none').addClass('show');
+                    }
+                    if (errors.Pseudo[0]) {
+                        $('#EditPseudoError').html(error.responseJSON.errors.Pseudo);
+                        $('#Edit_PseudoModal').removeClass('d-none').addClass('show');
+                    }
+                    if (errors.password[0]) {
+                        $('#EditpasswordError').html(error.responseJSON.errors.password);
+                        $('#Edit_passwordModal').removeClass('d-none').addClass('show');
+                    }
+                    if (errors.Tel[0]) {
+                        $('#EditTelError').html(error.responseJSON.errors.Tel);
+                        $('#Edit_TelModal').removeClass('d-none').addClass('show');
+                    }
+                    if (errors.Adresse[0]) {
+                        $('#EditAdresseError').html(error.responseJSON.errors.Adresse);
+                        $('#Edit_AdresseModal').removeClass('d-none').addClass('show');
+                    }
+                } else {
+                    $("#EditForm").hide();
+                    $("#EditErrorMSG").html(error.responseJSON.message);
+                    $("#EditModal_ErrorSection").removeClass('d-none').show();
+                }
+            }
+        });
+    });
+
 
     </script>
     <script src=" {{ asset('js/data-table.js') }}"></script>

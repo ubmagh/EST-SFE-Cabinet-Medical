@@ -103,6 +103,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
 
     Route::get('users/secretaires', 'SecretaireController@Admin_Get_users_list');
     Route::post('users/secretaires/create', 'SecretaireController@Create');
+    Route::put('users/secretaires/Modify', 'SecretaireController@Update');
     
 
 });
