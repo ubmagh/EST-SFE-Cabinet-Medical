@@ -101,10 +101,18 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('CabinetInfos/Modify', 'CabinetController@Get_Edit_Form');
     Route::post('CabinetInfos', 'CabinetController@SubmitChanges');
 
+    // Gestion des Secretaires
     Route::get('users/secretaires', 'SecretaireController@Admin_Get_users_list');
     Route::post('users/secretaires/create', 'SecretaireController@Create');
-    Route::put('users/secretaires/Modify', 'SecretaireController@Update');
+    Route::post('users/secretaires/Modify', 'SecretaireController@Update');
+    Route::delete('users/secretaires/Delete', 'SecretaireController@Delete');
     
+    // Gestion des Secretaires
+    Route::get('users/medcins', 'MedcinController@Admin_Get_users_list');
+    Route::post('users/medcins/create', 'MedcinController@Create');
+    Route::post('users/medcins/Modify', 'MedcinController@Update');
+    Route::delete('users/medcins/Delete', 'MedcinController@Delete');
+
 
 });
 

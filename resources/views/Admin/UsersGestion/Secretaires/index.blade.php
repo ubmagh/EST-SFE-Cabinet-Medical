@@ -222,7 +222,7 @@
             <div class="modal-body">
                 <form method="POST" id="EditForm">
                     @csrf
-                    @method('PUT')
+                    @method('POST')
                     <input type="hidden" name="id" id="id" value="">
 
                     <div class="form-group mb-2">
@@ -330,6 +330,65 @@
     </div>
 </div>
 <!-- -------------------- ENDZ EDIT Modal   ------------------------- -->
+
+<!-- --------------------  Delete Modal   ------------------------- -->
+
+
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-3"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel-3">Supprimer un secretaire </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="" id="DELETEmodal">
+                @csrf
+                @method('DELETE')
+
+                <input type="hidden" name="deleteID" value="" id="deleteID" />
+                <div class="modal-body">
+                    <p>Toutes les les données relatives à cet utilisateur seront supprimées, Etes-vous Sure ?</p>
+                    <div class="form-group mb-2">
+                        <small class="text-muted text-warning"> Saisissez votre mot de passe pour confirmer: </small>
+                        <input name="password" id="passwordDELETE" type="password" required 
+                            class="form-control" placeholder="">
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
+                        id="DELETE_passwordModal">
+                        <span id="DELETEpasswordError"></span>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger"> <i class="fas fa-trash-alt"></i> Supprimer</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" id="DismissDeleteModal"> <i
+                            class="fas fa-times    "></i> Annuler</button>
+                </div>
+            </form>
+            <div class="modal-body d-none" id="deleteModal_ErrorSection">
+                <div class="alert alert-danger" role="alert">
+                    <p> Une erreure Servenue! Ressayez plus-tard !</p>
+                    <p id="deleteErrorMSG"></p>
+                </div>
+                <button type="button" class="btn btn-danger dissmiss" data-dismiss="modal" > <i
+                        class="fas fa-times    "></i> Fermer</button>
+            </div>
+            <div class="modal-body d-none" id="deleteModal_SuccessSection">
+                <div class="alert alert-success" role="alert">
+                    <p> Supprimé avec succès !</p>
+                </div>
+                <button type="button" class="btn btn-danger dissmiss" data-dismiss="modal" > <i
+                        class="fas fa-times    "></i> Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- -------------------- ENDZ Delete Modal   ------------------------- -->
 
 
     @endsection
@@ -442,7 +501,7 @@ $('#createForm').submit(function (e) {
     $('#EditForm').submit(function (e) {
         e.preventDefault();
         $.ajax({
-            type: "PUT",
+            type: "POST",
             url: <?php echo '"'.url('users/secretaires/Modify').'"' ?>,
             data: $(this).serialize(),
             success: function (resp) {
@@ -458,33 +517,32 @@ $('#createForm').submit(function (e) {
             },
             error: function (error) {
                 const response = error.responseJSON;
-                const errors = response.errors;
                 if (error.responseJSON.errors) {
-                    if (errors.Nom[0]) {
+                    if (response.errors.Nom) {
                         $('#EditNomError').html(error.responseJSON.errors.Nom);
                         $('#Edit_NomModal').removeClass('d-none').addClass('show');
                     }
-                    if (errors.Prenom[0]) {
+                    if (response.errors.Prenom) {
                         $('#EditPrenomError').html(error.responseJSON.errors.Prenom);
                         $('#Edit_PrenomModal').removeClass('d-none').addClass('show');
                     }
-                    if (errors.Email[0]) {
+                    if (response.errors.Email) {
                         $('#EditEmailError').html(error.responseJSON.errors.Email);
                         $('#Edit_EmailModal').removeClass('d-none').addClass('show');
                     }
-                    if (errors.Pseudo[0]) {
+                    if (response.errors.Pseudo) {
                         $('#EditPseudoError').html(error.responseJSON.errors.Pseudo);
                         $('#Edit_PseudoModal').removeClass('d-none').addClass('show');
                     }
-                    if (errors.password[0]) {
+                    if (response.errors.password) {
                         $('#EditpasswordError').html(error.responseJSON.errors.password);
                         $('#Edit_passwordModal').removeClass('d-none').addClass('show');
                     }
-                    if (errors.Tel[0]) {
+                    if (response.errors.Tel) {
                         $('#EditTelError').html(error.responseJSON.errors.Tel);
                         $('#Edit_TelModal').removeClass('d-none').addClass('show');
                     }
-                    if (errors.Adresse[0]) {
+                    if (response.errors.Adresse) {
                         $('#EditAdresseError').html(error.responseJSON.errors.Adresse);
                         $('#Edit_AdresseModal').removeClass('d-none').addClass('show');
                     }
@@ -492,6 +550,54 @@ $('#createForm').submit(function (e) {
                     $("#EditForm").hide();
                     $("#EditErrorMSG").html(error.responseJSON.message);
                     $("#EditModal_ErrorSection").removeClass('d-none').show();
+                }
+            }
+        });
+    });
+
+
+////  copyind data from datatable to delete modal fields
+$('#DeleteModal').on('show.bs.modal', function (event) {
+        let button = $(event.relatedTarget);
+        const id = button.data('medid');
+        let modal = $(this);
+        $('#deleteID').val(""+id);
+    });
+
+/// submitting delete form
+
+$('#DELETEmodal').submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "DELETE",
+            url: <?php echo '"'.url('users/secretaires/Delete').'"' ?>,
+            data: $(this).serialize(),
+            success: function (resp) {
+                if (resp.status === "OK") {
+                    $('#DELETEmodal').hide();
+                    $("#deleteModal_SuccessSection").removeClass('d-none').show();
+                    setTimeout(() => window.location.reload(), 1400);
+                } else if(resp.status=="pwd"){
+                    $('#DELETEpasswordError').html("Mot de passe erroné !");
+                        $('#DELETE_passwordModal').removeClass('d-none').addClass('show');
+                } else {
+                    $("#DELETEmodal").hide();
+                    $("#deleteErrorMSG").html(resp);
+                    $("#deleteModal_ErrorSection").removeClass('d-none').show();
+                }
+            },
+            error: function (error) {
+                const response = error.responseJSON;
+                const errors = response.errors;
+
+                if (error.responseJSON.errors && response.errors.password) {
+                        $('#DELETEpasswordError').html(error.responseJSON.errors.password);
+                        $('#DELETE_passwordModal').removeClass('d-none').addClass('show');
+                    }else{
+
+                    $("#DELETEmodal").hide();
+                    $("#deleteErrorMSG").html(error.responseJSON.message);
+                    $("#deleteModal_ErrorSection").removeClass('d-none').show();
                 }
             }
         });

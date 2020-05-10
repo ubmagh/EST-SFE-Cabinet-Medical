@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cabinet;
 use App\Secretaire;
 use Dotenv\Validator;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class SecretaireController extends Controller
     
     public function Admin_Get_users_list(){
         $secretaires = Secretaire::all();
-        return view('Admin.Users.Secretaires.index')->with(['name'=>"Administrateur",'secretaires'=>$secretaires,'counter'=>0]);
+        return view('Admin.UsersGestion.Secretaires.index')->with(['name'=>"Administrateur",'secretaires'=>$secretaires,'counter'=>0]);
     }
 
     public function Create(Request $request){
@@ -189,6 +190,42 @@ class SecretaireController extends Controller
             return response()->json(['status'=>'NotOk']);
         }
     }
+
+
+
+    public function Delete(Request $request){
+
+        $id= $request->input('deleteID');
+        $secretaire = Secretaire::find($id);
+        if(empty($secretaire))
+            return response()->json(['status'=>'NotOk']);
+        
+        $this->validate(
+            $request,
+            [
+                'password'  =>  'required|min:6'
+            ],
+            [
+                'password.required' =>  " Saisissez votre mot de passe ",
+                'password.min' =>  " Mot de passe erroné ",
+            ]
+        );
+
+        $admin = Cabinet::first();
+
+        if( !Hash::check($request->input('password'), $admin->password ) )
+            return response()->json(['status'=>'pwd']);
+
+        $res = $secretaire->delete();
+        if($res){
+            return response()->json(['status'=>'OK']);
+        }else{
+            return response()->json(['status'=>'NotOk']);
+        }
+
+    }
+
+    
 
 
 }
