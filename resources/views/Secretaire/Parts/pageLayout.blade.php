@@ -19,7 +19,7 @@ les variables de ce template
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="csrf-token" content="{{ csrf_token() }}"></meta>
+  <meta name="csrf-token" content="{{ csrf_token() }}" >
   <title> @yield('title') </title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="{{ asset('vendors/iconfonts/ti-icons/css/themify-icons.css') }}">
@@ -416,9 +416,9 @@ les variables de ce template
   <script src="{{ asset('/js/settings.js') }}"></script>
   <script src="{{ asset('/js/todolist.js') }}"></script>
   <!-- endinject -->
-  <!-- Custom js for this page-->1
+  <!-- Custom js for this page-->
 <script src="{{ asset('/js/FontAwesomeAll.min.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="{{ asset('/js/sweetalert2@9.js') }}"></script>
   @yield('script')
   <!--<script src="js/todolist.js"></script>-->
   <!-- End custom js for this page-->
