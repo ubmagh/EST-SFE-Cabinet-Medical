@@ -21,8 +21,8 @@ class CreateConsultationsTable extends Migration
             $table->bigInteger('MedcinId')->unsigned();
             $table->bigInteger('SecretaireId')->unsigned();
             $table->boolean('Urgent');
-            $table->boolean('A_Rdv');
-
+            $table->longText('ExamensAfaire')->nullable();
+            // on va ajouter aussi les confrères recommandés
             $table->foreign('PatientId')->references('id')->on('patients')->onDeletes('cascade');
             $table->foreign('MedcinId')->references('id')->on('medcins')->onDeletes('cascade');
             $table->foreign('SecretaireId')->references('id')->on('Secretaires')->onDeletes('cascade');

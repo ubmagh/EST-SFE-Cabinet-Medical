@@ -8,7 +8,7 @@ class Rendezvous extends Model
 {
     //
     public $timestamps = false;
-    public $table="rendervouses";
+    public $table="rendezvouses";
     protected $fillable = [
         'Date', 'Heure', 'PatientId', 'Description', 'SecretaireId', 'Statut'
     ];
