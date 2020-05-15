@@ -51,30 +51,52 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="form-group" id="PatientSearch">
+                    <input type="hidden" name="id_civile" id="id_civile" />
+                    <div class="form-group mb-0" id="PatientSearch">
                         <label for="date"> Chercher Patient :</label>
                         <div id="custom-templates" class="w-100">
-                            <input data-role="tagsInput" class="w-100 typeahead form-control w-100" autocomplete="off" type="text" placeholder="identifiant civile - nom du patient" id="id_civile" name="id_civile" />
+                            <input data-role="tagsInput" class="w-100 typeahead form-control w-100" autocomplete="off" type="text" placeholder="identifiant civile - nom du patient" id="id_civile2" name="id_civile2" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="date">Date Debut :</label>
+                    <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
+                        id="idcivileModal">
+                        <span id="idcivileError"></span>
+                    </div>
+
+
+                    <div class="form-group mb-0">
+                        <label for="DateDebut">Date Debut :</label>
                         <input type="text" class="form-control" autocomplete="off" name="DateDebut" id="DateDebut">
                     </div>
-                    <div class="form-group">
-                        <label for="date">Date Fin :</label>
+                    <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
+                        id="datedebModal">
+                        <span id="datedebError"></span>
+                    </div>
+
+
+                    <div class="form-group mb-0">
+                        <label for="DateFin">Date Fin :</label>
                         <input type="text" class="form-control" autocomplete="off" name="DateFin" id="DateFin">
                     </div>
+                    <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
+                        id="datefinModal">
+                        <span id="datefinError"></span>
+                    </div>
+
                     
-                    <div class="form-group">
+                    <div class="form-group mb-0">
                         <label for="message-text" class="col-form-label">Description :</label>
                         <textarea class="form-control" name="Description" rows="3" maxlength="255" style="resize: none;"></textarea>
+                        <small class="text-muted text-right d-block ml-auto">255 caractères</small>
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
+                        id="descModal">
+                        <span id="descError"></span>
                     </div>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Annuler</button>
+                <button type="button" class="btn btn-danger dissmiss" data-dismiss="modal"><i class="fa fa-times"></i> Annuler</button>
                 <button type="submit" class="btn btn-primary"> <i class="fa fa-check" ></i> Ajouter</button>
             </div>
             </form>
@@ -102,7 +124,6 @@
 @endsection
 
 @section('script')
-
 
 
 
@@ -141,6 +162,7 @@ $('#custom-templates .typeahead').typeahead(null, {
 $('#custom-templates .typeahead').bind('typeahead:select', function(ev, suggestion) {
     $('#PatientName').html(suggestion.name);
     $('#PatientID').html("Identifiant: "+suggestion.ID_c);
+    $('#id_civile2').val(suggestion.ID_c);
     $('#id_civile').val(suggestion.ID_c);
     $('#PatientDetails').removeClass("d-none");
     $('#PatientSearch').addClass("d-none");
@@ -149,6 +171,7 @@ $('#custom-templates .typeahead').bind('typeahead:select', function(ev, suggesti
 $('#removePatient').click(()=>{
     $('#PatientName').html('');
     $('#PatientID').html('');
+    $('#id_civile2').val('');
     $('#id_civile').val('');
     $('#PatientDetails').addClass("d-none");
     $('#PatientSearch').removeClass("d-none");
@@ -247,7 +270,7 @@ $('#removePatient').click(()=>{
                                 Swal.fire({
                                     position: 'center',
                                     icon: 'success',
-                                    title: 'Rdv Supprimé',
+                                    title: 'Rendezvous Supprimé',
                                     showConfirmation: false,
                                     timer: 1500
                                 });
@@ -258,10 +281,6 @@ $('#removePatient').click(()=>{
                 })
             },
             eventDrop: function (info) { // had fonction ela wd update dial chi rdv
-                let true_date = info.event.start.getFullYear() + '-' + (info.event.start
-                    .getMonth() + 1) + '-' + info.event.start.getDate();
-                let true_heure = info.event.start.getHours() + ':' + info.event.start.getMinutes() +
-                    ":" + info.event.start.getSeconds();
                 let Token = $('meta[name="csrf-token"]').attr('content') + "";
                 //console.log(token);
                 let id = info.event.Description;
@@ -278,11 +297,8 @@ $('#removePatient').click(()=>{
                     data: {
                         //Description : title,
                         rdvID: info.event.id,
-                        Date: true_date,
-                        Heure: true_heure,
-                        //PatientId : 1,
-                        //SecretaireId : 1,
-                        //Status : 'daba',
+                        start: FullCalendar.formatDate( info.event.start, {meridiem:false,omitCommas:true,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}),
+                        end: info.event.end,
                         _token: Token
                     },
                     success: function () {
@@ -336,14 +352,18 @@ $('#removePatient').click(()=>{
 
     $('#CreateForm').submit((e)=>{
         e.preventDefault();
+        $.ajaxSetup({
+                    hearders: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
         $.ajax({
-            url: {{url('/Rendez-Vous/Ressource')}},
+            url: "{{url('/Rendez-Vous/Ressource')}}",
             type: 'POST',
-            data: $(this).serialize();
+            data: $('#CreateForm').serialize(),
             success: function (resp) {
                 if (resp.status === "OK") {
-                    $('#DELETEmodal').hide();
-                    $("#deleteModal_SuccessSection").removeClass('d-none').show();
+                    $("#AddRdv").modal('toggle');
                     setTimeout(() => window.location.reload(), 1200);
                     Swal.fire({
                                     position: 'center',
@@ -353,19 +373,63 @@ $('#removePatient').click(()=>{
                                     timer: 1500
                                 });
                 } else {
-                    $("#DELETEmodal").hide();
-                    $("#deleteErrorMSG").html(resp);
-                    $("#deleteModal_ErrorSection").removeClass('d-none').show();
+                    $("#AddRdv").modal('toggle');
+                    Swal.fire({
+                                    position: 'center',
+                                    icon: 'error',
+                                    title: 'Une erreure servenue:'+resp,
+                                    showConfirmation: false,
+                                    timer: 1500
+                                });
                 }
             },
             error: function (error) {
                 const response = error.responseJSON;
                 const errors = response.errors;
-                $("#DELETEmodal").hide();
-                $("#deleteErrorMSG").html(error.responseJSON.message);
-                $("#deleteModal_ErrorSection").removeClass('d-none').show();
+                
+                if (error.responseJSON.errors) {
+                            
+                    if (response.errors.id_civile) {
+                            $('#idcivileError').html(error.responseJSON.errors.Email);
+                            $('#idcivileModal').removeClass('d-none').addClass('show');
+                    }
+
+                    if(response.errors.DateDebut){
+                        $('#datedebError').html(error.responseJSON.errors.DateDebut);
+                        $('#datedebModal').removeClass('d-none').addClass('show');
+                    }
+                    
+                    if(response.errors.DateFin){
+                        $('#datefinError').html(error.responseJSON.errors.DateFin);
+                        $('#datefinModal').removeClass('d-none').addClass('show');
+                    }
+
+                    if(response.errors.Description){
+                        $('#descError').html(error.responseJSON.errors.Description);
+                        $('#descModal').removeClass('d-none').addClass('show');
+                    }
+
+                }else{
+                $("#AddRdv").modal('toggle');
+                Swal.fire({
+                                    position: 'center',
+                                    icon: 'error',
+                                    title: 'Une erreure servenue: '+error.responseJSON.message,
+                                    showConfirmation: false,
+                                    timer: 1500
+                        });
+                }
             }
         });
     });
+
+    /// closing modal and clearing all of thiere stored data
+    $("#AddRdv").on('hide.bs.modal', function(){
+            $(this).closest('form').find('input').val('');
+            $(this).closest('form').find('textarea').val('');
+            $(this).closest('form').find('textarea').html('');
+            $('form .alert').removeClass('show').addClass('d-none');
+            $('form .alert span').html('');
+        });
     </script>
 @endsection

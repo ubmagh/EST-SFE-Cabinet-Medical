@@ -7,6 +7,7 @@ use DateTime;
 use App\Patient;
 use Carbon\Carbon;
 use App\Rendezvous;
+use App\Rules\notBetweenTwoDateTimes;
 use App\Secretaire;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -71,20 +72,65 @@ class RendezvousController extends Controller
      */
     public function store(Request $request)
     {
-        $name= Auth::guard('secretaire')->user()->Nom.' '.Auth::guard('secretaire')->user()->Prenom;
-        $sec = Auth::guard('secretaire')->user(); // hna kanjib secretaire li7al db db application o ghat2insere
-        $patient = Patient::where("id_civile",$request->input('id_civile')) // kanjib patient li2insirit lih id civile
-                          ->first();
+
+        // validation !!
+
+        $last_dateTime = Rendezvous::orderBy('id','DESC')->first();
+        
+        $this->validate(
+            $request,
+            [
+                'id_civile' =>   'required|exists:patients',
+                'DateDebut' =>  'required|date_format:Y-m-d H:i|after_or_equal:now',
+                'DateFin'   =>  'required|date_format:Y-m-d H:i|after:DateDebut',
+                'Description'   =>  'nullable|max:255'
+            ],
+            [
+                'id_civile.required'    =>  'Patient introuvable',
+                'id_civile.exists'    =>  'Patient introuvable',
+                'DateDebut.required' =>  'Saisissez la date de Début',
+                'DateDebut.date_format' =>  'Date invalide',
+                'DateDebut.after_or_equal' =>  'Date invalide',
+                'DateFin.required' =>  'Saisissez la date de Fin',
+                'DateFin.date_format' =>  'Date invalide',
+                'DateFin.after' =>  'Date invalide',
+                'Description.max'   =>  '255 caractères au Max'
+            ]
+        );
+
+
+        if($last_dateTime)
+        $this->validate(
+            $request,
+            [
+                'DateDebut' =>  ['required','date_format:Y-m-d H:i', new notBetweenTwoDateTimes($last_dateTime->DateTimeDebut,$last_dateTime->DateTimeFin,$request->input('DateDebut'))],
+            ],
+            [
+                'DateDebut.required' =>  'Saisissez la date de Début',
+                'DateDebut.date_format' =>  'Date invalide',
+                'DateDebut.notBetweenTwoDateTimes' =>  'la Date selectionné est indisponible voir le calendrier ',
+            ]
+        );
+
+        // validation end
+
+
+        $sec = Auth::guard('secretaire')->user(); 
+        $patient = Patient::where("id_civile",$request->input('id_civile'))->first();
                                         
         $rdv = new Rendezvous();   
-        $rdv->Date =$request->input('Date');
-        $rdv->Heure = $request->input('Heure');
+        $rdv->DateTimeDebut =$request->input('DateDebut');
+        $rdv->DateTimeFin =$request->input('DateFin');
         $rdv->PatientId = $patient->id; 
         $rdv->SecretaireId= $sec->id ;
         $rdv->Statut = "En cours";
         $rdv->Description = $request->input('Description'); //par défaut ghatakhd en cours
-        $rdv->save();             
-        return response()->json(['status'=>'OK']);
+
+        $res=$rdv->save();         
+        if($res)    
+            return response()->json(['status'=>'OK']);
+        return response()->json(['status'=>'NOTOK']);
+
     }
 
     /**
