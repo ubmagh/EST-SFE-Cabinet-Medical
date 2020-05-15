@@ -10,7 +10,7 @@ class Rendezvous extends Model
     public $timestamps = false;
     public $table="rendezvouses";
     protected $fillable = [
-        'Date', 'Heure', 'PatientId', 'Description', 'SecretaireId', 'Statut'
+        'DateTimeDebut', 'DateTimeFin', 'PatientId', 'Description', 'SecretaireId', 'Statut'
     ];
 
     public function sectetaire() 

@@ -15,8 +15,8 @@ class CreateRendezvousesTable extends Migration
     {
         Schema::create('rendezvouses', function (Blueprint $table) {
             $table->id();
-            $table->date('Date');
-            $table->time('Heure');
+            $table->dateTime('DateTimeDebut');
+            $table->dateTime('DateTimeFin');
             $table->bigInteger('PatientId')->unsigned();
             $table->string('Description')->nullable();
             $table->bigInteger('SecretaireId')->unsigned();

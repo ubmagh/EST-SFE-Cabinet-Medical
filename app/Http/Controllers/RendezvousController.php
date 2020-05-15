@@ -10,6 +10,7 @@ use App\Rendezvous;
 use App\Secretaire;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class RendezvousController extends Controller
 {
@@ -33,10 +34,9 @@ class RendezvousController extends Controller
               "id"=>$rdv->id,
               "patient" => $rdv->patient->Nom,
               "title" => $rdv->Description.' '.$rdv->patient->Nom,
-              "start" => $rdv->Date.' '.$rdv->Heure,
-              "end" => $rdv->Date,
+              "start" => $rdv->DateTimeDebut,
+              "end" => $rdv->DateTimeFin,
               "textColor" => "white",//dakhla manuelle hit khasha darori tkon f parametre dial calendar(documentation..)             
-              "statut" => $rdv->Status
             ];
           array_push($rdvArray, $data);
        }
@@ -45,8 +45,10 @@ class RendezvousController extends Controller
 
     public function autocomplete_rdv_patient(Request $request)
     {
-        $data = Patient::select("id_civile as name") 
+        $data = Patient::select("id_civile as ID_c", DB::raw(" CONCAT(Nom,' ',Prenom) as name ") )
                         ->where("id_civile","LIKE","%{$request->input('query')}%")
+                        ->orWhere("Prenom","LIKE","%{$request->input('query')}%")
+                        ->orWhere("Nom","LIKE","%{$request->input('query')}%")
                         ->get();
         return response()->json($data);
     }
@@ -82,7 +84,7 @@ class RendezvousController extends Controller
         $rdv->Statut = "En cours";
         $rdv->Description = $request->input('Description'); //par défaut ghatakhd en cours
         $rdv->save();             
-         return redirect('/Rendez-vous');
+        return response()->json(['status'=>'OK']);
     }
 
     /**
