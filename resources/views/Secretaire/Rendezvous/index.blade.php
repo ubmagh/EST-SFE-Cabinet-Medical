@@ -109,8 +109,18 @@
 
 
     <div class="card w-100 p-0">
-        <div class="card-body w-100 ">
-            <div class="w-100 d-block">
+        <div class="card-body w-100 grid-margin  stretch-card " style="height: 480px;" id="LoaderSec">
+            <div class="loader-demo-box border-0">
+                <div class="dot-opacity-loader">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+            </div>
+        </div>
+        <div class="card-body w-100 d-none" id="PageContent">
+            <div class="w-100 d-block text-center mt-4 mb-3">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AddRdv">
                     <i class="fa fa-plus"></i>
                     Ajouter Rendez-Vous
@@ -189,7 +199,12 @@ $('#removePatient').click(()=>{
 <script>
 
     $('#custom-templates').find(">:first-child").addClass('w-100');
+
     document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('PageContent').classList.remove('d-none');
+        document.getElementById('PageContent').classList.add('d-block');
+        document.getElementById('LoaderSec').classList.add('d-none');
+
         const calendarEl = document.getElementById('calendar');
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -282,9 +297,6 @@ $('#removePatient').click(()=>{
             },
             eventDrop: function (info) { // had fonction ela wd update dial chi rdv
                 let Token = $('meta[name="csrf-token"]').attr('content') + "";
-                //console.log(token);
-                let id = info.event.Description;
-                //alert(info.true_heure);
                 $.ajaxSetup({
                     hearders: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -295,10 +307,9 @@ $('#removePatient').click(()=>{
                     url: '/Rendez-Vous/Update',
 
                     data: {
-                        //Description : title,
                         rdvID: info.event.id,
-                        start: FullCalendar.formatDate( info.event.start, {meridiem:false,omitCommas:true,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}),
-                        end: info.event.end,
+                        start: FullCalendar.formatDate( info.event.start, {meridiem:false,omitCommas:true,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}),
+                        end: FullCalendar.formatDate( info.event.end, {meridiem:false,omitCommas:true,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}),
                         _token: Token
                     },
                     success: function () {
@@ -309,8 +320,57 @@ $('#removePatient').click(()=>{
                             showConfirmation: false,
                             timer: 1500
                         });
+                    },
+                    error:function(err){
+                        info.revert();
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: 'Midification échouée : '+err.responseJSON.message,
+                            showConfirmation: false,
+                            timer: 1500
+                        });
                     }
+
                 })
+            },
+            eventResize: function(info) {
+                let Token = $('meta[name="csrf-token"]').attr('content') + "";
+                $.ajaxSetup({
+                    hearders: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'PUT',
+                    url: '/Rendez-Vous/Update',
+
+                    data: {
+                        rdvID: info.event.id,
+                        start: FullCalendar.formatDate( info.event.start, {meridiem:false,omitCommas:true,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}),
+                        end: FullCalendar.formatDate( info.event.end, {meridiem:false,omitCommas:true,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}),
+                        _token: Token
+                    },
+                    success: function () {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Durée du Rendezvous modifié avec succès',
+                            showConfirmation: false,
+                            timer: 1500
+                        });
+                    },
+                    error:function(err){
+                        info.revert();
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: 'Midification de la durée est échouée : '+err.responseJSON.message,
+                            showConfirmation: false,
+                            timer: 1500
+                        });
+                    }
+                });
             }
 
         });
@@ -319,7 +379,7 @@ $('#removePatient').click(()=>{
         document.querySelector('.fc-today-button').classList.add('text-dark');
         document.querySelectorAll('.fc-day-header.fc-widget-header').forEach(node => node.classList.add('text-center'));
 
-
+        
     });
     </script>
     <script src="{{ asset('/js/jquery.datetimepicker.full.min.js') }}"></script>

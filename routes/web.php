@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -94,6 +95,7 @@ Route::group(['middleware' => ['auth:secretaire']], function () {
     Route::resource('/Rendez-Vous/Ressource' ,'RendezvousController');//hadi api kan2afichi biha rdv f calendar/insert rdv f calendar/
     Route::put('/Rendez-Vous/Update','RendezvousController@update');//update rdv f calendar
     Route::get('/Rendez-Vous/autocomplete','RendezvousController@autocomplete_rdv_patient');
+
 });
 
 #################################   Secretary Routes End   ################################

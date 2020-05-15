@@ -259,7 +259,7 @@ les variables de ce template
             </li>
             <li class="nav-item">
               <a href="{{ url('/Rendez-Vous') }}" class="nav-link">
-                <i class="ti-clipboard menu-icon"></i>
+                <i class="ti-time menu-icon"></i>
                 <span class="menu-title">Rendez-Vous</span>
                </a>
             </li>

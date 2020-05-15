@@ -7,7 +7,8 @@ use DateTime;
 use App\Patient;
 use Carbon\Carbon;
 use App\Rendezvous;
-use App\Rules\notBetweenTwoDateTimes;
+use App\Rules\DateDebutnotBetweenTwoDateTimes;
+use App\Rules\DateFinnotBetweenTwoDateTimes;
 use App\Secretaire;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -75,14 +76,13 @@ class RendezvousController extends Controller
 
         // validation !!
 
-        $last_dateTime = Rendezvous::orderBy('id','DESC')->first();
-        
+
         $this->validate(
             $request,
             [
                 'id_civile' =>   'required|exists:patients',
-                'DateDebut' =>  'required|date_format:Y-m-d H:i|after_or_equal:now',
-                'DateFin'   =>  'required|date_format:Y-m-d H:i|after:DateDebut',
+                'DateDebut' =>  ['required','date_format:Y-m-d H:i','after_or_equal:now', new DateDebutnotBetweenTwoDateTimes($request->input('DateDebut'))],
+                'DateFin'   =>  [ 'required','date_format:Y-m-d H:i','after:DateDebut', new DateFinnotBetweenTwoDateTimes($request->input('DateFin')) ],
                 'Description'   =>  'nullable|max:255'
             ],
             [
@@ -95,20 +95,6 @@ class RendezvousController extends Controller
                 'DateFin.date_format' =>  'Date invalide',
                 'DateFin.after' =>  'Date invalide',
                 'Description.max'   =>  '255 caractères au Max'
-            ]
-        );
-
-
-        if($last_dateTime)
-        $this->validate(
-            $request,
-            [
-                'DateDebut' =>  ['required','date_format:Y-m-d H:i', new notBetweenTwoDateTimes($last_dateTime->DateTimeDebut,$last_dateTime->DateTimeFin,$request->input('DateDebut'))],
-            ],
-            [
-                'DateDebut.required' =>  'Saisissez la date de Début',
-                'DateDebut.date_format' =>  'Date invalide',
-                'DateDebut.notBetweenTwoDateTimes' =>  'la Date selectionné est indisponible voir le calendrier ',
             ]
         );
 
@@ -166,10 +152,32 @@ class RendezvousController extends Controller
     {
         $rdvID = $request->rdvID;
         $rdv =  Rendezvous::find($rdvID); 
-        $rdv->Date =   $request->Date;
-        $rdv->Heure =   $request->Heure;
-        $rdv->save();
-        return response()->json(['success' => 'updated']);
+        $this->validate(
+            $request,
+            [
+                'rdvID' =>  'required|exists:rendezvouses,id',
+                'start' =>  [ 'required','date_format:m/d/Y H:i',new DateDebutnotBetweenTwoDateTimes($request->input('start'),$rdvID) ], /// vous pouvez modifier un rdv vers le passé
+                'end'   =>  [ 'required','date_format:m/d/Y H:i','after:start',new DateFinnotBetweenTwoDateTimes($request->input('start'),$rdvID) ],
+            ],
+            [
+                'rdvID.required'    =>  'Données Fournies au serveur sont invalides',
+                'rdvID.exists'    =>  'Données Fournies au serveur sont invalides',
+                'start.required'    =>  'Données Fournies au serveur sont invalides',
+                'start.date_format'    =>  'Données Fournies au serveur sont invalides',
+                'start.after_or_equal'    =>  'Données Fournies au serveur sont invalides',
+                'end.required'    =>  'Données Fournies au serveur sont invalides',
+                'end.date_format'    =>  'Données Fournies au serveur sont invalides',
+                'end.after'    =>  'Données Fournies au serveur sont invalides',
+            ]
+        );
+        $start = Carbon::createFromFormat('m/d/Y H:i',$request->input('start'));
+        $end = Carbon::createFromFormat('m/d/Y H:i',$request->input('end'));
+        $rdv->DateTimeDebut =   $start->format('Y-m-d H:i');
+        $rdv->DateTimeFin =   $end->format('Y-m-d H:i');
+        $res = $rdv->save();
+        if($res)
+            return response()->json(['success' => 'updated']);
+        return response('Erreur d\'enregistrement ',422);
     }
 
     /**
