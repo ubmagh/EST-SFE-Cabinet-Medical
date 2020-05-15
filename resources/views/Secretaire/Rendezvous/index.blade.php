@@ -7,7 +7,8 @@
 @section('css')
 
 <link rel="stylesheet" href="{{ asset('/css/main-core.min.css') }}">
-<link rel="stylesheet" href="{{ asset('/css/main-daygrid.min.css') }}">
+
+{{-- <link rel="stylesheet" href="{{ asset('/css/main-daygrid.min.css') }}">  100% unsued  --}}
 <link rel="stylesheet" href="{{ asset('/css/main-timegrid.min.css') }}">
 <link rel="stylesheet" href="{{ asset('/css/jquery.datetimepicker.min.css') }}">
 <style>
@@ -388,22 +389,22 @@ $('#removePatient').click(()=>{
         format:'Y-m-d H:i',
         minDate:0,
         minTime:'07:00',
-        maxTime:'20:00',
+        maxTime:'19:00',
         step:30,
-        defaultTime:'08:00',
+        defaultTime:'07:00',
         disabledWeekDays:[0],
     }); 
     $('#DateFin').datetimepicker({
         format:'Y-m-d H:i',
-        minTime:'07:00',
-        maxTime:'20:00',
+        minTime:'07:30',
+        maxTime:'19:30',
         step:30,
-        defaultTime:'08:00',
+        defaultTime:'19:00',
         disabledWeekDays:[0],
         onShow:function( ct ){
             this.setOptions({
                 minDate:jQuery('#DateDebut').val()?jQuery('#DateDebut').val():false,
-                minTime:jQuery('#DateDebut').val()?jQuery('#DateDebut').val().split(' ').pop():false
+                minTime:jQuery('#DateDebut').val()?jQuery('#DateDebut').val().split(' ').pop():'07:30'
             })
         }
     }); 
