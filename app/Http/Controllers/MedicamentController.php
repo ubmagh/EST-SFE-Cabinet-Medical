@@ -26,8 +26,6 @@ class MedicamentController extends Controller
             'Nom.max'  =>  'Nom trop long',
             'Nom.min'  =>  'Nom trop court',
             'Nom.regex'  =>  'Nom invalide',
-            'Dosage.regex'  =>  'Caractères invalides',
-            'Dosage.max'  =>  '30 caractères au MAX',
             'Prise.regex'  =>  'Caractères invalides',
             'Prise.max'  =>  '30 caractères au MAX',
             'Quand.in'  =>  'Choix invalide',
@@ -36,8 +34,7 @@ class MedicamentController extends Controller
         );
 
         $this->validate($request,[
-            'Nom' =>  'required|regex:/^[a-zA-Z0-9 ]+(([\',. -][a-zA-Z0-9 ])?[a-zA-Z0-9]*)*$/i|max:100|min:2',
-            'Dosage'    =>  'max:30|regex:/^[a-zA-Z0-9 ]+(([\',. -][a-zA-Z0-9 ])?[a-zA-Z0-9]*)*$/i|nullable',
+            'Nom' =>  'required|regex:/^[a-zA-Z0-9 ]+(([\',. -][a-zA-Z0-9 ])?[a-zA-Z0-9]*)*$/i|max:160|min:2',
             'Prise' =>  'max:30|regex:/^[a-zA-Z0-9 ]+(([\',. -][a-zA-Z0-9 ])?[a-zA-Z0-9]*)*$/i|nullable',
             'Quand' =>  ['required',Rule::in(['Avant','Apres','indifini'])]
         ],$messages
@@ -47,7 +44,6 @@ class MedicamentController extends Controller
         $res = Medicament::create([
             'Nom'   =>  $request->input('Nom'), 
             'Prise' =>  $request->input('Prise'),
-            'Dosage' =>  $request->input('Dosage'),
             'Quand' =>  $request->input('Quand')
         ]);
 
@@ -65,8 +61,6 @@ class MedicamentController extends Controller
             'Nom.max'  =>  'Nom trop long',
             'Nom.min'  =>  'Nom trop court',
             'Nom.regex'  =>  'Nom invalide',
-            'Dosage.regex'  =>  'Caractères invalides',
-            'Dosage.max'  =>  '30 caractères au MAX',
             'Prise.regex'  =>  'Caractères invalides',
             'Prise.max'  =>  '30 caractères au MAX',
             'Quand.in'  =>  'Choix invalide',
@@ -75,8 +69,7 @@ class MedicamentController extends Controller
         );
 
         $this->validate($request,[
-            'Nom' =>  'required|regex:/^[a-zA-Z0-9 ]+(([\',. -][a-zA-Z0-9 ])?[a-zA-Z0-9]*)*$/i|max:100|min:2',
-            'Dosage'    =>  'max:30|regex:/^[a-zA-Z0-9 ]+(([\',. -][a-zA-Z0-9 ])?[a-zA-Z0-9]*)*$/i|nullable',
+            'Nom' =>  'required|regex:/^[a-zA-Z0-9 ]+(([\',. -][a-zA-Z0-9 ])?[a-zA-Z0-9]*)*$/i|max:160|min:2',
             'Prise' =>  'max:30|regex:/^[a-zA-Z0-9 ]+(([\',. -][a-zA-Z0-9 ])?[a-zA-Z0-9]*)*$/i|nullable',
             'Quand' =>  ['required',Rule::in(['Avant','Apres','indifini'])]
         ],$messages
@@ -88,7 +81,6 @@ class MedicamentController extends Controller
             return response()->json(['status'=>'NotOk']);
         $medicament->Nom   =  $request->input('Nom');
         $medicament->Prise =  $request->input('Prise');
-        $medicament->Dosage =  $request->input('Dosage');
         $medicament->Quand =  $request->input('Quand');
 
         if(  $medicament->save() )

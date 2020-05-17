@@ -21,7 +21,6 @@
                             <tr>
                                 <th class="text-center">Num#</th>
                                 <th class="text-center">Nom</th>
-                                <th class="text-center">Dosage</th>
                                 <th class="text-center">Prise</th>
                                 <th class="text-center">Quand</th>
                                 <th class="text-center"> Actions </th>
@@ -34,7 +33,6 @@
                                 <tr>
                                     <td class="text-center">{{ ++$counter }}</td>
                                     <td>{{ $medicament['Nom'] }}</td>
-                                    <td class="text-center">{{ $medicament['Dosage'] }}</td>
                                     <td class="text-center">{{ $medicament['Prise'] }}</td>
                                     <td class="text-center">
                                         @switch(strtolower($medicament['Quand']))
@@ -54,7 +52,6 @@
                                             data-toggle="modal" data-target="#EditModal" class="btn btn-info btn-sn"
                                             data-id="{{ $medicament['id'] }}"
                                             data-Nom="{{ $medicament['Nom'] }}"
-                                            data-Dosage="{{ $medicament['Dosage'] }}"
                                             data-Prise="{{ $medicament['Prise'] }}"
                                             data-Quand="{{ $medicament['Quand'] }}">
                                             <i class="far fa-edit"></i> Modifier
@@ -106,17 +103,6 @@
                         <span id="CreateNomError"></span>
                     </div>
 
-
-
-                    <div class="form-group mb-2">
-                        <label for="Dosage">Dosage:</label>
-                        <input name="Dosage" id="Dosage" maxlength="30" minlength="0" type="text" class="form-control"
-                            placeholder="500mg">
-                    </div>
-                    <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
-                        id="Create_DosageModal">
-                        <span id="CreateDosageError"></span>
-                    </div>
 
 
 
@@ -206,16 +192,7 @@
 
 
 
-                    <div class="form-group mb-2">
-                        <label for="DosageEdit">Dosage:</label>
-                        <input name="Dosage" id="DosageEdit" maxlength="30" minlength="0" type="text"
-                            class="form-control" placeholder="500mg">
-                    </div>
-                    <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
-                        id="Edit_DosageModal">
-                        <span id="EditDosageError"></span>
-                    </div>
-
+                   
 
 
                     <div class="form-group mb-2">
@@ -373,10 +350,7 @@
                         $('#CreateNomError').html(error.responseJSON.errors.Nom);
                         $('#Create_NomModal').removeClass('d-none').addClass('show');
                     }
-                    if (errors.Dosage[0]) {
-                        $('#CreateDosageError').html(error.responseJSON.errors.Dosage);
-                        $('#Create_DosageModal').removeClass('d-none').addClass('show');
-                    }
+                   
                     if (errors.Prise[0]) {
                         $('#CreatePriseError').html(error.responseJSON.errors.Prise);
                         $('#Create_PriseModal').removeClass('d-none').addClass('show');
@@ -442,10 +416,6 @@
                     if (errors.Nom[0]) {
                         $('#EditNomError').html(error.responseJSON.errors.Nom);
                         $('#Edit_NomModal').removeClass('d-none').addClass('show');
-                    }
-                    if (errors.Dosage[0]) {
-                        $('#EditDosageError').html(error.responseJSON.errors.Dosage);
-                        $('#Edit_DosageModal').removeClass('d-none').addClass('show');
                     }
                     if (errors.Prise[0]) {
                         $('#EditPriseError').html(error.responseJSON.errors.Prise);
