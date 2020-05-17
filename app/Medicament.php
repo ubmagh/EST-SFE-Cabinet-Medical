@@ -10,6 +10,6 @@ class Medicament extends Model
     public $timestamps = false;
     public $table="medicaments";
     protected $fillable = [
-        'Nom', 'Prise', 'Dosage',  'Quand'
+        'Nom', 'Prise', 'Quand'
     ];
 }

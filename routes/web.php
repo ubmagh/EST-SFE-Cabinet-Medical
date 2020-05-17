@@ -153,6 +153,10 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::post('users/medcins/Modify', 'MedcinController@Update');
     Route::delete('users/medcins/Delete', 'MedcinController@Delete');
 
+    /// Paramètres de compte
+    Route::get('Parametres', 'CabinetController@Admin_Account_Settings');
+    Route::post('Parametres', 'CabinetController@Admin_Account_Settings');
+
 
 });
 

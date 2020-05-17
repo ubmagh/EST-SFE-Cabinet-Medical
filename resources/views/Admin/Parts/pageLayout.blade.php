@@ -134,7 +134,7 @@
                 <p style="font-family: Source Sans Pro;"> <u> {{ $name }} </u> </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                  <a class="dropdown-item">
+                <a class="dropdown-item" href="{{ url('/Parametres') }}">
                     <i class="ti-settings text-primary"></i>
                     Paramètres
                   </a>

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOperationsSelonFacturesTable extends Migration
+class CreateOperationsSelonConsultationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateOperationsSelonFacturesTable extends Migration
      */
     public function up()
     {
-        Schema::create('operations__selon__factures', function (Blueprint $table) {
+        Schema::create('operations__selon__Consultation', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('FactureId')->unsigned();
+            $table->bigInteger('ConsultationID')->unsigned();
             $table->bigInteger('OperationId')->unsigned();
-
             $table->foreign('OperationId')->references('id')->on('operations__cabinets')->onDeletes('cascade');
-            $table->foreign('FactureId')->references('id')->on('factures')->onDeletes('cascade');
+            $table->foreign('ConsultationID')->references('id')->on('consultations')->onDeletes('cascade');
             
             
         });

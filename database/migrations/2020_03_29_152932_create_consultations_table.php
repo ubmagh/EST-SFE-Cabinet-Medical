@@ -15,17 +15,15 @@ class CreateConsultationsTable extends Migration
     {
         Schema::create('consultations', function (Blueprint $table) {
             $table->id();
+            $table->timestamp('Date')->useCurrent();
             $table->string('Type',20);
             $table->longText('Description')->nullable();
             $table->bigInteger('PatientId')->unsigned();
             $table->bigInteger('MedcinId')->unsigned();
-            $table->bigInteger('SecretaireId')->unsigned();
             $table->boolean('Urgent');
             $table->longText('ExamensAfaire')->nullable();
-            // on va ajouter aussi les confrères recommandés
             $table->foreign('PatientId')->references('id')->on('patients')->onDeletes('cascade');
             $table->foreign('MedcinId')->references('id')->on('medcins')->onDeletes('cascade');
-            $table->foreign('SecretaireId')->references('id')->on('Secretaires')->onDeletes('cascade');
 
 
         });

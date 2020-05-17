@@ -10,6 +10,6 @@ class Medicament_par_ordonnance extends Model
     public $timestamps = false;
     public $table="medicament_par_ordonnances";
     protected $fillable = [
-        'MedicamentId', 'OrdonnanceId',  'Remarques','Periode', 'NbrParJour',
+        'MedicamentId', 'OrdonnanceId', 'Periode', 'NbrParJour',
     ];
 }

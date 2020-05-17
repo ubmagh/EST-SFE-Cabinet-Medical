@@ -17,7 +17,6 @@ class CreateExamensTable extends Migration
             $table->id();
             $table->string('Titre',50);
             $table->longText('Description')->nullable();
-            $table->longText('Fichiers')->nullable();
             $table->bigInteger('ConsultationId')->unsigned();
 
             $table->foreign('ConsultationId')->references('id')->on('consultations')->onDeletes('cascade');

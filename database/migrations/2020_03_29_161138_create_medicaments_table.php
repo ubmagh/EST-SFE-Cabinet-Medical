@@ -15,11 +15,9 @@ class CreateMedicamentsTable extends Migration
     {
         Schema::create('medicaments', function (Blueprint $table) {
             $table->id();
-            $table->string('Nom',100);
-            $table->string('Dosage',30)->nullable();
+            $table->string('Nom',160);
             $table->string('Prise',30)->nullable();
-        $table->string('Quand',20)->nullable();
-            
+            $table->string('Quand',20)->nullable();
         });
     }
 

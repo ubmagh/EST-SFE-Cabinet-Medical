@@ -14,11 +14,9 @@ class CreateOrdonnancesTable extends Migration
     public function up()
     {
         Schema::create('ordonnances', function (Blueprint $table) {
-            $table->id();
-        $table->date('Date');
+        $table->id();
         $table->bigInteger( 'ConsultationId')->unsigned();
-        $table->longText( 'Allergies')->nullable();
-        $table->longText( 'Antecedants')->nullable();
+        $table->longText( 'Description')->nullable();
         $table->foreign('ConsultationId')->references('id')->on('consultations')->onDeletes('cascade');
 
             

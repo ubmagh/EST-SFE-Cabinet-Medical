@@ -37,7 +37,7 @@ class CreateCabinetsTable extends Migration
             'Nom'   =>  'Cabinet Alfarah',
             'Adresse'   =>  ' 12, Rue ziz, Agadir ',
             'logo'  =>  'Cabinet-Default-logo.png',
-            'Specialites'   =>  ' Dentist ',
+            'Specialites'   =>  ' Les dents ',
             'Description'   =>  ' Cabinet Medical ',
             'Tel'   =>  '0600000000',
             'Email'   =>  'Contact@AlfarahCabinet.info',

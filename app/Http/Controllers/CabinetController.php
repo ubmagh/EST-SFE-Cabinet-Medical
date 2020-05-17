@@ -123,4 +123,9 @@ class CabinetController extends Controller
     }
 
 
+    public function Admin_Account_Settings(){
+        return view('Admin.AccountSettings')->with(['name'=>'Administrateur','LastLoginDate'=>Auth::user()->AdminLastLogin]);
+    }
+
+
 }
