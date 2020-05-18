@@ -30,6 +30,7 @@ class SalleAttenteController extends Controller
       
        $liste_attente = SalleAttente::leftJoin('rendezvouses','salle_attentes.rdvID','=','rendezvouses.id')
                                     ->whereNull('ConsultationID')// pas encore consulter 
+                                    ->whereDate('DateArrive', '=' , Carbon::today()->toDateString() ) /// d'aujourd'hui 
                                     ->where('Quitte','=',0) // (and) et n'est pas quitté
                                     ->OrderBy('startTime','DESC') /// avoir en premier le patient qui a le time de consultation saisi, c-a-d avoir en premier le patient qui est consulté
                                     ->OrderBy('Urgent','DESC') /// Avoir les cas urgentes en Premier
@@ -78,6 +79,37 @@ class SalleAttenteController extends Controller
             return response()->json(['status'=>'done']);
         return response()->json(['status'   =>  'err'],422);
     }
+
+
+
+    public function GoNextPatient(Request $request,$id){
+
+        if(!ctype_digit($id))
+            return response()->json(['status'=>'error','message'=>'Données Reçues sont invalides !'],422);
+
+        $obj = SalleAttente::find($id);
+        if(empty($obj))
+            return response()->json(['status'=>'error','message'=>'Patient Introuvable !'],422);
+
+        # Avant de passer quelqu'un il faut vérifier la disponiblité
+        $Attendants= SalleAttente::whereNull('ConsultationID')// pas encore consulter 
+                                ->whereDate('DateArrive', '=' , Carbon::today()->toDateString() ) /// d'aujourd'hui 
+                                ->where('Quitte','=',0)
+                                ->whereNotNull('startTime')->get();
+        
+        if(count($Attendants))
+            return response()->json(['status'=>'error','message'=>'La Consultation est indisponible attendez que le medcin fini avec un patient.'],200);
+
+        // if no body there so add the requesteed one
+        $obj->startTime= date('H:i:s');
+        $res = $obj->update();
+        if($res)
+            return response()->json(['status'=>'Done','message'=>' Effectué avec succèss '],200);
+        else
+            return response()->json(['status'=>'error','message'=>'une Erreur Servenue.'],422);
+    }
+
+
 
     /**
      * Store a newly created resource in storage.

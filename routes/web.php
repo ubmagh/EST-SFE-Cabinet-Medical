@@ -99,7 +99,9 @@ Route::group(['middleware' => ['auth:secretaire']], function () {
 
     // Sale attente routes
     Route::resource('/SalleAttente' ,'SalleAttenteController');
-    route::post('/SalleAttente_aprouveRdv/{id}','SalleAttenteController@CreateWithRdv');
+    Route::post('/SalleAttente_aprouveRdv/{id}','SalleAttenteController@CreateWithRdv');
+    Route::get('/SalleAttente/NextPatient/{id}','SalleAttenteController@GoNextPatient');
+    
 });
 
 #################################   Secretary Routes End   ################################
