@@ -96,6 +96,10 @@ Route::group(['middleware' => ['auth:secretaire']], function () {
     Route::put('/Rendez-Vous/Update','RendezvousController@update');//update rdv f calendar
     Route::get('/Rendez-Vous/autocomplete','RendezvousController@autocomplete_rdv_patient');
 
+
+    // Sale attente routes
+    Route::resource('/SalleAttente' ,'SalleAttenteController');
+    route::post('/SalleAttente_aprouveRdv/{id}','SalleAttenteController@CreateWithRdv');
 });
 
 #################################   Secretary Routes End   ################################

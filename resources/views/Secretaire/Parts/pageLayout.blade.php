@@ -174,9 +174,9 @@ les variables de ce template
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/widgets/widgets.html">
-                <i class="ti-settings menu-icon"></i>
-                <span class="menu-title">Widgets</span>
+              <a class="nav-link" href="{{ url('SalleAttente') }}">
+                <i class="ti-list-ol menu-icon"></i>
+                <span class="menu-title">Liste d'Attente</span>
               </a>
             </li>
             <li class="nav-item mega-menu">
@@ -379,14 +379,13 @@ les variables de ce template
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
-        <div class="content-wrapper">
+        
           
           
         @yield('content')
         
           
         
-        </div>
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         <footer class="footer">

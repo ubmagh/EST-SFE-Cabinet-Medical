@@ -15,12 +15,20 @@ class CreateSalleAttentesTable extends Migration
     {
         Schema::create('salle_attentes', function (Blueprint $table) {
             $table->id();
+            $table->timestamp('DateArrive')->useCurrent();
             $table->bigInteger('PatientId')->unsigned();
-            $table->timestamp('dateArrive')->useCurrent();
-            $table->boolean('passe')->default(false);
+            //$table->boolean('passe')->default(false);
+            $table->bigInteger('ConsultationID')->unsigned()->nullable(); 
+            $table->bigInteger('rdvID')->unsigned()->nullable();
+            $table->bigInteger('SecretaireID')->unsigned();
             $table->boolean('Urgent')->default(false);
+            $table->boolean('Quitte')->default(false);
+            $table->time('startTime')->nullable()->default(null);
             
         $table->foreign('PatientId')->references('id')->on('patients')->onDeletes('cascade');
+        $table->foreign('ConsultationID')->references('id')->on('consultations')->onDeletes('cascade');
+        $table->foreign('rdvID')->references('id')->on('rendezvouses')->onDeletes('cascade');
+        $table->foreign('SecretaireID')->references('id')->on('secretaires')->onDeletes('cascade');
     });
 
 

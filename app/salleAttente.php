@@ -10,9 +10,13 @@ class salleAttente extends Model
     public $timestamps = false;
     public $table="salle_attentes";
     protected $fillable = [
-        'PatientId', 'dateArrive', 'passe', 'Urgent'
+         'id','DateArrive', 'PatientId', 'ConsultationID', 'rdvID', 'SecretaireID', 'Urgent', 'Quitte', 'startTime',
     ];
+    
     public function patient(){
         return $this->BelongsTo('App\Patient' , 'PatientId');
      }
+
+     
+
 }

@@ -4,6 +4,7 @@
 
 
 @section('content')
+<div class="content-wrapper">
 <div class="card h-100">
     <div class="card-body">
         <h4 class=" display-4  text-center "> Medicaments : </h4>
@@ -300,6 +301,7 @@
 <!-- -------------------- ENDZ Delete Modal   ------------------------- -->
 
 
+</div>
 
 @endsection
 
