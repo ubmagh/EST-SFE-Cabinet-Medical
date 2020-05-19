@@ -99,8 +99,13 @@ Route::group(['middleware' => ['auth:secretaire']], function () {
 
     // Sale attente routes
     Route::resource('/SalleAttente' ,'SalleAttenteController');
+    Route::post('/SalleAttente/Add' ,'SalleAttenteController@CreateWithoutRdv');
     Route::post('/SalleAttente_aprouveRdv/{id}','SalleAttenteController@CreateWithRdv');
+    Route::get('/SalleAttente/UndoRdv/{id}','SalleAttenteController@UndoRdvConfirmation');
     Route::get('/SalleAttente/NextPatient/{id}','SalleAttenteController@GoNextPatient');
+    Route::get('/SalleAttente/Urgent/{id}','SalleAttenteController@UrgentPatient');
+    Route::get('/SalleAttente/UnUrgent/{id}','SalleAttenteController@UnUrgentPatient');
+    Route::get('/SalleAttente/Quit/{id}','SalleAttenteController@QuitPatient');
     
 });
 

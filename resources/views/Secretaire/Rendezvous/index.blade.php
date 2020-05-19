@@ -500,7 +500,7 @@
                 if (error.responseJSON.errors) {
 
                     if (response.errors.id_civile) {
-                        $('#idcivileError').html(error.responseJSON.errors.Email);
+                        $('#idcivileError').html(error.responseJSON.errors.id_civile);
                         $('#idcivileModal').removeClass('d-none').addClass('show');
                     }
 

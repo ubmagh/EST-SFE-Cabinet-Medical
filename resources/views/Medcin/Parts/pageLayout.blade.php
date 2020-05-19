@@ -3,26 +3,18 @@
 
 
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title> @yield('title') </title>
-  <!-- plugins:css -->
 <link rel="stylesheet" href="{{ asset('vendors/iconfonts/ti-icons/css/themify-icons.css') }}">
   <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.base.css') }}">
   <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.addons.css') }}">
-  <!-- endinject -->
-  <!-- plugin css for this page -->
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-  <!-- endinject -->
   <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" />
 </head>
 
 <body>
   <div class="container-scroller">
-    <!-- partial:partials/_horizontal-navbar.html -->
     <div class="horizontal-menu">
       <nav class="navbar top-navbar col-lg-12 col-12 p-0">
         <div class="container">
@@ -380,7 +372,6 @@
       </nav>
     </div>
 
-    <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
         <div class="content-wrapper">
@@ -391,43 +382,27 @@
           
         
         </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:partials/_footer.html -->
         <footer class="footer">
           <div class="w-100 clearfix">
             <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2018 <a href="http://www.urbanui.com/" target="_blank">Urbanui</a>. All rights reserved.</span>
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
           </div>
         </footer>
-        <!-- partial -->
       </div>
-      <!-- main-panel ends -->
     </div>
-    <!-- page-body-wrapper ends -->
   </div>
-  <!-- container-scroller -->
 
-  <!-- plugins:js -->
   <script src="{{ asset('/vendors/js/vendor.bundle.base.js') }}"></script>
   <script src="{{ asset('/vendors/js/vendor.bundle.addons.js') }}"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page-->
-  <!-- End plugin js for this page-->
-  <!-- inject:js -->
   <script src="{{ asset('/js/off-canvas.js') }}"></script>
   <script src="{{ asset('/js/hoverable-collapse.js') }}"></script>
   <script src="{{ asset('/js/template.js') }}"></script>
   <script src="{{ asset('/js/settings.js') }}"></script>
   <script src="{{ asset('/js/todolist.js') }}"></script>
-  <!-- endinject -->
-  <!-- Custom js for this page-->
   @yeild('script')
 <script src="{{ asset('/js/FontAwesomeAll.min.js') }}"></script>
   <script src="js/dashboard.js"></script>
-  <!--<script src="js/todolist.js"></script>-->
-  <!-- End custom js for this page-->
 </body>
 
 
-<!-- Mirrored from www.urbanui.com/justdo/template/demo/horizontal-default-light/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 03 Apr 2019 21:12:44 GMT -->
 </html>
