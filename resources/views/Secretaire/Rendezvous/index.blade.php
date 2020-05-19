@@ -74,7 +74,7 @@
 
                         <div class="form-group mb-0">
                             <label for="DateDebut">Date Debut :</label>
-                            <input type="text" class="form-control" autocomplete="off" name="DateDebut" id="DateDebut">
+                            <input type="text" class="form-control" autocomplete="off" name="DateDebut" id="DateDebut" required>
                         </div>
                         <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
                             id="datedebModal">
@@ -84,7 +84,7 @@
 
                         <div class="form-group mb-0">
                             <label for="DateFin">Date Fin :</label>
-                            <input type="text" class="form-control" autocomplete="off" name="DateFin" id="DateFin">
+                            <input type="text" class="form-control" autocomplete="off" name="DateFin" id="DateFin" required>
                         </div>
                         <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
                             id="datefinModal">
@@ -438,7 +438,7 @@
         minDate: 0,
         minTime: '07:00',
         maxTime: '19:00',
-        step: 30,
+        step: 10,
         defaultTime: '07:00',
         disabledWeekDays: [0],
     });
@@ -446,7 +446,7 @@
         format: 'Y-m-d H:i',
         minTime: '07:30',
         maxTime: '19:30',
-        step: 30,
+        step: 10,
         defaultTime: '19:00',
         disabledWeekDays: [0],
         onShow: function (ct) {

@@ -81,8 +81,8 @@ class RendezvousController extends Controller
             $request,
             [
                 'id_civile' =>   'required|exists:patients',
-                'DateDebut' =>  ['required','date_format:Y-m-d H:i','after_or_equal:now', new DateDebutnotBetweenTwoDateTimes($request->input('DateDebut'))],
-                'DateFin'   =>  [ 'required','date_format:Y-m-d H:i','after:DateDebut', new DateFinnotBetweenTwoDateTimes($request->input('DateFin')) ],
+                'DateDebut' =>  ['bail','required','regex:\d{4}-[01]\d-[0-3]\d [0-2]\d:[0-5]\d','date_format:Y-m-d H:i','after_or_equal:now', new DateDebutnotBetweenTwoDateTimes($request->input('DateDebut'))],
+                'DateFin'   =>  [ 'bail','required','regex:\d{4}-[01]\d-[0-3]\d [0-2]\d:[0-5]\d','date_format:Y-m-d H:i','after:DateDebut', new DateFinnotBetweenTwoDateTimes($request->input('DateFin')) ],
                 'Description'   =>  'nullable|max:255'
             ],
             [
@@ -91,9 +91,11 @@ class RendezvousController extends Controller
                 'DateDebut.required' =>  'Saisissez la date de Début',
                 'DateDebut.date_format' =>  'Date invalide',
                 'DateDebut.after_or_equal' =>  'Date invalide',
+                'DateDebut.regex' =>  'Date invalide',
                 'DateFin.required' =>  'Saisissez la date de Fin',
                 'DateFin.date_format' =>  'Date invalide',
                 'DateFin.after' =>  'Date invalide',
+                'DateFin.regex' =>  'Date invalide',
                 'Description.max'   =>  '255 caractères au Max'
             ]
         );

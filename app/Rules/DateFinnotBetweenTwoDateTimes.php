@@ -16,7 +16,7 @@ class DateFinnotBetweenTwoDateTimes implements Rule
      * @param  int  $rdvID  en cas de modification d'un rdv
      * @return void
      */
-    public function __construct(string $dateTimeFin,$rdvID=null)
+    public function __construct(string $dateTimeFin="",$rdvID=null)
     {
         //  
 

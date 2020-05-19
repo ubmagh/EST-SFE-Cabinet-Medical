@@ -16,7 +16,7 @@ class DateDebutnotBetweenTwoDateTimes implements Rule
      * @param  int  $rdvID  en cas de modification d'un rdv
      * @return void
      */
-    public function __construct(string $dateTimeDebut,$rdvID=null)
+    public function __construct(string $dateTimeDebut="",$rdvID=null)
     {
         //  
 
