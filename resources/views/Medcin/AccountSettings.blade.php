@@ -45,7 +45,7 @@
 <div class="card card-fluid">
     <h6 class="card-header"> Paramètres  du compte Medcin : </h6>
     <div class="card-body">
-    <form method="post" action="{{ url('MedcinParametres') }}">
+    <form method="post" action="{{ url('MedcinParametres') }}" enctype="multipart/form-data">
 
             {{ csrf_field() }}
             <div class="form-row">
@@ -138,8 +138,49 @@
             </div>
 
             <h5 class="h5 my-3 mb-2 text-info"> <i class="fa fa-exclamation-circle fa-lg"></i> laissez le champ vide s'il n'est pas modifiable. </h5>
- 
             <hr>
+            <div class="row my-3">
+                <h4 class="h4 mt-2 ml-2"> Changer votre Signature : </h4>
+            </div>
+            
+                <div class="form-row mt-3 mb-4">
+                    <div class="col-md-6">
+                        @if( $user->Signature )
+                            <img src="{{ url('/Signature/'.$user->Signature) }}" class="border border-secondary rounded" style="min-height: 200px; max-height: 400px; width: auto; max-width: 100%;" alt="votre Signature Actuelle" title="votre Signature Actuelle"/>
+                            <small class="form-text text-muted">Votre signature actuelle</small>
+                        @else
+                            <div  class="bg-secondary" style="min-height: 200px;width: auto;" alt="votre Signature Actuelle" title="votre Signature Actuelle"></div>
+                        @endif
+                    </div>
+                    <div class="col-md-6">
+                        <div class="custom-file mt-4 mb-5">
+                          <input type="file" class="custom-file-input" name="Nsigna" id="file" accept="image/*" />
+                          <label class="custom-file-label" for="file">Choisir une Nouvelle signature</label>
+                          <small id="fileHelpId" class="form-text text-muted">une image large de plus de 300*100px, d'une arrière plan transparent(.png).</small>
+                            @if($errors->has('Nsigna'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        <span class="sr-only">Close</span>
+                                    </button>
+                                    {{ $errors->first('Nsigna') }}
+                                </div>
+                            @endif
+                        </div>
+                        <div class="d-block form-group mt-4">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" name="DelCurrent"  value="YesPlease" />
+                                Supprimer la signature courante
+                              </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            <hr>
+
+
             <div class="form-row">
                 <div class="col-md-10 mb-3">
                     <input type="password" class="form-control ml-auto mr-3 " name="Oldpwd"  placeholder="Entrez votre mot de passe mot de passe" />

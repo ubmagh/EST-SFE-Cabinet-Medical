@@ -247,4 +247,86 @@ class MedcinController extends Controller
     }
 
 
+    public function Account_Settings_change(Request $request){
+
+        $toDelete = $request->input('DelCurrent')?true:false;
+        
+        $this->validate(
+            $request,
+            [
+                'Pseudo'    =>  'nullable|min:4|max:20|alpha_num|unique:secretaires',
+                'Email' =>  'nullable|email|unique:medcins|unique:medcins|unique:cabinets,AdminEmail',
+                'password'  =>  'nullable|min:6|max:100',
+                'pwdc'  =>  'required_with:password|same:password',
+                'Tel'   =>  'nullable|max:14|min:10||regex:/^[0-9+\- ]*$/i',
+                'adresse'  =>  'nullable|max:100',
+                'Nsigna'    =>  'nullable|file|image|mimes:jpeg,png,jpg,bmp|dimensions:min_width=300,min_height=100',
+                'Oldpwd'    =>  'required_with:Pseudo,Email,password,Tel,adresse,Nsigna|password:medcin'
+            ],
+            [
+                'Pseudo.min'    =>  'Pseudo doit etre de 4 caractères au Min.',
+                'Pseudo.max'    =>  'Pseudo doit etre de 20 caractères au Max.',
+                'Pseudo.alpha_num'  =>  'Pseudo invalide, contient des caractères non alloués.',
+                'Email.email' => 'Adresse Email invalide',
+                'Email.unique'  =>  'adresse Email est déjà enregistrée pour un utilisateur.',
+                'password.min'  =>  'le mot de passe doit etre de 6 caractères au Min.',
+                'password.max'  =>  'le mot de passe est trop long',
+                'pwdc.required_with'    =>  'Saisissez d\'abord le nouveau mot de passe ',
+                'pwdc.same' =>  ' Confirmation de mot de passe est erronée ',
+                'Tel.max'   =>  'Numéro de téléphone est invalide .',
+                'Tel.min'   =>  'Numéro de téléphone est invalide .',
+                'Tel.regex'   =>  'Numéro de téléphone est invalide .',
+                'adresse.max'   =>  'Maximum pour ce champs est de 100 caractères.',
+                'Nsigna.file'  =>  ' Fichier attendue! ',
+                'Nsigna.image'  =>  ' Format du fichier est inconnue. ',
+                'Nsigna.dimensions' =>  ' Les dimensions doivent etre au minimum 300*100px ',
+                'Oldpwd.password'   =>  'Mot de passe incorrecte.'
+            ]
+        );
+
+        
+        $medcinUser = Medcin::find(Auth::guard('medcin')->user()->id);
+        if(empty($medcinUser))
+        return redirect()->back()->with('status','err');
+        
+        if( $request->input('Pseudo') )
+            $medcinUser->Pseudo=$request->input('Pseudo');
+
+
+        if( $request->input('Email') )
+            $medcinUser->Email=$request->input('Email');
+
+
+        if( $request->input('password') )
+            $medcinUser->password= Hash::make( $request->input('password') );
+
+        if( $request->input('Tel') )
+            $medcinUser->Tel=$request->input('Tel');
+        
+        if( $request->input('adresse') )
+            $medcinUser->Adresse=$request->input('adresse');
+
+        
+        $oldname = $medcinUser->Signature;
+
+        if($request->Nsigna){
+            $imageName = $medcinUser->id.'.'.$request->Nsigna->getClientOriginalExtension();
+            request()->Nsigna->move( config('filesystems.disks.Signatures.root'), $imageName);
+            $medcinUser->Signature = $imageName;
+            if($oldname!=null)
+                unlink(config('filesystems.disks.Signatures.root') . DIRECTORY_SEPARATOR.$oldname);
+        }
+
+        if($toDelete&&$oldname){
+        $medcinUser->Signature = null;
+        unlink(config('filesystems.disks.Signatures.root') . DIRECTORY_SEPARATOR.$oldname);
+        }
+
+        $res = $medcinUser->update();
+        if($res)
+            return redirect()->back()->with('status','done');
+        return redirect()->back()->with('status','err');
+    }
+
+
 }

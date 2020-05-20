@@ -55,6 +55,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'Signatures' => [
+            'driver' => 'local',
+            'root' => storage_path('Signatures/'),
+            'url' => env('APP_URL').'/Signature',
+            'visibility' => 'private',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

@@ -137,6 +137,9 @@ Route::group(['middleware' => ['auth:medcin']], function () {
     Route::get('MedcinParametres', 'MedcinController@Account_Settings');
     Route::post('MedcinParametres', 'MedcinController@Account_Settings_change');
 
+    // Lien vers la signature
+    Route::get('/Signature/{filename}','SignatureController@getImage');
+
 });
 
 

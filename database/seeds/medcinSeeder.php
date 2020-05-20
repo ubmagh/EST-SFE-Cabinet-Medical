@@ -18,7 +18,7 @@ class medcinSeeder extends Seeder
             'Nom'   =>  'scott',
             'Prenom'    =>  'lara',
             'Specialite'    =>  'Dentist',
-            'Signature' =>  'Signature',
+            'Signature' =>  null,
             'Adresse'      =>   '13 rue ziz,Agadir',
             'Tel'   =>  '0687542150',
             'Email' =>  'Medcin1@localhost.com',
