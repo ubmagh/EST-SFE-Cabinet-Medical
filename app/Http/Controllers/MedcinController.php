@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cabinet;
 use App\Medcin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class MedcinController extends Controller
@@ -138,7 +139,7 @@ class MedcinController extends Controller
 
 
         if($medcin->Email != $request->input('Email')){
-            $Rules['Email']= 'required|email|max:100|unique:medcins|unique:medcins|unique:cabinets,AdminEmail';
+            $Rules['Email']= 'required|email|max:100|unique:secretaires|unique:medcins|unique:cabinets,AdminEmail';
             $Messages = array_merge($Messages,[
                 'Email.required'  =>  " Saisissez L'adresse Email ",
                 'Email.email'  =>  " Adresse Email invalide ",
@@ -237,6 +238,12 @@ class MedcinController extends Controller
             return response()->json(['status'=>'NotOk']);
         }
 
+    }
+
+    public function Account_Settings(){
+        $name= Auth::guard('medcin')->user()->Nom.' '.Auth::guard('medcin')->user()->Prenom;
+        $user = Auth::guard('medcin')->user();
+        return view('Medcin.AccountSettings')->with(['name'=>$name,'LastLoginDate'=>$user->DernierLog,'user'=>$user]);
     }
 
 

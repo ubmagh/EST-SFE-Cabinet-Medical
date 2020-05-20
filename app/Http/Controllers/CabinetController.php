@@ -124,7 +124,56 @@ class CabinetController extends Controller
 
 
     public function Admin_Account_Settings(){
-        return view('Admin.AccountSettings')->with(['name'=>'Administrateur','LastLoginDate'=>Auth::user()->AdminLastLogin]);
+        $user = Auth::guard('admin')->user();
+        return view('Admin.AccountSettings')->with(['name'=>'Administrateur','LastLoginDate'=>$user->AdminLastLogin,'user'=>$user]);
+    }
+
+
+    public function Admin_Account_Settings_change(Request $request){
+
+        $this->validate(
+            $request,
+            [
+                'Pseudo'    =>  'nullable|min:4|max:20|alpha_num',
+                'Email' =>  'nullable|email|unique:medcins|unique:medcins|unique:cabinets,AdminEmail',
+                'password'  =>  'nullable|min:6|max:100',
+                'pwdc'  =>  'required_with:password|same:password',
+                'Oldpwd'    =>  'required_with:Pseudo,Email,password|password:admin'
+            ],
+            [
+                'Pseudo.min'    =>  'Pseudo doit etre de 4 caractères au Min.',
+                'Pseudo.max'    =>  'Pseudo doit etre de 20 caractères au Max.',
+                'Pseudo.alpha_num'  =>  'Pseudo invalide, contient des caractères non alloués.',
+                'Email.email' => 'Adresse Email invalide',
+                'Email.unique'  =>  'adresse Email est déjà enregistrée pour un utilisateur.',
+                'password.min'  =>  'le mot de passe doit etre de 6 caractères au Min.',
+                'password.max'  =>  'le mot de passe est trop long',
+                'pwdc.required_with'    =>  'Saisissez d\'abord le nouveau mot de passe ',
+                'pwdc.same' =>  ' Confirmation de mot de passe est erronée ',
+                'Oldpwd.password'   =>  'Mot de passe incorrecte.'
+            ]
+        );
+
+        
+        $AdminUser = Cabinet::first(); // we allready have just one admin for this application
+        
+        if( $request->input('Pseudo') )
+            $AdminUser->AdminPseudo=$request->input('Pseudo');
+
+
+        if( $request->input('Email') )
+            $AdminUser->AdminEmail=$request->input('Email');
+
+
+        if( $request->input('password') )
+            $AdminUser->password= Hash::make( $request->input('password') );
+
+
+
+        $res = $AdminUser->update();
+        if($res)
+            return redirect()->back()->with('status','done');
+        return redirect()->back()->with('status','err');
     }
 
 

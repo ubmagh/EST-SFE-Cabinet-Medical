@@ -226,6 +226,74 @@ class SecretaireController extends Controller
     }
 
     
+    
+    public function Account_Settings(){
+        $name= Auth::guard('secretaire')->user()->Nom.' '.Auth::guard('secretaire')->user()->Prenom;
+        $user = Auth::guard('secretaire')->user();
+        return view('Secretaire.AccountSettings')->with(['name'=>$name,'LastLoginDate'=>$user->DernierLog,'user'=>$user]);
+    }
+
+
+    public function Account_Settings_change(Request $request){
+
+        $this->validate(
+            $request,
+            [
+                'Pseudo'    =>  'nullable|min:4|max:20|alpha_num|unique:secretaires',
+                'Email' =>  'nullable|email|unique:medcins|unique:medcins|unique:cabinets,AdminEmail',
+                'password'  =>  'nullable|min:6|max:100',
+                'pwdc'  =>  'required_with:password|same:password',
+                'Tel'   =>  'nullable|max:14|min:10||regex:/^[0-9+\- ]*$/i',
+                'adresse'  =>  'nullable|max:100',
+                'Oldpwd'    =>  'required_with:Pseudo,Email,password,Tel,adresse|password:secretaire'
+            ],
+            [
+                'Pseudo.min'    =>  'Pseudo doit etre de 4 caractères au Min.',
+                'Pseudo.max'    =>  'Pseudo doit etre de 20 caractères au Max.',
+                'Pseudo.alpha_num'  =>  'Pseudo invalide, contient des caractères non alloués.',
+                'Email.email' => 'Adresse Email invalide',
+                'Email.unique'  =>  'adresse Email est déjà enregistrée pour un utilisateur.',
+                'password.min'  =>  'le mot de passe doit etre de 6 caractères au Min.',
+                'password.max'  =>  'le mot de passe est trop long',
+                'pwdc.required_with'    =>  'Saisissez d\'abord le nouveau mot de passe ',
+                'pwdc.same' =>  ' Confirmation de mot de passe est erronée ',
+                'Tel.max'   =>  'Numéro de téléphone est invalide .',
+                'Tel.min'   =>  'Numéro de téléphone est invalide .',
+                'Tel.regex'   =>  'Numéro de téléphone est invalide .',
+                'adresse.max'   =>  'Maximum pour ce champs est de 100 caractères.',
+                'Oldpwd.password'   =>  'Mot de passe incorrecte.'
+            ]
+        );
+
+        
+        $secretaireUser = Secretaire::find(Auth::guard('secretaire')->user()->id);
+        if(empty($secretaireUser))
+        return redirect()->back()->with('status','err');
+        
+        if( $request->input('Pseudo') )
+            $secretaireUser->Pseudo=$request->input('Pseudo');
+
+
+        if( $request->input('Email') )
+            $secretaireUser->Email=$request->input('Email');
+
+
+        if( $request->input('password') )
+            $secretaireUser->password= Hash::make( $request->input('password') );
+
+        if( $request->input('Tel') )
+            $secretaireUser->Tel=$request->input('Tel');
+        
+        if( $request->input('adresse') )
+            $secretaireUser->Adresse=$request->input('adresse');
+
+
+        $res = $secretaireUser->update();
+        if($res)
+            return redirect()->back()->with('status','done');
+        return redirect()->back()->with('status','err');
+    }
+
 
 
 }

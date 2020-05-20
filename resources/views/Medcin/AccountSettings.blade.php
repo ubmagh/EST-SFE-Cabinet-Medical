@@ -1,6 +1,6 @@
 @extends('Admin.Parts.pageLayout')
 
-@section('title','Administrateur : Paramètres de compte')
+@section('title','Medcin : Paramètres de compte')
 
 @section('content')
 
@@ -43,15 +43,15 @@
 
 
 <div class="card card-fluid">
-    <h6 class="card-header"> Paramètres  du compte administrateur : </h6>
+    <h6 class="card-header"> Paramètres  du compte Medcin : </h6>
     <div class="card-body">
-    <form method="post" action="{{ url('AdminParametres') }}">
+    <form method="post" action="{{ url('MedcinParametres') }}">
 
             {{ csrf_field() }}
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                     <label for="input05">Changer votre Pseudo : </label>
-                    <input type="text" class="form-control" id="input05" name="Pseudo" maxlength="20" placeholder="{{ $user->AdminPseudo }}" />
+                <input type="text" class="form-control" id="input05" name="Pseudo" maxlength="20" placeholder="{{ $user->Pseudo }}">
                     @if($errors->has('Pseudo'))
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -64,7 +64,7 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="input03">Changer votre adresse Email :</label>
-                    <input type="email" class="form-control" id="input03" name="Email" maxlength="100" placeholder="{{ $user->AdminEmail }}" />
+                    <input type="email" class="form-control" id="input03" name="Email" maxlength="100" placeholder="{{ $user->Email }}" />
                     @if($errors->has('Email'))
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -82,7 +82,7 @@
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                     <label for="input04">Nouveau mot de passe: </label>
-                    <input type="password" class="form-control" id="input04" name="password" maxlength="100"/>
+                    <input type="password" class="form-control" id="input04" maxlength="100" name="password"/>
                     @if($errors->has('password'))
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -108,12 +108,41 @@
                 </div>
             </div>
 
+            <div class="form-row mt-3">
+                <div class="col-md-6 mb-3">
+                    <label for="Tel">Numéro de Téléphone: </label>
+                    <input type="text" class="form-control" id="Tel" name="Tel" maxlength="14" placeholder="{{ $user->Tel }}" />
+                    @if($errors->has('Tel'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                <span class="sr-only">Close</span>
+                            </button>
+                            {{ $errors->first('Tel') }}
+                        </div>
+                    @endif
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="adresse">Adresse :</label>
+                    <textarea class="form-control" id="adresse" name="adresse" maxlength="100" rows="3" placeholder="{{ $user->Adresse }}"></textarea>
+                    @if($errors->has('adresse'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                <span class="sr-only">Close</span>
+                            </button>
+                            {{ $errors->first('adresse') }}
+                        </div>
+                    @endif
+                </div>
+            </div>
+
             <h5 class="h5 my-3 mb-2 text-info"> <i class="fa fa-exclamation-circle fa-lg"></i> laissez le champ vide s'il n'est pas modifiable. </h5>
  
             <hr>
             <div class="form-row">
                 <div class="col-md-10 mb-3">
-                    <input type="password" class="form-control ml-auto mr-3 " name="Oldpwd"  placeholder="Entrez votre mot de passe mot de passe" maxlength="100" />
+                    <input type="password" class="form-control ml-auto mr-3 " name="Oldpwd"  placeholder="Entrez votre mot de passe mot de passe" />
                     <small class="text-muted"> Le mot de passe courant est necessaire pour toute modification </small>
                     @if($errors->has('Oldpwd'))
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">

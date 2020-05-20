@@ -106,6 +106,12 @@ Route::group(['middleware' => ['auth:secretaire']], function () {
     Route::get('/SalleAttente/Urgent/{id}','SalleAttenteController@UrgentPatient');
     Route::get('/SalleAttente/UnUrgent/{id}','SalleAttenteController@UnUrgentPatient');
     Route::get('/SalleAttente/Quit/{id}','SalleAttenteController@QuitPatient');
+
+    /// Paramètres de compte
+    Route::get('SecretaireParametres', 'SecretaireController@Account_Settings');
+    Route::post('SecretaireParametres', 'SecretaireController@Account_Settings_change');
+
+    
     
 });
 
@@ -126,6 +132,10 @@ Route::group(['middleware' => ['auth:secretaire']], function () {
 Route::group(['middleware' => ['auth:medcin']], function () {
     //
     Route::resource('Consultation', 'ConsultationController');
+
+    /// Paramètres de compte
+    Route::get('MedcinParametres', 'MedcinController@Account_Settings');
+    Route::post('MedcinParametres', 'MedcinController@Account_Settings_change');
 
 });
 
@@ -165,8 +175,8 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::delete('users/medcins/Delete', 'MedcinController@Delete');
 
     /// Paramètres de compte
-    Route::get('Parametres', 'CabinetController@Admin_Account_Settings');
-    Route::post('Parametres', 'CabinetController@Admin_Account_Settings');
+    Route::get('AdminParametres', 'CabinetController@Admin_Account_Settings');
+    Route::post('AdminParametres', 'CabinetController@Admin_Account_Settings_change');
 
 
 });
