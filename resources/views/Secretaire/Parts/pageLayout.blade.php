@@ -255,55 +255,11 @@ les variables de ce template
                 <span class="menu-title">Rendez-Vous</span>
                </a>
             </li>
-            <li class="nav-item mega-menu">
-              <a href="#" class="nav-link">
-                <i class="ti-bar-chart-alt menu-icon"></i>
-                <span class="menu-title">Data</span>
-                <i class="menu-arrow"></i></a>
-              <div class="submenu">
-                <div class="col-group-wrapper row">
-                  <div class="col-group col-md-6">
-                    <p class="category-heading">Charts</p>
-                    <div class="submenu-item">
-                      <div class="row">
-                        <div class="col-md-6">
-                          <ul>
-                            <li class="nav-item"><a class="nav-link" href="pages/charts/chartjs.html">Chart Js</a></li>
-                            <li class="nav-item"><a class="nav-link" href="pages/charts/morris.html">Morris</a></li>
-                            <li class="nav-item"><a class="nav-link" href="pages/charts/flot-chart.html">Flot</a></li>
-                            <li class="nav-item"><a class="nav-link" href="pages/charts/google-charts.html">Google Chart</a></li>
-                          </ul>
-                        </div>
-                        <div class="col-md-6">
-                          <ul>
-                            <li class="nav-item"><a class="nav-link" href="pages/charts/sparkline.html">Sparkline</a></li>
-                            <li class="nav-item"><a class="nav-link" href="pages/charts/c3.html">C3 Chart</a></li>
-                            <li class="nav-item"><a class="nav-link" href="pages/charts/chartist.html">Chartist</a></li>
-                            <li class="nav-item"><a class="nav-link" href="pages/charts/justGage.html">JustGage</a></li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-group col-md-3">
-                    <p class="category-heading">Table</p>
-                    <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="pages/tables/basic-table.html">Basic Table</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/tables/data-table.html">Data Table</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/tables/js-grid.html">Js-grid</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/tables/sortable-table.html">Sortable Table</a></li>
-                    </ul>
-                  </div>
-                  <div class="col-group col-md-3">
-                    <p class="category-heading">Maps</p>
-                    <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="pages/maps/mapael.html">Mapael</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/maps/vector-map.html">Vector Map</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/maps/google-maps.html">Google Map</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+            <li class="nav-item">
+              <a href="{{ url('Confreres') }}" class="nav-link">
+                <i class="fas fa-user-tag menu-icon"></i>
+                  <span class="menu-title">Confrères</span>
+              </a>
             </li>
             <li class="nav-item mega-menu">
               <a href="#" class="nav-link">

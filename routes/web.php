@@ -111,6 +111,8 @@ Route::group(['middleware' => ['auth:secretaire']], function () {
     Route::get('SecretaireParametres', 'SecretaireController@Account_Settings');
     Route::post('SecretaireParametres', 'SecretaireController@Account_Settings_change');
 
+    // Confreres routes
+    Route::get('Confreres', 'ConfrereController@Secretaire_gestion_view');
     
     
 });
