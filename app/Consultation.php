@@ -12,4 +12,13 @@ class Consultation extends Model
     protected $fillable = [
         'Date', 'Type', 'Description', 'PatientId', 'MedcinId', 'Urgent', 'ExamensAfaire', 
     ];
+
+    public function medecin() 
+    {
+        return $this->BelongsTo('App\Medcin' , 'MedcinId');
+    }
+
+     public function patient(){
+        return $this->BelongsTo('App\Patient' , 'PatientId');
+     }
 }

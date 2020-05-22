@@ -135,6 +135,7 @@ Route::group(['middleware' => ['auth:medcin']], function () {
     //
     Route::resource('Consultation', 'ConsultationController');
 
+
     /// Paramètres de compte
     Route::get('MedcinParametres', 'MedcinController@Account_Settings');
     Route::post('MedcinParametres', 'MedcinController@Account_Settings_change');

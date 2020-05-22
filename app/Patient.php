@@ -24,4 +24,11 @@ class Patient extends Model
     {
       return $this->hasMany('App\salleAttente' , 'PatientId');
     }
+
+
+    public function consultation()
+    {
+      return $this->hasMany('App\Consultation' , 'PatientId');
+    }
+    
 }

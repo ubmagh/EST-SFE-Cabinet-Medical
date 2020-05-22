@@ -12,4 +12,9 @@ class Medicament_par_ordonnance extends Model
     protected $fillable = [
         'MedicamentId', 'OrdonnanceId', 'Periode', 'NbrParJour',
     ];
+
+    public function medicament(){
+        return $this->BelongsTo('App\Medicament' , 'MedicamentId');
+     }
+
 }

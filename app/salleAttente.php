@@ -12,6 +12,15 @@ class salleAttente extends Model
     protected $fillable = [
          'id','DateArrive', 'PatientId', 'ConsultationID', 'rdvID', 'SecretaireID', 'Urgent', 'Quitte', 'startTime',
     ];
+
+    /*
+
+     # Oth's model 
+     
+             'PatientId', 'DateArrive','rdvID','SecretaireID', 'passe', 'Urgent'
+
+
+    */
     
     public function patient(){
         return $this->BelongsTo('App\Patient' , 'PatientId');

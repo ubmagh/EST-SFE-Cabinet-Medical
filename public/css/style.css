@@ -26920,6 +26920,7 @@ div.tagsinput span.tag a {
 @media (max-width: 767px) {
   .wizard.vertical > .steps {
     width: 42%;
+    /* height: 200; */ 
   }
 }
 

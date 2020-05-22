@@ -3,190 +3,258 @@
 
 
 @section('title')
-    Liste des consultations
+Consultations
 @endsection
 
+@section('css')
+<style>
+.wizard.vertical > .steps{
+  width: 25% !important;
+}
+.wizard.vertical > .content{
+  width: 70% !important;
+  overflow-y: scroll;
+}
+</style>
+@endsection
 
 @section('content')
 
 
 
-      <div class="card h-100">
-        <div class="card-body">
-            <div class="d-block w-100 mb-n5 text-center mt-3">
-                <a name="" id="" class="btn btn-primary mx-auto text-center text-white mb-n5 mt-3" role="button"
-                    data-toggle="modal" data-target="#AddModal" type="button"> <i class="fa fa-plus-circle fa-lg"
-                        aria-hidden="true"></i> Ajouter une consultation </a>
-            </div>
-        <div  class="row mt-n3">
-            <div class="col-12">
-              <div   class="table-responsive">
 
-   
-                <table id="order-listing" class="table">
-                 
-                  <thead>
-                    
-                    <tr>
-                        <th class="text-center">Num Consultation</th>
-                        <th class="text-center">Date de consultation</th>
-                        <th class="text-center">Description</th>
-                        <th class="text-center">Patient </th>
-                        <th class="text-center">Medecin</th>
-                        <th class="text-center">Urgent</th>
-                        <th class="text-center">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($consultations as $consultation)
-                    <tr>
-                        <td class="text-center"></td>
-                        <td class="text-center"></td>
-                        <td class="text-center"></td>
-                        <td class="text-center"></td>
-                        <td class="text-center"></td>
-                        <td class="text-center"></td>
-                        <td class="px-0 text-center">
 
-                          <!-- -------------------- EDIT BUTTON   ------------------------- -->
-                        <button   
-                        
-                        data-toggle="modal" data-target="#modal_edit"   role="button" type="button" 
-                             class="btn btn-outline-success py-2 ">
-                             <i class="far fa-edit"></i> Modifier</button>
 
-                          <!-- -------------------- DELETE BUTTON   ------------------------- -->
-                        <button  data-toggle="modal" data-target="#ModalDelete" 
-                          role="button" type="button" class="btn btn-outline-danger py-2 ">
-                          <i class="fas fa-trash-alt"></i> Supprimer</button>
+<div class="row w-100">
+    <div class="col-9 grid-margin my-4">
+        <div class="card h-100 ">
+            <div class="card-body pt-3 px-1" >
+                <form method="POST" action="/Consultation" id="example-vertical-wizard" >
+                    <div>
+                      {{csrf_field()}}
 
+                        <h3><i class="fas fa-file-medical-alt"></i> Consultation</h3>
+                        <section>
+
+                            
+                          <input id="userName" name="userName" type="hidden" class="required form-control">
+                           
+
+                            <div class="form-group">
+                                <label for="">Type de consultation</label>
+                                <select name="typeConsultation" class="form-control">
+                                    <option>Consultation normale</option>
+                                    <option>Contrôle</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Description</label>
+                                <textarea class="form-control" name="Description" rows="3"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Analyses à faire (Optionnel)</label>
+                                <textarea class="form-control" name="analyses" rows="3"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                              <label for="">Urgent</label>
+                              <select name="urgent" class="form-control">
+                                  <option>Oui</option> 
+                                  <option>Non</option> 
+                              </select>
+                          </div>
+
+
+                        </section>
+                        <h3><i class="fas fa-file-alt"></i> Ordonnance</h3>
+                        <section>
                           
+                          <table class="w-100">
+                            <thead>
+                              <tr>
+                                <th>Médicament</th>
+                                <th>Unité/Jour</th>
+                                <th>Période</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>
 
-                        
+                                  <select name="medicament[]" class="form-control" >
+                                    @foreach($medicaments as $medicament)
+                                  <option>{{$medicament->Nom}}</option>
+                                    @endforeach
+                                  </select>
 
-                    </tr>
-                    @endforeach                     
-                  </tbody>
-                  
-                  
-                </table>
+                                </td>
+                                <td>
+                                  <input id="name1" name="unites[]" type="number" class=" form-control ">
+                                </td>
+                                <td class="mr-n1">
+                                  <input id="name1" name="Periods[]" type="number" class=" form-control">
+                                </td>
+                              </tr>
 
-<!-- -------------------- INSERT Modal   ------------------------- -->
+                              <tr id="buttonsRaw">
+                                <td colspan="3" class="text-center">
+                                  <button type="button" class="btn btn-info mt-4" id="addMedi" ><i class="fas fa-plus fa-lg text-white"></i></button>
+                                  <button type="button" class="btn btn-danger d-none mt-4" id="DelMedi" ><i class="fas fa-times fa-lg text-white"></i></button>
+                                </td>
+                              </tr>
 
-
-<div class="modal fade left" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog model-notify modal-md modal-right modal-info" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nouvelle consultation</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      
-      <form id="addform" action="####here" method="POST"> 
-        <div  class="modal-body">
-        {{csrf_field()}}
-
+                            </tbody>
+                          </table>
 
 
-        <div class="col-auto" style="width : 55%; margin-left: 22%">
-            <label class="sr-only" for="inlineFormInputGroup">Identifiant Civil</label>
-            <div class="input-group mb-2">
-              <div class="input-group-prepend">
-                <div class="input-group-text">@</div>
-              </div>
-              <input type="text" class="form-control" id="inlineFormInputGroup" 
-              placeholder="Identifiant civil">
+                              <hr class="mt-4"/>
+                            <div class="form-group">
+                              <label for="">Remarques</label>
+                              <textarea class="form-control" name="remarque" rows="3"></textarea>
+                            </div>
+                        </section>
+                        <h3><i class="fas fa-print"></i> Imprimer l'ordonnance</h3>
+                        <section>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="checkbox" type="checkbox">
+                                    I agree with the Terms and Conditions.
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+                </form>
             </div>
-        </div><br>
-
-          <div class="form-group">
-            <label for="exampleFormControlInput1">Nom du patient </label>
-            <input name="Nom" type="text" class="form-control" placeholder="Entrer le nom">
-          </div>
-  
-          <div class="form-group">
-            <label for="exampleFormControlInput1">Prénom du patient </label>
-            <input name="Prenom" type="text" class="form-control" placeholder="Entrer le prénom">
-          </div>
-
-          <div class="form-group">
-            <label for="Mutuel">Type de la consultation</label>
-            <select name="typeMutuel" class="form-control">
-              <option>1</option>
-              
-            </select>
-          </div>
-
-
-          @foreach($medecins as $medecin)
-          <div class="form-group">
-            <label for="Mutuel">Médecin</label>
-            <select name="typeMutuel" class="form-control">
-              <option>{{$medecin['Nom']}} {{$medecin['Prenom']}}</option>
-              
-            </select>
-          </div>
-          @endforeach
-
-          @foreach($secretaires as $secretaire)
-          <div class="form-group">
-            <label for="Mutuel">Secrétaire</label>
-            <select name="typeMutuel" class="form-control">
-              <option>{{$secretaire['Nom']}} {{$secretaire['Prenom']}}</option>
-              
-            </select>
-          </div>
-          @endforeach
-
-          <div class="form-group">
-            <label for="exampleFormControlTextarea1">Description de la consultation</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-          </div>
-
-          <div class="form-group">
-            <label for="exampleFormControlTextarea1">Urgent (Optionnel)</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-          </div>
-
-          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-times-circle"></i> Annuler</button>
-        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Enregistrer</button>
-
-            </form>
-    
+        </div>
     </div>
+    
+    <div class="col-3 my-4">
+      <div class="card">
+        <div class="card-body">
+          
+              <div class="border-bottom text-center pb-4">
+                <img src="../../images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3"/>
+              </div>
+              
+              <div class="py-4">
+                
+                <p class="clearfix">
+               
+                  <span class="float-left">
+                    Identifiant civil 
+                  </span>
+                  <span class="float-right text-muted">
+                    {{$ListeAttentes->patient->id_civile}}
+                  </span>
+                </p>
+                <p class="clearfix">
+                  <span class="float-left">
+                    Nom
+                  </span>
+                  <span class="float-right text-muted">
+                    {{$ListeAttentes->patient->Nom}}
+                  </span>
+                </p>
+                <p class="clearfix">
+                  <span class="float-left">
+                    Prénom
+                  </span>
+                  <span class="float-right text-muted">
+                    {{$ListeAttentes->patient->Prenom}}
+                  </span>
+                </p>
+              <table id="order-listing" class="table">
+                 
+                <thead>
+                  
+                  <tr>
+                      <th class="text-center">Date de consultation</th>
+                      <th class="text-center">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach($consultations as $consultation)
+                  <tr>
+                  <td class="text-center">{{$consultation->Date}}</td>
+                  <td class="text-center">{{$consultation->Description}}</td>
+                  </tr>
+                   @endforeach                    
+                </tbody>
+                
+                
+              </table>
+
+
+              </div>
+              
+              <button class="btn btn-primary btn-block mb-2"><i class="far fa-id-card"></i>
+                 Voir le  dossier médical</button>
+            </div>
+            
+         
+       
+      
   </div>
+    </div>
 </div>
 
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    @endsection
+@endsection
 
-    @section('script')
+@section('script')
+  <script src="{{ asset('/js/wizard.js') }}"></script>
+  <script>
 
-    <script>
-    const dataTable_Place_Holder = "Consultation";
-    const dataTable_Search_label = "Chercher : ";
-    const dataTable_nbr_lines_language = "Afficher _MENU_ lignes";
-    const dataTable_Order_string = "asc"; /// "desc" for descendent order
-    const dataTable_can_sort_columns__ = [{
-        "orderable": false,
-        "targets": [6]
-    }];
-   </script>  
+ 
+var i=1;
+
+function addInput(indice){
+     var input = `<tr id="row`+indice+`" class="mt-1"> 
+      <td>
+
+<select name="medicament[]" class="form-control" >
+  @foreach($medicaments as $mediacament)
+<option>{{$medicament->Nom}}</option>
+  @endforeach
+</select>
+
+</td>
+<td>
+<input id="name1" name="unites[]" type="number" class=" form-control ">
+</td>
+<td class="mr-n1">
+<input id="name1" name="Periods[]" type="number" class=" form-control">
+</td>
+                  </tr>`;
+     $(input).insertBefore("#buttonsRaw");
+   };
+
+
+// code here
+$('#addMedi').click(function(e){
+  if(i==1)
+    $('#DelMedi').removeClass('d-none');
+  addInput(i);
+  i++;
+ });
     
+ $('#DelMedi').click(function(e){
+  if(i<=1)
+    return;
+  $('#row'+(i-1)).remove();
+  i--;
+  if(i==1)
+    $('#DelMedi').addClass('d-none');
+
+ });
+  
+</script>
 
 
-    <script src=" {{ asset('js/FontAwesomeAll.min.js') }}"></script>
-    <script src=" {{ asset('js/data-table.js') }}"></script>
-    
+ 
 
 
 
-
-    @endsection
+<script src=" {{ asset('js/FontAwesomeAll.min.js') }}"></script>
+@endsection

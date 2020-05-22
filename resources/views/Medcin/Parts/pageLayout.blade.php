@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.addons.css') }}">
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
   <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" />
+  @yield('css')
 </head>
 
 <body>
@@ -374,14 +375,11 @@
 
     <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
-        <div class="content-wrapper">
           
           
         @yield('content')
         
           
-        
-        </div>
         <footer class="footer">
           <div class="w-100 clearfix">
             <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2018 <a href="http://www.urbanui.com/" target="_blank">Urbanui</a>. All rights reserved.</span>

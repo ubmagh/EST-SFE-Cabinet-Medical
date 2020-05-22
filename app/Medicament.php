@@ -12,4 +12,11 @@ class Medicament extends Model
     protected $fillable = [
         'Nom', 'Prise', 'Quand'
     ];
+
+    public function medicament()
+    {
+      return $this->hasMany('App\Medicament_par_ordonnance' , 'MedicamentId');
+    }
+
+    
 }
