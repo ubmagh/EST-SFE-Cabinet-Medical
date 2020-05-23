@@ -152,88 +152,23 @@
               </a>
             </li>
             <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="fas fa-heartbeat menu-icon"></i>
+                <span class="menu-title">Consultation</span>
+                <i class="menu-arrow"></i></a>
+              </a>
+              <div class="submenu">
+                <ul class="submenu-item">
+                  <li class="nav-item"><a  href="{{ url('/Consultation') }}" class="nav-link"> à Cabinet</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#Domicile"> à Domicile</a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="pages/widgets/widgets.html">
                 <i class="ti-settings menu-icon"></i>
                 <span class="menu-title">Widgets</span>
               </a>
-            </li>
-            <li class="nav-item mega-menu">
-              <a href="#" class="nav-link">
-                <i class="ti-palette menu-icon"></i>
-                <span class="menu-title">UI Elements</span>
-                <i class="menu-arrow"></i>
-              </a>
-              <div class="submenu">
-                <div class="col-group-wrapper row">
-                  <div class="col-group col-md-4">
-                    <div class="row">
-                      <div class="col-12">
-                        <p class="category-heading">Basic Elements</p>
-                        <div class="submenu-item">
-                          <div class="row">
-                            <div class="col-md-6">
-                              <ul>
-                                <li class="nav-item"><a class="nav-link" href="pages/ui-features/accordions.html">Accordion</a></li>
-                                <li class="nav-item"><a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-                                <li class="nav-item"><a class="nav-link" href="pages/ui-features/badges.html">Badges</a></li>
-                                <li class="nav-item"><a class="nav-link" href="pages/ui-features/breadcrumbs.html">Breadcrumbs</a></li>
-                                <li class="nav-item"><a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdown</a></li>
-                                <li class="nav-item"><a class="nav-link" href="pages/ui-features/modals.html">Modals</a></li>
-                              </ul>
-                            </div>
-                            <div class="col-md-6">
-                              <ul>
-                                <li class="nav-item"><a class="nav-link" href="pages/ui-features/progress.html">Progress bar</a></li>
-                                <li class="nav-item"><a class="nav-link" href="pages/ui-features/pagination.html">Pagination</a></li>
-                                <li class="nav-item"><a class="nav-link" href="pages/ui-features/tabs.html">Tabs</a></li>
-                                <li class="nav-item"><a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
-                                <li class="nav-item"><a class="nav-link" href="pages/ui-features/tooltips.html">Tooltip</a></li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-group col-md-4">
-                    <div class="row">
-                      <div class="col-12">
-                        <p class="category-heading">Advanced Elements</p>
-                        <div class="submenu-item">
-                          <div class="row">
-                            <div class="col-md-6">
-                              <ul>
-                                <li class="nav-item"><a class="nav-link" href="pages/ui-features/dragula.html">Dragula</a></li>
-                                <li class="nav-item"><a class="nav-link" href="pages/ui-features/carousel.html">Carousel</a></li>
-                                <li class="nav-item"><a class="nav-link" href="pages/ui-features/clipboard.html">Clipboard</a></li>
-                                <li class="nav-item"><a class="nav-link" href="pages/ui-features/context-menu.html">Context Menu</a></li>
-                                <li class="nav-item"><a class="nav-link" href="pages/ui-features/loaders.html">Loader</a></li>
-                                <li class="nav-item"><a class="nav-link" href="pages/ui-features/slider.html">Slider</a></li>
-                              </ul>
-                            </div>
-                            <div class="col-md-6">
-                              <ul>
-                                <li class="nav-item"><a class="nav-link" href="pages/ui-features/popups.html">Popup</a></li>
-                                <li class="nav-item"><a class="nav-link" href="pages/ui-features/notifications.html">Notification</a></li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-group col-md-4">
-                    <p class="category-heading">Icons</p>
-                    <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="pages/icons/flag-icons.html">Flag Icons</a></li>
-                      <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Mdi icons</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/icons/font-awesome.html">Font Awesome</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/icons/simple-line-icon.html">Simple Line Icons</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/icons/themify.html">Themify Icons</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
@@ -363,11 +298,6 @@
                 </ul>
               </div>
             </li>
-            <li class="nav-item">
-              <a href="{{ url('/Consultation') }}" class="nav-link">
-                <i class="ti-receipt menu-icon"></i>
-                <span class="menu-title">Consultation</span></a>
-            </li>
           </ul>
         </div>
       </nav>
@@ -397,8 +327,8 @@
   <script src="{{ asset('/js/template.js') }}"></script>
   <script src="{{ asset('/js/settings.js') }}"></script>
   <script src="{{ asset('/js/todolist.js') }}"></script>
-  @yeild('script')
-<script src="{{ asset('/js/FontAwesomeAll.min.js') }}"></script>
+  @yield('script')
+  <script src="{{ asset('/js/FontAwesomeAll.min.js') }}"></script>
   <script src="js/dashboard.js"></script>
 </body>
 

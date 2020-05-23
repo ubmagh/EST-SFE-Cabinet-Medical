@@ -25,23 +25,31 @@ use Illuminate\Support\Facades\Auth;
 class ConsultationController extends Controller
 {
     public function index(Request $request){
-     
-        $name= Auth::guard('medcin')->user()->Nom.' '.Auth::guard('medcin')->user()->Prenom;
-        // ->take(1)
-        $ListeAttentes = salleAttente::where('passe','=','0')
+        $user = Auth::guard('medcin')->user();
+        $name= $user->Nom.' '.$user->Prenom;
+
+        $ListeAttentes =[];
+        $consultations =[];
+        $medicaments =[];
+        $found=false;
+        $SalleAttenteEmpty= app('App\Http\Controllers\SalleAttenteController')->Check_empty_liste();
+
+        $ListeAttentes = salleAttente::whereNotNull('startTime')
+                                    ->whereNull('ConsultationID')
                                      ->whereDate('dateArrive', '=' , Carbon::today()->toDateString() )
                                      ->orderby('dateArrive' , 'asc')
                                      ->first();
-        //dd($ListeAttentes->patient->id_civile);
-        $consultations = Consultation::where('PatientId', $ListeAttentes->patient->id)->get();                          
-        //dd($consultations);
 
-        $medicaments = Medicament::all();
+        if (!empty($ListeAttentes)){
+            $consultations = Consultation::where('PatientId', $ListeAttentes->patient->id)->get();                          
+            $medicaments = Medicament::all();
+            $found=true;
+        }
 
                 
         return view('Medcin.Consultation.index',
         ['name'=>$name, 'ListeAttentes'=>$ListeAttentes, 'consultations'=>$consultations, 
-        'medicaments'=>$medicaments ]);
+        'medicaments'=>$medicaments,'found'=>$found,'EmptySa'=>$SalleAttenteEmpty ]);
     }
 
 

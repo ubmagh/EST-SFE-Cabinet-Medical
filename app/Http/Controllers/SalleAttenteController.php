@@ -250,6 +250,16 @@ class SalleAttenteController extends Controller
             return response()->json(['status'=>'error','message'=>'une Erreur Servenue.'],422);
     }
 
+    
+    public function Check_empty_liste(){
+        $tmp = SalleAttente::whereNull('ConsultationID')
+                            ->whereDate( 'dateArrive', '=' , Carbon::today()->toDateString() )
+                            ->get();
+        if(count($tmp)>0)
+            return false;
+        return true;
+    }
+
 
 
     /**
