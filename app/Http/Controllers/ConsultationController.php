@@ -58,10 +58,11 @@ class ConsultationController extends Controller
     public function store(Request $request)
     {
     //**************************INSERT INTO CONSULTATIONS********************************************** */
-        $ListeAttentes = salleAttente::where('passe','=','0')
-                                     ->whereDate('dateArrive', '=' , Carbon::today()->toDateString() )
-                                     ->orderby('dateArrive' , 'asc')
-                                     ->first();   
+        $ListeAttentes = salleAttente::whereNotNull('startTime')
+                                    ->whereNull('ConsultationID')
+                                    ->whereDate('dateArrive', '=' , Carbon::today()->toDateString() )
+                                    ->orderby('dateArrive' , 'asc')
+                                    ->first();   
         $medecin = Auth::guard('medcin')->user();
         $patient = Patient::where("id_civile",$ListeAttentes->patient->id_civile)
                           ->first();
@@ -92,20 +93,21 @@ class ConsultationController extends Controller
        
        $ordonnance = DB::table('ordonnances')->latest('id')->first();
      
-       $medicament = $request->input('medicament');
+       $medicaments = $request->input('medicament');
         
         $all = array();
 
-        foreach ($medicament as $key=>$medicament){
+        if($medicaments)
+        foreach ($medicaments as $key=>$medicament){
         
         $medi_par_ordo = new Medicament_par_ordonnance();
 
-        $medicaments = Medicament::where('Nom', $request->input('medicament')[$key])->first();
+        $medicament = Medicament::where('Nom', $medicaments[$key])->first();
 
 
         $medi_par_ordo->Periode=$request->input('Periods')[$key];
         $medi_par_ordo->NbrParJour=$request->input('unites')[$key];
-        $medi_par_ordo->MedicamentId=$medicaments->id;
+        $medi_par_ordo->MedicamentId=$medicament->id;
         $medi_par_ordo->OrdonnanceId=$ordonnance->id;
         
         $medi_par_ordo->save();   
