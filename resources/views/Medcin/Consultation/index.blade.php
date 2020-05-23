@@ -15,8 +15,12 @@ Medcin: Consultation à Cabinet
     .wizard.vertical>.content {
         width: 70% !important;
         overflow-y: scroll;
+        height: 87%;
     }
 
+    #steps-uid-0{
+        height: 100%;
+    }
 </style>
 @endsection
 
@@ -48,9 +52,9 @@ Medcin: Consultation à Cabinet
     @else
         <div class="col-9 grid-margin my-4">
             <div class="card h-100 ">
-                <div class="card-body pt-3 px-1">
-                    <form method="POST" action="/Consultation" id="example-vertical-wizard">
-                        <div>
+                <div class="card-body h-100 pt-3 px-1">
+                    <form method="POST" class="h-100" action="/Consultation" id="example-vertical-wizard">
+                        <div class="h-100">
                             {{ csrf_field() }}
 
                             <h3><i class="fas fa-file-medical-alt"></i> Consultation</h3>
@@ -62,29 +66,23 @@ Medcin: Consultation à Cabinet
 
                                 <div class="form-group">
                                     <label for="">Type de consultation</label>
-                                    <select name="typeConsultation" class="form-control">
-                                        <option>Consultation normale</option>
-                                        <option>Contrôle</option>
+                                    <select name="typeConsultation" class="form-control text-dark">
+                                        <option value="normale">Consultation normale</option>
+                                        <option value="controle">Contrôle</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">Description</label>
-                                    <textarea class="form-control" name="Description" rows="3"></textarea>
+                                    <label for="">Titre</label>
+                                    <textarea class="form-control" name="Description" rows="2"></textarea>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="">Analyses à faire (Optionnel)</label>
-                                    <textarea class="form-control" name="analyses" rows="3"></textarea>
+                                    <textarea class="form-control" name="analyses" rows="5"></textarea>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="">Urgent</label>
-                                    <select name="urgent" class="form-control">
-                                        <option>Oui</option>
-                                        <option>Non</option>
-                                    </select>
-                                </div>
+                                
 
 
                             </section>
@@ -158,56 +156,86 @@ Medcin: Consultation à Cabinet
 
                     <div class="border-bottom text-center pb-4">
                         <img src="../../images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3" />
+                        <h5 class="h6 text-center mb-2"> {{ $patient->id_civile }} </h5>
                     </div>
+                    
 
                     <div class="py-4">
 
-                        <p class="clearfix">
-
-                            <span class="float-left">
-                                Identifiant civil
-                            </span>
-                            <span class="float-right text-muted">
-                                {{ $ListeAttentes->patient->id_civile }}
-                            </span>
-                        </p>
+                        
                         <p class="clearfix">
                             <span class="float-left">
                                 Nom
                             </span>
                             <span class="float-right text-muted">
-                                {{ $ListeAttentes->patient->Nom }}
+                                {{ $patient->Nom }}
                             </span>
                         </p>
+
                         <p class="clearfix">
                             <span class="float-left">
                                 Prénom
                             </span>
                             <span class="float-right text-muted">
-                                {{ $ListeAttentes->patient->Prenom }}
+                                {{ $patient->Prenom }}
                             </span>
                         </p>
-                        <table id="order-listing" class="table">
 
-                            <thead>
+                        @if($patient->age)
+                        <p class="clearfix">
+                            <span class="float-left">
+                                Age
+                            </span>
+                            <span class="float-right text-muted">
+                                {{ $patient->age }}
+                            </span>
+                        </p>
+                        @endif
+                        
 
-                                <tr>
-                                    <th class="text-center">Date de consultation</th>
-                                    <th class="text-center">Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($consultations as $consultation)
+                        @if($patient->Occupation)
+                        <p class="clearfix">
+                            <span class="float-left">
+                                Occupation
+                            </span>
+                            <span class="float-right text-muted">
+                                {{ $patient->Occupation }}
+                            </span>
+                        </p>
+                        @endif
+
+                        @if($patient->typeMutuel)
+                        <p class="clearfix">
+                            <span class="float-left">
+                                Mutuel
+                            </span>
+                            <span class="float-right text-muted">
+                                <strong>{{ $patient->typeMutuel.': ' }}</strong> {{$patient->ref_mutuel}}
+                            </span>
+                        </p>
+                        @endif
+
+                        <div class="w-100 mt-4 border border-secondary border-left-0 border-right-0 border-bottom-0">
+                            <h4 class="h5 text-center mt-3 pb-3 mb-0 border border-secondary border-left-0 border-right-0 border-top-0"> Dernièrers Consultations : </h4>
+                            <table id="order-listing" class="table table-striped mt-0 w-100" style="overflow-x: hidden;">
+                                <thead>
                                     <tr>
-                                        <td class="text-center">{{ $consultation->Date }}</td>
-                                        <td class="text-center">{{ $consultation->Description }}</td>
+                                        <th class="text-center">Date</th>
+                                        <th class="text-center">Titre</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
+                                </thead>
+                                <tbody>
+                                    @foreach($consultations as $consultation)
+                                        <tr>
+                                            <td class="text-center">{{ substr( $consultation->Date,0,10) }}</td>
+                                            <td class="text-center">{{ $consultation->Description }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
 
 
-                        </table>
-
+                            </table>
+                        </div>
 
                     </div>
 

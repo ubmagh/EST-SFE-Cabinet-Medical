@@ -31,25 +31,29 @@ class ConsultationController extends Controller
         $ListeAttentes =[];
         $consultations =[];
         $medicaments =[];
+        $patient = (object) [];
         $found=false;
         $SalleAttenteEmpty= app('App\Http\Controllers\SalleAttenteController')->Check_empty_liste();
 
         $ListeAttentes = salleAttente::whereNotNull('startTime')
                                     ->whereNull('ConsultationID')
                                      ->whereDate('dateArrive', '=' , Carbon::today()->toDateString() )
-                                     ->orderby('dateArrive' , 'asc')
+                                     ->orderby('dateArrive' , 'desc')
                                      ->first();
 
         if (!empty($ListeAttentes)){
-            $consultations = Consultation::where('PatientId', $ListeAttentes->patient->id)->get();                          
+            $consultations = Consultation::where('PatientId', $ListeAttentes->patient->id)->OrderBy('Date','DESC')->take(3)->get();                          
             $medicaments = Medicament::all();
+            $patient = $ListeAttentes->patient;
+            if($patient->DateNaissance)
+                $patient->age = Carbon::createFromFormat("Y-m-d", $patient->DateNaissance)->age.' ans';
             $found=true;
         }
 
                 
         return view('Medcin.Consultation.index',
         ['name'=>$name, 'ListeAttentes'=>$ListeAttentes, 'consultations'=>$consultations, 
-        'medicaments'=>$medicaments,'found'=>$found,'EmptySa'=>$SalleAttenteEmpty ]);
+        'medicaments'=>$medicaments, 'patient'=>$patient,'found'=>$found,'EmptySa'=>$SalleAttenteEmpty ]);
     }
 
 
@@ -61,7 +65,7 @@ class ConsultationController extends Controller
         $ListeAttentes = salleAttente::whereNotNull('startTime')
                                     ->whereNull('ConsultationID')
                                     ->whereDate('dateArrive', '=' , Carbon::today()->toDateString() )
-                                    ->orderby('dateArrive' , 'asc')
+                                    ->orderby('dateArrive' , 'desc')
                                     ->first();   
         $medecin = Auth::guard('medcin')->user();
         $patient = Patient::where("id_civile",$ListeAttentes->patient->id_civile)
@@ -72,11 +76,7 @@ class ConsultationController extends Controller
         $consultation->ExamensAfaire =$request->input('analyses');
         $consultation->PatientId = $patient->id; 
         $consultation->MedcinId= $medecin->id ;
-        if($request->input('urgent') == 'Oui'){
-            $consultation->Urgent = 1;
-        }else{
-            $consultation->Urgent = 0;
-        }
+        $consultation->Urgent = $ListeAttentes->Urgent;
         $consultation->save(); 
 
       //***************************INSERT INTO ORDONNANCES******************************************** */
