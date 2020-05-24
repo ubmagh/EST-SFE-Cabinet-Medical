@@ -291,6 +291,7 @@
                                 _token: Token
                             },
                             success: function () {
+                                setTimeout(()=>window.location.reload(),1200);
                                 Swal.fire({
                                     position: 'center',
                                     icon: 'success',

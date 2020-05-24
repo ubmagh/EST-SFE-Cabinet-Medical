@@ -11,11 +11,19 @@ Medcin: Consultation à Cabinet
     .wizard.vertical>.steps {
         width: 25% !important;
     }
+    
+    .wizard > .content > .body{
+        width: 100% !important;
+    }
 
     .wizard.vertical>.content {
         width: 70% !important;
         overflow-y: scroll;
         height: 87%;
+    }
+
+    .twitter-typeahead{
+        width: 100% !important;
     }
 
     #steps-uid-0{
@@ -90,29 +98,23 @@ Medcin: Consultation à Cabinet
                             <section>
 
                                 <table class="w-100">
-                                    <thead>
-                                        <tr>
-                                            <th>Médicament</th>
-                                            <th>Unité/Jour</th>
-                                            <th>Période</th>
+                                    <thead >
+                                        <tr class="row">
+                                            <th class="col-md-6 col-sm">Médicament</th>
+                                            <th class="col-md-3 col-sm">Nombre par jour</th>
+                                            <th class="col-md-3 col-sm">Période</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-
-                                                <select name="medicament[]" class="form-control">
-                                                    @foreach($medicaments as $medicament)
-                                                        <option>{{ $medicament->Nom }}</option>
-                                                    @endforeach
-                                                </select>
-
+                                        <tr class="row">
+                                            <td class="col-md-6 px-1 col-sm">
+                                                <input id="name1" name="medicament[]" autocomplete="off" type="text" class=" form-control typeahead ">
                                             </td>
-                                            <td>
-                                                <input id="name1" name="unites[]" type="number" class=" form-control ">
+                                            <td  class="col-md-3 px-1 col-sm">
+                                                <input id="name2" name="unites[]" type="number" class=" form-control ">
                                             </td>
-                                            <td class="mr-n1">
-                                                <input id="name1" name="Periods[]" type="number" class=" form-control">
+                                            <td  class="col-md-3 px-1 col-sm">
+                                                <input id="name3" name="Periods[]" autocomplete="off" type="text" class=" form-control">
                                             </td>
                                         </tr>
 
@@ -216,7 +218,7 @@ Medcin: Consultation à Cabinet
                         @endif
 
                         <div class="w-100 mt-4 border border-secondary border-left-0 border-right-0 border-bottom-0">
-                            <h4 class="h5 text-center mt-3 pb-3 mb-0 border border-secondary border-left-0 border-right-0 border-top-0"> Dernièrers Consultations : </h4>
+                            <h4 class="h5 text-center mt-3 pb-3 mb-0 border border-secondary border-left-0 border-right-0 border-top-0"> Dernières Consultations : </h4>
                             <table id="order-listing" class="table table-striped mt-0 w-100" style="overflow-x: hidden;">
                                 <thead>
                                     <tr>
@@ -232,14 +234,14 @@ Medcin: Consultation à Cabinet
                                         </tr>
                                     @endforeach
                                 </tbody>
-
-
                             </table>
+                            <h6 class="h6 text-center mt-3 pb-3 mb-0 border border-secondary border-left-0 border-right-0 py-2"> Secretaire : {{ $secretaire->Nom.' '.$secretaire->Prenom }} </h4>
+
                         </div>
 
                     </div>
 
-                    <button class="btn btn-primary btn-block mb-2"><i class="far fa-id-card"></i>
+                    <button class="btn btn-success btn-block mb-2"><i class="far fa-id-card"></i>
                         Voir le dossier médical</button>
                 </div>
             </div>
@@ -255,23 +257,17 @@ Medcin: Consultation à Cabinet
     var i = 1;
 
     function addInput(indice) {
-        var input = `<tr id="row` + indice + `" class="mt-1"> 
-      <td>
-
-<select name="medicament[]" class="form-control" >
-@foreach($medicaments as $mediacament)
-<option>{{ $medicament->Nom }}</option>
-@endforeach
-</select>
-
-</td>
-<td>
-<input id="name1" name="unites[]" type="number" class=" form-control ">
-</td>
-<td class="mr-n1">
-<input id="name1" name="Periods[]" type="number" class=" form-control">
-</td>
-                  </tr>`;
+        var input = `<tr class="row" id="row` + indice + `" class="mt-1"> 
+                                            <td class="col-md-6 px-1 col-sm">
+                                                <input id="name1" name="medicament[]" autocomplete="off" type="text" class=" form-control typeahead ">
+                                            </td>
+                                            <td  class="col-md-3 px-1 col-sm">
+                                                <input id="name2" name="unites[]" type="number" class=" form-control ">
+                                            </td>
+                                            <td  class="col-md-3 px-1 col-sm">
+                                                <input id="name3" name="Periods[]" autocomplete="off" type="text" class=" form-control">
+                                            </td>
+                                        </tr>`;
         $(input).insertBefore("#buttonsRaw");
     };
 
@@ -295,6 +291,38 @@ Medcin: Consultation à Cabinet
     });
 
 </script>
+<script src="{{ asset('/js/typeahead.bundle.min.js') }}"></script>
+<script>
+    var data = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        prefetch: '{{ url('/Rendez-Vous/autocomplete') }}',
+        remote: {
+            url: '{{ url('/Rendez-Vous/autocomplete').'?query=%QUERY' }}',
+            wildcard: '%QUERY'
+        }
+    });
 
+    $('.typeahead').typeahead(null, {
+        name: 'data',
+        display: function (data) {
+            return data.name + ' – ' + data.ID_c;
+        },
+        source: data,
+        templates: {
+            empty: [
+                '<div class="empty-message text-center">',
+                ' Patient Introuvable ! <a href="' + "{{ url('/patient') }}" +
+                '"> <i class="fa fa-arrow-right" ></i> Créer d\'abord un ? </a> ',
+                '</div>'
+            ].join('\n'),
+            suggestion: function (data) {
+                return '<p><strong>' + data.name + '</strong> – ' + data.ID_c + '</p>';
+            }
+        }
+    });
+    $('.typeahead').addClass('w-100');
+    
+</script>
 <script src=" {{ asset('js/FontAwesomeAll.min.js') }}"></script>
 @endsection

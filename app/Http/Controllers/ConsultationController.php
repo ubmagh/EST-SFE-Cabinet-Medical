@@ -18,6 +18,7 @@ use App\salleAttente;
 use  Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Medicament_par_ordonnance;
+use App\Secretaire;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,7 +31,6 @@ class ConsultationController extends Controller
 
         $ListeAttentes =[];
         $consultations =[];
-        $medicaments =[];
         $patient = (object) [];
         $found=false;
         $SalleAttenteEmpty= app('App\Http\Controllers\SalleAttenteController')->Check_empty_liste();
@@ -40,10 +40,10 @@ class ConsultationController extends Controller
                                      ->whereDate('dateArrive', '=' , Carbon::today()->toDateString() )
                                      ->orderby('dateArrive' , 'desc')
                                      ->first();
+        $secretaire = Secretaire::find($ListeAttentes->SecretaireID);
 
         if (!empty($ListeAttentes)){
             $consultations = Consultation::where('PatientId', $ListeAttentes->patient->id)->OrderBy('Date','DESC')->take(3)->get();                          
-            $medicaments = Medicament::all();
             $patient = $ListeAttentes->patient;
             if($patient->DateNaissance)
                 $patient->age = Carbon::createFromFormat("Y-m-d", $patient->DateNaissance)->age.' ans';
@@ -52,8 +52,7 @@ class ConsultationController extends Controller
 
                 
         return view('Medcin.Consultation.index',
-        ['name'=>$name, 'ListeAttentes'=>$ListeAttentes, 'consultations'=>$consultations, 
-        'medicaments'=>$medicaments, 'patient'=>$patient,'found'=>$found,'EmptySa'=>$SalleAttenteEmpty ]);
+        ['name'=>$name, 'ListeAttentes'=>$ListeAttentes, 'consultations'=>$consultations, 'patient'=>$patient, 'secretaire'=>$secretaire, 'found'=>$found,'EmptySa'=>$SalleAttenteEmpty ]);
     }
 
 
