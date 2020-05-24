@@ -22,8 +22,8 @@ class CreateConsultationsTable extends Migration
             $table->bigInteger('MedcinId')->unsigned();
             $table->boolean('Urgent');
             $table->longText('ExamensAfaire')->nullable();
-            $table->foreign('PatientId')->references('id')->on('patients')->onDeletes('cascade');
-            $table->foreign('MedcinId')->references('id')->on('medcins')->onDeletes('cascade');
+            $table->foreign('PatientId')->references('id')->on('patients')->onDelete('cascade');
+            $table->foreign('MedcinId')->references('id')->on('medcins')->onDelete('cascade');
 
 
         });

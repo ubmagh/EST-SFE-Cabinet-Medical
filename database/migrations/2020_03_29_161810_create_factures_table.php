@@ -21,7 +21,7 @@ class CreateFacturesTable extends Migration
             $table->decimal('Paye')->nullable();
             $table->decimal('Remise');
 
-            $table->foreign('ConsultationId')->references('id')->on('consultations')->onDeletes('cascade');
+            $table->foreign('ConsultationId')->references('id')->on('consultations')->onDelete('cascade');
 
             
         });

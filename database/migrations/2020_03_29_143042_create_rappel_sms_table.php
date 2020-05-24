@@ -18,7 +18,7 @@ class CreateRappelSmsTable extends Migration
             $table->timestamp('DateEnvoi')->useCurrent();
             $table->bigInteger('RdvId')->unsigned();
 
-            $table->foreign('RdvId')->references('id')->on('rendezvouses')->onDeletes('cascade');
+            $table->foreign('RdvId')->references('id')->on('rendezvouses')->onDelete('cascade');
 
         });
     }

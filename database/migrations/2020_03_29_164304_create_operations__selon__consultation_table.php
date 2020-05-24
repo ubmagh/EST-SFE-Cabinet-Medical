@@ -17,8 +17,8 @@ class CreateOperationsSelonConsultationTable extends Migration
             $table->id();
             $table->bigInteger('ConsultationID')->unsigned();
             $table->bigInteger('OperationId')->unsigned();
-            $table->foreign('OperationId')->references('id')->on('operations__cabinets')->onDeletes('cascade');
-            $table->foreign('ConsultationID')->references('id')->on('consultations')->onDeletes('cascade');
+            $table->foreign('OperationId')->references('id')->on('operations__cabinets')->onDelete('cascade');
+            $table->foreign('ConsultationID')->references('id')->on('consultations')->onDelete('cascade');
             
             
         });

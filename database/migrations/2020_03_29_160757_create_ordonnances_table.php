@@ -17,7 +17,8 @@ class CreateOrdonnancesTable extends Migration
         $table->id();
         $table->bigInteger( 'ConsultationId')->unsigned();
         $table->longText( 'Description')->nullable();
-        $table->foreign('ConsultationId')->references('id')->on('consultations')->onDeletes('cascade');
+
+        $table->foreign('ConsultationId')->references('id')->on('consultations')->onDelete('cascade');
 
             
         });

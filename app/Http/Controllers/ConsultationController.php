@@ -10,7 +10,6 @@ use App\Medicament;
 use App\Ordonnance;
 
 use Illuminate\Support\Facades\DB;
-use Barryvdh\DomPDF\PDF;
 
 
 use App\Consultation;
@@ -82,7 +81,7 @@ class ConsultationController extends Controller
 
       //***************************INSERT INTO ORDONNANCES******************************************** */
 
-        $consultation = DB::table('consultations')->latest('id')->first();
+        //$consultation = DB::table('consultations')->latest('id')->first();
         $ordonnance = new Ordonnance();
         $ordonnance->ConsultationId = $consultation->id ; 
         $ordonnance->Description = $request->input('remarque');
@@ -92,7 +91,7 @@ class ConsultationController extends Controller
        
       
        
-       $ordonnance = DB::table('ordonnances')->latest('id')->first();
+       //$ordonnance = DB::table('ordonnances')->latest('id')->first();
      
        $medicaments = $request->input('medicament');
         
@@ -103,12 +102,10 @@ class ConsultationController extends Controller
         
         $medi_par_ordo = new Medicament_par_ordonnance();
 
-        $medicament = Medicament::where('Nom', $medicaments[$key])->first();
-
-
+        
         $medi_par_ordo->Periode=$request->input('Periods')[$key];
         $medi_par_ordo->NbrParJour=$request->input('unites')[$key];
-        $medi_par_ordo->MedicamentId=$medicament->id;
+        $medi_par_ordo->MedicamentId=$medicament;
         $medi_par_ordo->OrdonnanceId=$ordonnance->id;
         
         $medi_par_ordo->save();   
@@ -116,22 +113,6 @@ class ConsultationController extends Controller
        }   
        
        
-       //************************************ORDONNANCE PDF********************************************* */
-
-        $nom= Auth::guard('medcin')->user()->Nom.' '.Auth::guard('medcin')->user()->Prenom;
-        $cabinet = Cabinet::all()->first();
-        $medi = Medicament_par_ordonnance::where('OrdonnanceId', $ordonnance->id)->get();
-                              
-        $pdf_ordonnance = PDF::loadview('Medcin.Consultation.ordonnance',
-         ['consultation' => $consultation ,'nom'=>$nom, 'patient'=>$patient, 'cabinet'=>$cabinet
-         , 'medecin'=>$medecin, 'ordonnance'=>$ordonnance, 'medi'=>$medi]);
-         $customPaper = array(0, 0, 792.00, 1224.00);
-         $pdf_ordonnance->setPaper($customPaper);;
-        return $pdf_ordonnance->stream();
-        
-       
-
-      
     }
 
 

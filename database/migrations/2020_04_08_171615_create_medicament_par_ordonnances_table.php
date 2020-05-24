@@ -20,7 +20,7 @@ class CreateMedicamentParOrdonnancesTable extends Migration
             $table->string('Periode',20)->nullable(); ///Duree \
             $table->integer('NbrParJour')->nullable();
 
-        $table->foreign('MedicamentId')->references('id')->on('medicaments')->onDeletes('cascade');
+        $table->foreign('MedicamentId')->references('id')->on('medicaments')->onDelete('cascade');
         $table->foreign('OrdonnanceId')->references('id')->on('ordonnances');
         });
     }

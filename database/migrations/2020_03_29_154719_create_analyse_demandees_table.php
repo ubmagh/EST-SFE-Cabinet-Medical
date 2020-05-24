@@ -22,7 +22,7 @@ class CreateAnalyseDemandeesTable extends Migration
             $table->longText('Description');
             $table->date('RenduLe');
 
-            $table->foreign('ConsultationId')->references('id')->on('consultations')->onDeletes('cascade');
+            $table->foreign('ConsultationId')->references('id')->on('consultations')->onDelete('cascade');
 
         });
     }

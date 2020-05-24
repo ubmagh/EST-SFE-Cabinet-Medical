@@ -30,7 +30,7 @@
       <thead>
         <tr>
           <th class="desc">Médicament</th>
-          <th class="unit">Dose</th>
+          <th class="unit">prises par jour</th>
           <th class="qty">Période</th>
    
         </tr>

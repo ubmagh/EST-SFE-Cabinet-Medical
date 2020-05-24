@@ -68,9 +68,7 @@ Medcin: Consultation à Cabinet
                             <h3><i class="fas fa-file-medical-alt"></i> Consultation</h3>
                             <section>
 
-
                                 <input id="userName" name="userName" type="hidden" class="required form-control">
-
 
                                 <div class="form-group">
                                     <label for="">Type de consultation</label>
@@ -82,18 +80,53 @@ Medcin: Consultation à Cabinet
 
                                 <div class="form-group">
                                     <label for="">Titre</label>
-                                    <textarea class="form-control" name="Description" rows="2"></textarea>
+                                    <textarea class="form-control" name="Description" maxlength="200" rows="2"></textarea>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">Analyses à faire (Optionnel)</label>
-                                    <textarea class="form-control" name="analyses" rows="5"></textarea>
+                                    <label for="">Analyses à faire (Optionnelles)</label>
+                                    <textarea class="form-control" name="analyses"  rows="8"></textarea>
                                 </div>
 
-                                
+                            </section>
+
+
+                            <h3> <i class="fas fa-stethoscope"></i> Examens et Mesures</h3>
+                            <section>
+                            
+                                <table class="w-100">
+                                    <thead >
+                                        <tr class="row">
+                                            <th class="col-md-5 col-sm">objet</th>
+                                            <th class="col-md-7 col-sm">Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="row mt-3">
+                                            <td class="col-md-5 px-1 col-sm">
+                                                <input  name="ExaTitres[]" autocomplete="false" type="text" placeholder="Poids" class=" form-control SuggestExa ">
+                                            </td>
+                                            <td  class="col-md-7 px-1 col-sm">
+                                                <input  name="ExaValues[]" type="text" class=" form-control" placeholder="60Kg" />
+                                            </td>
+                                        </tr>
+
+                                        <tr id="ExabuttonsRaw">
+                                            <td colspan="2" class="text-center">
+                                                <button type="button" class="btn btn-info mt-4" id="addExa"><i
+                                                        class="fas fa-plus fa-lg text-white"></i></button>
+                                                <button type="button" class="btn btn-danger d-none mt-4" id="DelExa"><i
+                                                        class="fas fa-times fa-lg text-white"></i></button>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
 
 
                             </section>
+
+
                             <h3><i class="fas fa-file-alt"></i> Ordonnance</h3>
                             <section>
 
@@ -112,11 +145,11 @@ Medcin: Consultation à Cabinet
                                             </td>
                                             <td  class="col-md-3 px-1 col-sm">
                                                 <div class="input-group">
-                                                    <input  name="unites[]" type="number" min="0" class=" form-control ">
+                                                    <input  name="unites[]" type="number" min="0" class=" form-control px-1 ">
                                                 </div>
                                             </td>
                                             <td  class="col-md-3 px-1 col-sm">
-                                                <input  name="Periods[]" autocomplete="false" type="text" class=" form-control">
+                                                <input  name="Periods[]" autocomplete="false" type="text" class=" form-control px-1" placeholder="15 jours | 1 semaine" maxlength="20">
                                             </td>
                                         </tr>
 
@@ -133,10 +166,10 @@ Medcin: Consultation à Cabinet
                                 </table>
 
 
-                                <hr class="mt-4" />
-                                <div class="form-group">
-                                    <label for="">Remarques</label>
-                                    <textarea class="form-control" name="remarque" rows="3"></textarea>
+                                <hr class="mt-5" />
+                                <div class="form-group mt-3">
+                                    <label for=""> contenu additionnel à l'ordonndance : </label>
+                                    <textarea class="form-control" name="remarque" placeholder="antécédants, allergie, remarques sur les medicaments..." rows="12" ></textarea>
                                 </div>
                             </section>
                             <h3><i class="fas fa-print"></i> Imprimer l'ordonnance</h3>
@@ -232,7 +265,7 @@ Medcin: Consultation à Cabinet
                                     @foreach($consultations as $consultation)
                                         <tr>
                                             <td class="text-center">{{ substr( $consultation->Date,0,10) }}</td>
-                                            <td class="text-center">{{ $consultation->Description }}</td>
+                                            <td class="text-truncate text-center">{{ $consultation->Description }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -257,26 +290,39 @@ Medcin: Consultation à Cabinet
 <script src="{{ asset('/js/wizard.js') }}"></script>
 <script>
     var i = 1;
-
+    var j = 1;
+    
     function addInput(indice) {
-        var input = `<tr class="row" id="row` + indice + `" class="mt-1"> 
+        var input = `<tr class="row mt-2" id="row` + indice + `" class="mt-1"> 
                                             <td class="col-md-6 px-1 col-sm">
                                                 <input  autocomplete="false" type="text" class=" form-control typeahead ">
                                             </td>
                                             <td  class="col-md-3 px-1 col-sm">
                                                 <div class="input-group">
-                                                    <input  name="unites[]" type="number" min="0" class=" form-control ">
+                                                    <input  name="unites[]" type="number" min="0" class=" form-control  px-1">
                                                 </div>
                                             </td>
                                             <td  class="col-md-3 px-1 col-sm">
-                                                <input  name="Periods[]" autocomplete="off" type="text" class=" form-control">
+                                                <input  name="Periods[]" autocomplete="off" type="text" class=" form-control px-1"  placeholder="15 jours | 1 semaine" maxlength="20">
                                             </td>
                                         </tr>`;
         $(input).insertBefore("#buttonsRaw");
         let newMedicinInput=$("#row" + indice).children().first().children().first();
         CreateTypeAHead( newMedicinInput );                    
     };
-
+    function addExaInput(indice) {
+        var input = `<tr class="row mt-2" id="Exa` + indice + `" class="mt-1"> 
+            <td class="col-md-5 px-1 col-sm">
+                                            <input  name="ExaTitres[]" autocomplete="false" type="text"  class=" form-control SuggestExa ">
+                                            </td>
+                                            <td  class="col-md-7 px-1 col-sm">
+                                                <input  name="ExaValues[]" type="text" class=" form-control" />
+                                            </td>
+                                        </tr>`;
+        $(input).insertBefore("#ExabuttonsRaw");
+        let newMedicinInput=$("#Exa" + indice).children().first().children().first();
+        CreateTypeAHeadExa( newMedicinInput );                    
+    };
 
     // code here
     $('#addMedi').click(function (e) {
@@ -319,7 +365,7 @@ Medcin: Consultation à Cabinet
         $(element).typeahead(null, {
             name: 'data',
             display: function (data) {
-                return data.Nom + ' – ' + data.id;
+                return data.Nom ;
             },
             source: data,
             templates: {
@@ -386,11 +432,62 @@ Medcin: Consultation à Cabinet
         });
 
      }
-    
+
+
+     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     /////////////////////////////  Section des Examens  //////////////////////////////////////////////////////
+     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     var ExamsSrc = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        prefetch: '{{ url('Examens/Example') }}',
+        remote: {
+            url: '{{ url('/Examens/Example').'?query=%QUERY' }}',
+            wildcard: '%QUERY'
+        }
+    });
+    function CreateTypeAHeadExa( element ){
+        $(element).typeahead(null, {
+            name: 'data',
+            display: function (data) {
+                return data.Titre;
+            },
+            source: ExamsSrc,
+            templates: {
+                empty: [
+                    '<div class="empty-message text-center">',
+                    " Aucune suggestion !",
+                    '</div>'
+                ].join('\n'),
+                suggestion: function (data) {
+                    return '<p><strong>' + data.Titre + '</strong> </p>';
+                }
+            }
+        });
+        $(element).addClass('w-100');
+    }
+
+    $('#addExa').click(()=>{
+        if (j == 1)
+            $('#DelExa').removeClass('d-none');
+        addExaInput(j);
+        j++;
+    });
+    $('#DelExa').click( ()=> {
+        if (j <= 1)
+            return;
+        $('#Exa' + (j - 1)).remove();
+        j--;
+        if (j == 1)
+            $('#DelExa').addClass('d-none');
+    });
+
+
      document.addEventListener('DOMContentLoaded', function () {
          $('.typeahead').each((index,elem)=>{
             CreateTypeAHead(elem);
         });
+        CreateTypeAHeadExa( $('.SuggestExa') );
      });
 
 </script>

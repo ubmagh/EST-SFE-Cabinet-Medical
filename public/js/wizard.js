@@ -12,7 +12,7 @@
             cancel: "Annuler",
             current: "current step:",
             pagination: "Pagination",
-            finish: "Finir",
+            finish: "Enregistrer",
             next: "Suivant",
             previous: "Précédent",
             loading: "Chargement",

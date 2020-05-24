@@ -136,7 +136,10 @@ Route::group(['middleware' => ['auth:medcin']], function () {
     // Consultation Routes
     Route::resource('Consultation', 'ConsultationController');
     Route::get('Medicament/Search', 'MedicamentController@autocomplete_Medcin_Medica');
+    Route::get('Examens/Example', 'ExamenController@ExamsNamesExamples');
 
+    // Ordonnance Route
+    Route::get('/Ordonnance/{ordonnanceid}', 'OrdonnanceController@GetOrdonnancePDF');
 
     /// Paramètres de compte
     Route::get('MedcinParametres', 'MedcinController@Account_Settings');

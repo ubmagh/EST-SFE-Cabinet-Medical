@@ -25,10 +25,10 @@ class CreateSalleAttentesTable extends Migration
             $table->boolean('Quitte')->default(false);
             $table->time('startTime')->nullable()->default(null);
             
-        $table->foreign('PatientId')->references('id')->on('patients')->onDeletes('cascade');
-        $table->foreign('ConsultationID')->references('id')->on('consultations')->onDeletes('cascade');
-        $table->foreign('rdvID')->references('id')->on('rendezvouses')->onDeletes('cascade');
-        $table->foreign('SecretaireID')->references('id')->on('secretaires')->onDeletes('cascade');
+        $table->foreign('PatientId')->references('id')->on('patients')->onDelete('cascade');
+        $table->foreign('ConsultationID')->references('id')->on('consultations')->onDelete('cascade');
+        $table->foreign('rdvID')->references('id')->on('rendezvouses')->onDelete('cascade');
+        $table->foreign('SecretaireID')->references('id')->on('secretaires')->onDelete('cascade');
     });
 
 

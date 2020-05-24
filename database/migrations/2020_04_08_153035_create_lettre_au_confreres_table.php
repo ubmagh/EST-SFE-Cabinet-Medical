@@ -22,7 +22,7 @@ class CreateLettreAuConfreresTable extends Migration
             $table->timestamp('date');
             $table->bigInteger('MedcinId')->unsigned();
 
-        $table->foreign('ConfrereID')->references('id')->on('confreres')->onDeletes('cascade');
+        $table->foreign('ConfrereID')->references('id')->on('confreres')->onDelete('cascade');
         $table->foreign('MedcinId')->references('id')->on('medcins');
             
         });

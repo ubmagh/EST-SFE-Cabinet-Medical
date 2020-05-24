@@ -21,7 +21,7 @@ class CreatePaimentsTable extends Migration
             $table->bigInteger('FactureId')->unsigned()->nullable();
             $table->string('Type');
 
-            $table->foreign('FactureId')->references('id')->on('factures')->onDeletes('cascade');
+            $table->foreign('FactureId')->references('id')->on('factures')->onDelete('cascade');
         });
     }
 
