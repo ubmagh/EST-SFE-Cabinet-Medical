@@ -99,4 +99,12 @@ class MedicamentController extends Controller
             return response()->json(['status'=>'NotOk']);
     }
 
+    public function autocomplete_Medcin_Medica(Request $request)
+    {
+        $data = Medicament::select("id", "Nom", "Prise")
+                        ->orWhere("Nom","LIKE","%{$request->input('query')}%")
+                        ->get();
+        return response()->json($data);
+    }
+
 }

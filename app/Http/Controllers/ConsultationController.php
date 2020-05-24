@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-use DB;
-use PDF;
 use App\Medcin;
 use App\Cabinet;
 use App\Patient;
@@ -10,6 +8,9 @@ use App\Patient;
 use Carbon\Carbon;
 use App\Medicament;
 use App\Ordonnance;
+
+use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\PDF;
 
 
 use App\Consultation;
@@ -22,7 +23,6 @@ use App\Secretaire;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
-
 class ConsultationController extends Controller
 {
     public function index(Request $request){
@@ -33,6 +33,7 @@ class ConsultationController extends Controller
         $consultations =[];
         $patient = (object) [];
         $found=false;
+        $secretaire=null;
         $SalleAttenteEmpty= app('App\Http\Controllers\SalleAttenteController')->Check_empty_liste();
 
         $ListeAttentes = salleAttente::whereNotNull('startTime')
@@ -40,9 +41,10 @@ class ConsultationController extends Controller
                                      ->whereDate('dateArrive', '=' , Carbon::today()->toDateString() )
                                      ->orderby('dateArrive' , 'desc')
                                      ->first();
-        $secretaire = Secretaire::find($ListeAttentes->SecretaireID);
+        
 
         if (!empty($ListeAttentes)){
+            $secretaire = Secretaire::find($ListeAttentes->SecretaireID);
             $consultations = Consultation::where('PatientId', $ListeAttentes->patient->id)->OrderBy('Date','DESC')->take(3)->get();                          
             $patient = $ListeAttentes->patient;
             if($patient->DateNaissance)

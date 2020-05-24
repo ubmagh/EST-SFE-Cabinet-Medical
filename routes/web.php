@@ -132,8 +132,10 @@ Route::group(['middleware' => ['auth:secretaire']], function () {
 
 
 Route::group(['middleware' => ['auth:medcin']], function () {
-    //
+
+    // Consultation Routes
     Route::resource('Consultation', 'ConsultationController');
+    Route::get('Medicament/Search', 'MedicamentController@autocomplete_Medcin_Medica');
 
 
     /// Paramètres de compte

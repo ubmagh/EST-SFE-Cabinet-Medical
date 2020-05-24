@@ -106,15 +106,17 @@ Medcin: Consultation à Cabinet
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="row">
+                                        <tr class="row mt-3">
                                             <td class="col-md-6 px-1 col-sm">
-                                                <input id="name1" name="medicament[]" autocomplete="off" type="text" class=" form-control typeahead ">
+                                                <input  autocomplete="false" type="text" class=" form-control typeahead ">
                                             </td>
                                             <td  class="col-md-3 px-1 col-sm">
-                                                <input id="name2" name="unites[]" type="number" class=" form-control ">
+                                                <div class="input-group">
+                                                    <input  name="unites[]" type="number" min="0" class=" form-control ">
+                                                </div>
                                             </td>
                                             <td  class="col-md-3 px-1 col-sm">
-                                                <input id="name3" name="Periods[]" autocomplete="off" type="text" class=" form-control">
+                                                <input  name="Periods[]" autocomplete="false" type="text" class=" form-control">
                                             </td>
                                         </tr>
 
@@ -259,16 +261,20 @@ Medcin: Consultation à Cabinet
     function addInput(indice) {
         var input = `<tr class="row" id="row` + indice + `" class="mt-1"> 
                                             <td class="col-md-6 px-1 col-sm">
-                                                <input id="name1" name="medicament[]" autocomplete="off" type="text" class=" form-control typeahead ">
+                                                <input  autocomplete="false" type="text" class=" form-control typeahead ">
                                             </td>
                                             <td  class="col-md-3 px-1 col-sm">
-                                                <input id="name2" name="unites[]" type="number" class=" form-control ">
+                                                <div class="input-group">
+                                                    <input  name="unites[]" type="number" min="0" class=" form-control ">
+                                                </div>
                                             </td>
                                             <td  class="col-md-3 px-1 col-sm">
-                                                <input id="name3" name="Periods[]" autocomplete="off" type="text" class=" form-control">
+                                                <input  name="Periods[]" autocomplete="off" type="text" class=" form-control">
                                             </td>
                                         </tr>`;
         $(input).insertBefore("#buttonsRaw");
+        let newMedicinInput=$("#row" + indice).children().first().children().first();
+        CreateTypeAHead( newMedicinInput );                    
     };
 
 
@@ -296,33 +302,97 @@ Medcin: Consultation à Cabinet
     var data = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        prefetch: '{{ url('/Rendez-Vous/autocomplete') }}',
+        prefetch: '{{ url('Medicament/Search') }}',
         remote: {
-            url: '{{ url('/Rendez-Vous/autocomplete').'?query=%QUERY' }}',
+            url: '{{ url('/Medicament/Search').'?query=%QUERY' }}',
             wildcard: '%QUERY'
         }
     });
 
-    $('.typeahead').typeahead(null, {
-        name: 'data',
-        display: function (data) {
-            return data.name + ' – ' + data.ID_c;
-        },
-        source: data,
-        templates: {
-            empty: [
-                '<div class="empty-message text-center">',
-                ' Patient Introuvable ! <a href="' + "{{ url('/patient') }}" +
-                '"> <i class="fa fa-arrow-right" ></i> Créer d\'abord un ? </a> ',
-                '</div>'
-            ].join('\n'),
-            suggestion: function (data) {
-                return '<p><strong>' + data.name + '</strong> – ' + data.ID_c + '</p>';
+
+
+    // #1 These 3 functions are well nested to match the correcte event with each action by the user 
+
+
+    /// Function to Create TypeAhead objects: :D 
+    function CreateTypeAHead( element ){
+        $(element).typeahead(null, {
+            name: 'data',
+            display: function (data) {
+                return data.Nom + ' – ' + data.id;
+            },
+            source: data,
+            templates: {
+                empty: [
+                    '<div class="empty-message text-center">',
+                    " Medicament Introuvable !",
+                    '</div>'
+                ].join('\n'),
+                suggestion: function (data) {
+                    return '<p><strong>' + data.Nom + '</strong> </p>';
+                }
             }
-        }
-    });
-    $('.typeahead').addClass('w-100');
+        });
+        $(element).addClass('w-100');
+        BindSelectEvent(element);
+    }
+
+
+
+    /// Function that binds Select Event on a given typeAhead object
+    function BindSelectEvent(element){
+        $(element).bind('typeahead:select', function (ev, suggestion) {
+        let td = $(ev.target).closest('td');
+        let medicinElem = `
+                            <div class="card rounded border mb-2">
+                                <div class="card-body pl-2 pr-1 py-2">
+                                    <div class="media py-1">
+                                        <i class="fas fa-prescription-bottle-alt align-self-center mr-1 ml-n5 "></i>
+                                        <div class="media-body">
+                                            `+suggestion.Nom+`
+                                        </div>
+                                        <input type="hidden" name="medicament[]" value="`+suggestion.id+`"/>
+                                        <button type="button" class="float-right deleteMedicine" 
+                                            style="border: none; background-color: transparent; cursor: pointer;"><i
+                                                class="fa fa-times fa-lg text-danger"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+        `;
+        td.siblings().first().children().first().append(` <div class="input-group-append">
+                                                <div class="input-group-text">`+suggestion.Prise+`</div>
+                                            </div>
+                                        `); // Ajouter le Type de Prise après la selectionne du medicament à la fin du champ nombre par jour
+        td.empty(); // delete all children of TD element
+        td.append(medicinElem); // ajouter le medicament selectionné
+        let button = td.children().first().children().first().children().first().children().last();
+        BindDeleteEvent(button);
+        }); 
+    }
     
+
+
+
+
+     // Function that Binds Deleting event on delete button inside typeAhead card view
+     function BindDeleteEvent(element){
+        $(element).click((event) => {
+            let td = $(event.target).closest('td');
+            td.siblings().first().children().first().children().last().remove(); // supprimer le tage de prise pour le champs de nombre par jour
+            td.empty(); // supprimer le contenue de la case TD
+            td.append(` <input  autocomplete="false" type="text" class=" form-control typeahead "> `);
+            CreateTypeAHead ( td.children().first() );
+            td.children().first().addClass('w-100');
+        });
+
+     }
+    
+     document.addEventListener('DOMContentLoaded', function () {
+         $('.typeahead').each((index,elem)=>{
+            CreateTypeAHead(elem);
+        });
+     });
+
 </script>
 <script src=" {{ asset('js/FontAwesomeAll.min.js') }}"></script>
 @endsection
