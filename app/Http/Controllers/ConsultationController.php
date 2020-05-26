@@ -18,6 +18,7 @@ use App\salleAttente;
 use  Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Medicament_par_ordonnance;
+use App\Operations_Cabinet;
 use App\Secretaire;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,7 @@ class ConsultationController extends Controller
 
         $ListeAttentes =[];
         $consultations =[];
+        $operations =[];
         $patient = (object) [];
         $found=false;
         $secretaire=null;
@@ -49,11 +51,9 @@ class ConsultationController extends Controller
             if($patient->DateNaissance)
                 $patient->age = Carbon::createFromFormat("Y-m-d", $patient->DateNaissance)->age.' ans';
             $found=true;
+            $operations = Operations_Cabinet::OrderBy('Intitule')->get();
         }
-
-                
-        return view('Medcin.Consultation.index',
-        ['name'=>$name, 'ListeAttentes'=>$ListeAttentes, 'consultations'=>$consultations, 'patient'=>$patient, 'secretaire'=>$secretaire, 'found'=>$found,'EmptySa'=>$SalleAttenteEmpty ]);
+        return view( 'Medcin.Consultation.index', ['name'=>$name, 'ListeAttentes'=>$ListeAttentes, 'consultations'=>$consultations, 'patient'=>$patient, 'secretaire'=>$secretaire, 'found'=>$found, 'EmptySa'=>$SalleAttenteEmpty, 'operations'=>$operations ]);
     }
 
 
