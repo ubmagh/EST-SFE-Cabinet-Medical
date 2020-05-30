@@ -24,4 +24,9 @@ class Medcin extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function consultation()
+    {
+      return $this->hasMany('App\Consultation' , 'MedcinId');
+    }
 }

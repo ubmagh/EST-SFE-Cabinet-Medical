@@ -25,12 +25,18 @@
                 url: "/Consultation",
                 type: "POST",
                 data: $("#example-vertical-wizard").serialize(),
-                success: function (resp) {},
+                success: function (resp) {
+                    if(resp.status=="Good"){
+                        $('#steps-uid-0-p-5').empty();
+                        for(let i=0;i<5;i++)
+                            $("#steps-uid-0-t-" + i).attr('href','');
+                        $('#steps-uid-0-p-5').append(` <div class="row w-100 text-center" > <a href="`+resp.ordonnanceurl+`"> <i class="fas fa-print"></i> </a> </div> `);
+                        $('.actions.clearfix').addClass('d-none');
+                    }
+                },
                 error: function (error) {
                     const response = error.responseJSON;
                     const errors = response.errors;
-                    console.log("error : ");
-                    console.log(error);
 
                     if (error.responseJSON.errors) {
                         if (errors.typeConsultation) {
@@ -82,11 +88,28 @@
                                     .addClass("show");
                                 if (errortab > 2) errortab = 2;
                             }
+                            if (key.search("medicament") != -1 || key.search("unites") != -1 || key.search("Periods") != -1 ) {
+                                $("#MedsError").html()? null:$("#MedsError").html(
+                                    error.responseJSON.errors[key]
+                                );
+                                $("#MedsAlert")
+                                    .removeClass("d-none")
+                                    .addClass("show");
+                                if (errortab > 3) errortab = 3;
+                            }
                         }
                         /////////////////////
                         ///
                         ////
-
+                        if (errors.AddContent) {
+                            $("#ContentError").html(
+                                error.responseJSON.errors.AddContent
+                            );
+                            $("#ContentAlert")
+                                .removeClass("d-none")
+                                .addClass("show");
+                            if (errortab > 3) errortab = 3;
+                        }
                         // get error step
                         $("#steps-uid-0-t-" + errortab).click();
                     }

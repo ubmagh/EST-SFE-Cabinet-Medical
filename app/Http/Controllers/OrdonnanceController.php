@@ -26,7 +26,8 @@ class OrdonnanceController extends Controller
        $consultation = Consultation::find($ordonnance->ConsultationId);
         $patient = $consultation->patient();
         $medcin = $consultation->medcin();
-        
+        dd( $medcin );
+        return;
        $medi = Medicament_par_ordonnance::where('OrdonnanceId', $ordonnanceid)->get();
        $pdf_ordonnance = PDF::loadview('Medcin.Consultation.ordonnance',
         ['consultation' => $consultation ,'nom'=>$nom, 'patient'=>$patient, 'cabinet'=>$cabinet

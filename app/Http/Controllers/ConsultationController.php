@@ -71,16 +71,15 @@ class ConsultationController extends Controller
             "ExaTitres.*"  => "required|string|min:2|max:50",
             'ExaValues' =>  'array',
             "ExaValues.*"  => "required_with:ExaTitres|string|max:255",
-            
             'Operations'    =>  'array',
             'Operations.*'    =>  'required|exists:operations__cabinets,id',
             'Remarquez' =>  'array',
-            'Remarquez.*' =>  'required_with:Operations.*|string|max:100',
+            'Remarquez.*' =>  'nullable|string|max:100',
 
             'medicament'    =>  'array',
-            'medicament.*'  =>  'nullable|exists:medicaments,id',
+            'medicament.*'  =>  'required|exists:medicaments,id|min:1',
             'unites'    =>  'array',
-            'unites.*'  =>  'required_with:medicament.*|digits_between:1,100',
+            'unites.*'  =>  'required_with:medicament.*|digits_between:1,50',//:D
             'Periods'   =>  'array',
             'Periods.*' =>  'required_with:medicament.*|string|min:2|max:20',
             'AddContent'    =>  'nullable|string|max:500',
@@ -102,15 +101,26 @@ class ConsultationController extends Controller
             'ExaValues.*.required_with'   =>  'Remplissez tous les champs svp ',
             'ExaValues.*.string'   =>  'saisie invalide !',
             'ExaValues.*.max'   =>  '  trop de caractères pour le champs de valeur ',
-
             'Operations.array'  =>  'Données invalides !',
             'Operations.*.required'  =>  ' l\'opération n\'est pas choisi !',
             'Operations.*.exists'  =>  ' Choix de l\'opération est invalide !',
             'Remarquez.array'   =>  'Données invalides !',
-            'Remarquez.*.required_with'   =>  'Remplissez tous les champs svp ',
             'Remarquez.*.string'   =>  'saisie invalide, remplissez les champs !',
             'Remarquez.*.max'   =>  ' trop de caractères pour le champs de valeur ',
-
+            'medicament.array'  =>  'Données invalides!',
+            'medicament.*.required' =>  'saisissez le nom du medicament',
+            'medicament.*.min' =>  'saisissez le nom du medicament',
+            'medicament.*.exists' =>  'Medicament saisi est introuvable',
+            'unites.array'  =>  'Données invalides!',
+            'unites.*.required_with'    =>  'Veuillez remplisser le nom de medicament',
+            'unites.*.digits_between'    =>  ' nombre de prises est invalide! ',
+            'Periods.array' =>  'Données invalides !',
+            'Periods.*.required_with'   =>  'Veuillez remplisser le nom de medicament',
+            'Periods.*.string'   =>  'la saisie du Periode est invalide',
+            'Periods.*.min'   =>  'la Periode saisie est invalide',
+            'Periods.*.max'   =>  'la saisie du Periode est au Max 20 caractères',
+            'AddContent.string' =>  'Données saisies sont invalides ',
+            'AddContent.max' =>  'ce champ accepte au max 500 caractères',
         ]
         );
 
@@ -152,7 +162,6 @@ class ConsultationController extends Controller
      
        $medicaments = $request->input('medicament');
         
-        $all = array();
 
         if($medicaments)
         foreach ($medicaments as $key=>$medicament){
@@ -164,12 +173,10 @@ class ConsultationController extends Controller
         $medi_par_ordo->NbrParJour=$request->input('unites')[$key];
         $medi_par_ordo->MedicamentId=$medicament;
         $medi_par_ordo->OrdonnanceId=$ordonnance->id;
-        
         $medi_par_ordo->save();   
-
        }   
        
-       
+       return response()->json(['status'=>'Good','ordonnanceurl'=>url('/Ordonnance/'.$ordonnance->id)]);
     }
 
 

@@ -13,8 +13,7 @@ class Consultation extends Model
         'Date', 'Type', 'Description', 'PatientId', 'MedcinId', 'Urgent', 'ExamensAfaire', 
     ];
 
-    public function medecin() 
-    {
+    public function medcin(){
         return $this->BelongsTo('App\Medcin' , 'MedcinId');
     }
 

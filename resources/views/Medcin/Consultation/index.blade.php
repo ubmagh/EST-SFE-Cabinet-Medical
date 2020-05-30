@@ -186,6 +186,12 @@ Medcin: Consultation à Cabinet
                                                         class="fas fa-times fa-lg text-white"></i></button>
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
+                                                    id="MedsAlert">
+                                                    <span id="MedsError"></span>
+                                            </div>
+                                        </tr>
                                     </tbody>
                                 </table>
                                 <hr class="mt-5" />
@@ -194,6 +200,9 @@ Medcin: Consultation à Cabinet
                                     <textarea class="form-control" name="AddContent"
                                         placeholder="antécédants, allergie, remarques sur les medicaments..."
                                         rows="12"></textarea>
+                                </div>
+                                <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert" id="ContentAlert">
+                                    <span id="ContentError"></span>
                                 </div>
                             </section>
 
@@ -207,7 +216,7 @@ Medcin: Consultation à Cabinet
 
 
                             <h3><i class="fas fa-print"></i> Imprimer l'ordonnance</h3>
-                            <section class=" align-items-center">
+                            <section class=" align-items-center" id="FinalStep">
 
                                 <h4 class="h4 text-center">
                                     Enregistrer la consultation pour pouvoir imprimer l'ordonnance
