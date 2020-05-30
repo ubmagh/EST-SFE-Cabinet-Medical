@@ -109,7 +109,7 @@ Secretaire : Liste d'Attente
     <div class="container-fluid py-4" style="min-height: 100% !important;">
 
         <div class="row d-block w-25 mx-auto my-4 text-center">
-            <button type="button" class="btn btn-primary btn-block py-3 px-5 text-white h3 " data-toggle="modal" data-target="#Add"> <i class="fa fa-plus fa-lg ml-n1 mr-1"></i> Patient Arrivé </button>
+            <button type="button" class="btn btn-primary btn-block py-3 px-5 text-white h3 d-none ContentSec" data-toggle="modal" data-target="#Add"> <i class="fa fa-plus fa-lg ml-n1 mr-1"></i> Patient Arrivé </button>
         </div>
 
         <div class="row">

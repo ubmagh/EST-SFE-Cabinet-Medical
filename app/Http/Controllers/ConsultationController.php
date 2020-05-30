@@ -61,6 +61,61 @@ class ConsultationController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request,
+        [
+            'typeConsultation'  =>  Rule::in(['normale','controle']),
+            'Description'   =>  'required|max:200|string',
+            'analyses'   =>  'nullable|max:450|string',
+
+            'ExaTitres' =>  'array',
+            "ExaTitres.*"  => "required|string|min:2|max:50",
+            'ExaValues' =>  'array',
+            "ExaValues.*"  => "required_with:ExaTitres|string|max:255",
+            
+            'Operations'    =>  'array',
+            'Operations.*'    =>  'required|exists:operations__cabinets,id',
+            'Remarquez' =>  'array',
+            'Remarquez.*' =>  'required_with:Operations.*|string|max:100',
+
+            'medicament'    =>  'array',
+            'medicament.*'  =>  'nullable|exists:medicaments,id',
+            'unites'    =>  'array',
+            'unites.*'  =>  'required_with:medicament.*|digits_between:1,100',
+            'Periods'   =>  'array',
+            'Periods.*' =>  'required_with:medicament.*|string|min:2|max:20',
+            'AddContent'    =>  'nullable|string|max:500',
+            // validate files
+        ],
+        [
+            'typeConsultation.in'   =>  'Choix invalide!',
+            'Description.required'  =>  'Un titre pour la consultation est necessaire',
+            'Description.max'  =>  'utilisez 200 caractères au Max',
+            'Description.string'  =>  'saisie invalide !',
+            'analyses.max'  =>  'Maximum de 450 caractères.',
+            'analyses.string'  =>  ' saisie invalide ! ',
+            'ExaTitres.array'   =>  'Données invalides !',
+            'ExaTitres.*.min'   =>  'saisie invalide !',
+            'ExaTitres.*.required'   =>  'Remplissez tous les champs svp !',
+            'ExaTitres.*.max'   =>  '50 caractères au Max',
+            'ExaTitres.*.string'   =>  'saisie invalide !',
+            'ExaValues.array'   =>  'Données invalides !',
+            'ExaValues.*.required_with'   =>  'Remplissez tous les champs svp ',
+            'ExaValues.*.string'   =>  'saisie invalide !',
+            'ExaValues.*.max'   =>  '  trop de caractères pour le champs de valeur ',
+
+            'Operations.array'  =>  'Données invalides !',
+            'Operations.*.required'  =>  ' l\'opération n\'est pas choisi !',
+            'Operations.*.exists'  =>  ' Choix de l\'opération est invalide !',
+            'Remarquez.array'   =>  'Données invalides !',
+            'Remarquez.*.required_with'   =>  'Remplissez tous les champs svp ',
+            'Remarquez.*.string'   =>  'saisie invalide, remplissez les champs !',
+            'Remarquez.*.max'   =>  ' trop de caractères pour le champs de valeur ',
+
+        ]
+        );
+
+
+
     //**************************INSERT INTO CONSULTATIONS********************************************** */
         $ListeAttentes = salleAttente::whereNotNull('startTime')
                                     ->whereNull('ConsultationID')
@@ -79,6 +134,8 @@ class ConsultationController extends Controller
         $consultation->Urgent = $ListeAttentes->Urgent;
         $consultation->save(); 
 
+        $ListeAttentes->ConsultationID=$consultation->id;
+        $ListeAttentes->save();
       //***************************INSERT INTO ORDONNANCES******************************************** */
 
         //$consultation = DB::table('consultations')->latest('id')->first();

@@ -83,20 +83,31 @@ Medcin: Consultation à Cabinet
                                             <label class="form-check-label" for="inlineRadio2">Contrôle</label>
                                         </div>
                                     </div>
-
-
                                     
+                                    <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
+                                        id="typeAlert">
+                                        <span id="TypeError"></span>
+                                    </div>
+
                                 </div>
 
                                 <div class="form-group">
                                     <label  class=" font-weight-bold ">Titre</label>
                                     <textarea class="form-control" name="Description" maxlength="200"
                                         rows="2"></textarea>
+                                    <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
+                                        id="DescriptionAlert">
+                                        <span id="DescriptionError"></span>
+                                    </div>
                                 </div>
 
                                 <div class="form-group" >
                                     <label class=" font-weight-bold ">Analyses à faire (Optionnelles)</label>
-                                    <textarea class="form-control" name="analyses" rows="8"></textarea>
+                                    <textarea class="form-control" name="analyses" rows="8" maxlength="450"></textarea>
+                                    <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
+                                        id="analysesAlert">
+                                        <span id="analysesError"></span>
+                                    </div>
                                 </div>
 
                             </section>
@@ -107,23 +118,13 @@ Medcin: Consultation à Cabinet
 
                                 <table class="w-100">
                                     <thead>
-                                        <tr class="row">
-                                            <th class="col-md-5 col-sm">objet</th>
-                                            <th class="col-md-7 col-sm">Description</th>
+                                        <tr class="row d-none" id="OpersHeader">
+                                            <th class="col-md-5 col-sm">Mesure</th>
+                                            <th class="col-md-7 col-sm">Valeur</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="row mt-3">
-                                            <td class="col-md-5 px-1 col-sm">
-                                                <input name="ExaTitres[]" autocomplete="false" type="text"
-                                                    placeholder="Poids" class=" form-control SuggestExa ">
-                                            </td>
-                                            <td class="col-md-7 px-1 col-sm">
-                                                <input name="ExaValues[]" type="text" class=" form-control"
-                                                    placeholder="60Kg" />
-                                            </td>
-                                        </tr>
-
+                                        
                                         <tr id="ExabuttonsRaw">
                                             <td colspan="2" class="text-center">
                                                 <button type="button" class="btn btn-info mt-4" id="addExa"><i
@@ -132,7 +133,13 @@ Medcin: Consultation à Cabinet
                                                         class="fas fa-times fa-lg text-white"></i></button>
                                             </td>
                                         </tr>
-
+                                        <tr>
+                                            <td colspan="2">
+                                                <div class="alert alert-danger alert-dismissible fade mt-n5 d-none show" id="ExaAlert" role="alert">
+                                                    <span id="ExaError"></span>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </section>
@@ -142,25 +149,6 @@ Medcin: Consultation à Cabinet
 
                             <h3> <i class="fas fa-microscope"></i> Opérations </h3>
                             <section>
-                                <div class="row py-3 my-2 px-0 border border-secondary rounded mx-0 w-100 d-block text-center ">
-                                    <div class="input-group mb-2 mt-1 col-11 mx-auto">
-                                        <select class="custom-select col-12" name="Operations[]" id="inputGroupSelect02">
-                                            <option selected disabled>choisir opération...</option>
-                                            @if( !empty($operations) )
-                                                @foreach($operations as $operation)
-                                                    <option value="{{ $operation->id }} "> {{ $operation->Intitule }} </option>
-                                                @endforeach
-                                            @else
-                                                <option disabled> Aucune opération n'est enregistrée </option>
-                                            @endif
-                                        </select>
-                                    </div>
-                                    
-                                    <div class="form-group col-11 d-block mx-auto mt-3 mb-0">
-                                      <input type="text"
-                                        class="form-control" name="Remarquez[]"  maxlength="100" placeholder="Remarque pour l'opération.." />
-                                    </div>
-                                </div>
                                 <div class="row my-2 px-0 w-100 d-block text-center" id="OpsBeforeRow">
                                     <div class="text-center">
                                         <button type="button" class="btn btn-info mt-4" id="addOp"><i
@@ -169,6 +157,11 @@ Medcin: Consultation à Cabinet
                                                 class="fas fa-times fa-lg text-white"></i></button>
                                         </div>
                                 </div>
+                                <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
+                                        id="OpsAlert">
+                                        <span id="OpsError"></span>
+                                </div>
+                                
                             </section>
 
 
@@ -178,30 +171,13 @@ Medcin: Consultation à Cabinet
                             <section>
                                 <table class="w-100">
                                     <thead>
-                                        <tr class="row">
+                                        <tr class="row d-none" id="MedHeader">
                                             <th class="col-md-6 col-sm">Médicament</th>
                                             <th class="col-md-3 col-sm">Nombre par jour</th>
                                             <th class="col-md-3 col-sm">Période</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="row mt-3">
-                                            <td class="col-md-6 px-1 col-sm">
-                                                <input autocomplete="false" type="text"
-                                                    class=" form-control typeahead ">
-                                            </td>
-                                            <td class="col-md-3 px-1 col-sm">
-                                                <div class="input-group">
-                                                    <input name="unites[]" type="number" min="0"
-                                                        class=" form-control px-1 ">
-                                                </div>
-                                            </td>
-                                            <td class="col-md-3 px-1 col-sm">
-                                                <input name="Periods[]" autocomplete="false" type="text"
-                                                    class=" form-control px-1" placeholder="15 jours | 1 semaine"
-                                                    maxlength="20">
-                                            </td>
-                                        </tr>
                                         <tr id="buttonsRaw">
                                             <td colspan="3" class="text-center">
                                                 <button type="button" class="btn btn-info mt-4" id="addMedi"><i
@@ -215,7 +191,7 @@ Medcin: Consultation à Cabinet
                                 <hr class="mt-5" />
                                 <div class="form-group mt-3">
                                     <label class=" font-weight-bold "> contenu additionnel à l'ordonndance : </label>
-                                    <textarea class="form-control" name="remarque"
+                                    <textarea class="form-control" name="AddContent"
                                         placeholder="antécédants, allergie, remarques sur les medicaments..."
                                         rows="12"></textarea>
                                 </div>
@@ -231,7 +207,11 @@ Medcin: Consultation à Cabinet
 
 
                             <h3><i class="fas fa-print"></i> Imprimer l'ordonnance</h3>
-                            <section>
+                            <section class=" align-items-center">
+
+                                <h4 class="h4 text-center">
+                                    Enregistrer la consultation pour pouvoir imprimer l'ordonnance
+                                </h4>
                                 
                             </section>
                         
@@ -387,10 +367,10 @@ Medcin: Consultation à Cabinet
     function addExaInput(indice) {
         var input = `<tr class="row mt-2" id="Exa` + indice + `" class="mt-1"> 
             <td class="col-md-5 px-1 col-sm">
-                                            <input  name="ExaTitres[]" autocomplete="false" type="text"  class=" form-control SuggestExa ">
+                                            <input  name="ExaTitres[]" placeholder="Poids" autocomplete="false" type="text"  class=" form-control SuggestExa ">
                                             </td>
                                             <td  class="col-md-7 px-1 col-sm">
-                                                <input  name="ExaValues[]" type="text" class=" form-control" />
+                                                <input  name="ExaValues[]"  placeholder="60Kg" type="text" class=" form-control" />
                                             </td>
                                         </tr>`;
         $(input).insertBefore("#ExabuttonsRaw");
@@ -400,8 +380,11 @@ Medcin: Consultation à Cabinet
 
     // code here
     $('#addMedi').click(function (e) {
-        if (i == 1)
+        if (i == 1){
             $('#DelMedi').removeClass('d-none');
+            $('#MedHeader').removeClass('d-none');
+        }
+           
         addInput(i);
         i++;
     });
@@ -411,8 +394,11 @@ Medcin: Consultation à Cabinet
             return;
         $('#row' + (i - 1)).remove();
         i--;
-        if (i == 1)
+        if (i == 1){
             $('#DelMedi').addClass('d-none');
+            $('#MedHeader').addClass('d-none');
+        }
+            
 
     });
 
@@ -545,8 +531,10 @@ Medcin: Consultation à Cabinet
     }
 
     $('#addExa').click(() => {
-        if (j == 1)
+        if (j == 1){
             $('#DelExa').removeClass('d-none');
+            $('#OpersHeader').removeClass('d-none');
+        }
         addExaInput(j);
         j++;
     });
@@ -555,8 +543,10 @@ Medcin: Consultation à Cabinet
             return;
         $('#Exa' + (j - 1)).remove();
         j--;
-        if (j == 1)
+        if (j == 1){
             $('#DelExa').addClass('d-none');
+            $('#OpersHeader').addClass('d-none');
+        }
     });
 
 
