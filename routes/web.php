@@ -141,12 +141,15 @@ Route::group(['middleware' => ['auth:medcin']], function () {
     // Ordonnance Route
     Route::get('/Ordonnance/{ordonnanceid}', 'OrdonnanceController@GetOrdonnancePDF');
 
-    /// Paramètres de compte
+    // Paramètres de compte
     Route::get('MedcinParametres', 'MedcinController@Account_Settings');
     Route::post('MedcinParametres', 'MedcinController@Account_Settings_change');
 
     // Lien vers la signature
     Route::get('/Signature/{filename}','SignatureController@getImage');
+
+    // Check Consultation pipe / buffer :P
+    Route::get('/CheckForConsultation','SalleAttenteController@checkSalle');
 
 });
 

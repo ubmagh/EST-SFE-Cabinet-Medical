@@ -44,7 +44,9 @@ Medcin: Consultation à Cabinet
 
         <div class="col-8 mx-auto">
             <div class="alert d-block alert-warning px-5  py-4 " role="alert">
-                <i class="fa fa-times"></i> La liste d'attente est vide pour le moment.
+                <h2 class="h3 text-center">
+                    <i class="fa fa-times fa-lg mt-2"></i> La liste d'attente est vide pour le moment. En attendant l'arrivée d'un patient...
+                </h2>
             </div>
         </div>
 
@@ -350,6 +352,13 @@ Medcin: Consultation à Cabinet
 @endsection
 
 @section('script')
+    @if( $EmptySa || !$found )
+        {{-- script pour vérifier l'arrivé d'un patient --}}
+        {{-- // TODO script of refreshing + errors messages veiws +  --}}
+        <script>
+
+        </script>
+    @endif
 <script src="{{ asset('/js/wizard.js') }}"></script>
 <script>
     var i = 1,j = 1,nbrOps=1;

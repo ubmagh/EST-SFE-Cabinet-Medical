@@ -16,7 +16,7 @@ class CreateExamensTable extends Migration
         Schema::create('examens', function (Blueprint $table) {
             $table->id();
             $table->string('Titre',50);
-            $table->longText('Description')->nullable();
+            $table->longText('Valeur')->nullable();
             $table->bigInteger('ConsultationId')->unsigned();
 
             $table->foreign('ConsultationId')->references('id')->on('consultations')->onDeletes('cascade');

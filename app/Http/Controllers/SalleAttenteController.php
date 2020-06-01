@@ -262,6 +262,14 @@ class SalleAttenteController extends Controller
 
 
 
+    public function checkSalle(){
+
+        // TODO if someone entred to the cabinet or to medic's room then send refresh sign else nothing happens
+        
+    }
+
+
+
     /**
      * Store a newly created resource in storage.
      *

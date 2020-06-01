@@ -10,6 +10,6 @@ class Examen extends Model
     public $timestamps = false;
     public $table="examens";
     protected $fillable = [
-        'Titre', 'Description', 'ConsultationId',
+        'Titre', 'Valeur', 'ConsultationId',
     ];
 }

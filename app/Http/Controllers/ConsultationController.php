@@ -8,6 +8,8 @@ use App\Patient;
 use Carbon\Carbon;
 use App\Medicament;
 use App\Ordonnance;
+use App\Examen;
+use App\Operations_Selon_Consultation;
 
 use Illuminate\Support\Facades\DB;
 
@@ -146,12 +148,40 @@ class ConsultationController extends Controller
 
         $ListeAttentes->ConsultationID=$consultation->id;
         $ListeAttentes->save();
+        //***************************INSERT INTO Exams******************************************** *//
+        $examsTitles = $request->input('ExaTitres');
+        if( count($examsTitles) ){
+            $examsvalues = $request->input('ExaValues');
+            foreach($examsTitles as $num => $title){
+                $exaObj = new Examen();
+                $exaObj->Titre = $title ;
+                $exaObj->Valeur = $examsvalues[$num] ;
+                $exaObj->ConsultationId = $consultation->id ;
+                $exaObj->save();
+            }        
+        }
+      //***************************INSERT Operations******************************************** */
+      $Operations = $request->input('Operations');
+        if( count($Operations) ){
+
+            $Remarquez = $request->input('Remarquez');
+            foreach($Operations as $num => $Operation ){
+
+                $OpeObj = new Operations_Selon_Consultation();
+                $OpeObj->ConsultationID = $consultation->id ;
+                $OpeObj->OperationId = $Operation ;
+                $OpeObj->Remarque = strlen($Remarquez[$num])>0 ? $Remarquez[$num] : null  ;
+                $OpeObj->save();
+            }
+
+        }
+
       //***************************INSERT INTO ORDONNANCES******************************************** */
 
         //$consultation = DB::table('consultations')->latest('id')->first();
         $ordonnance = new Ordonnance();
         $ordonnance->ConsultationId = $consultation->id ; 
-        $ordonnance->Description = $request->input('remarque');
+        $ordonnance->Description = strlen($request->input('AddContent'))>0 ? $request->input('AddContent'):null ;
         $ordonnance->save();
 
       //***************************INSERT INTO MEDICAMENT_PAR_ORDONNANCES******************************************** */
@@ -176,6 +206,7 @@ class ConsultationController extends Controller
         $medi_par_ordo->save();   
        }   
        
+       // TODO : add Files + error returned + vérify everything + optimise + PDF Developpe
        return response()->json(['status'=>'Good','ordonnanceurl'=>url('/Ordonnance/'.$ordonnance->id)]);
     }
 
