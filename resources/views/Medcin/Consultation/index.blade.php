@@ -54,7 +54,9 @@ Medcin: Consultation à Cabinet
 
         <div class="col-8 mx-auto">
             <div class="alert d-block alert-warning px-5 w-75 mx-auto py-4 " role="alert">
-                <i class="far fa-clock"></i> Le Patient sera validé par le secretaire dans quelque secondes...
+                <h2 class="h3 text-center">
+                    <i class="far fa-clock fa-lg mt-2"></i> Le Patient suivant sera validé par le secretaire dans quelque secondes...
+                </h2>
             </div>
         </div>
 
@@ -353,9 +355,25 @@ Medcin: Consultation à Cabinet
 
 @section('script')
     @if( $EmptySa || !$found )
-        {{-- script pour vérifier l'arrivé d'un patient --}}
-        {{-- // TODO script of refreshing + errors messages veiws +  --}}
         <script>
+            setInterval(()=>{
+                $.ajax({
+                    type:'GET',
+                    url: "{{url('CheckForConsultation')}}",
+                    @if($EmptySa)
+                        data: {
+                            'mpt':'1y',
+                        },
+                    @endif
+                    success:function(resp){
+                        if(resp.ref=="yes")
+                           window.location.reload();
+                    },
+                    error:function(resp){
+                        swal("Une erreur du serveur lors de recherche de patient suivant, Essayez d'actualiser cette page.");
+                    },
+                });
+            },3500);
 
         </script>
     @endif

@@ -262,10 +262,22 @@ class SalleAttenteController extends Controller
 
 
 
-    public function checkSalle(){
+    public function checkSalle(Request $request){
 
-        // TODO if someone entred to the cabinet or to medic's room then send refresh sign else nothing happens
-        
+        if( $request->input('mpt') ){
+            if( !$this->Check_empty_liste())
+                return response()->json(['ref'=>'yes']);
+            return response()->json(['ref'=>'no']);
+        }else{
+            $nextypatient = SalleAttente::whereNotNull('startTime')
+                                    ->whereNull('ConsultationID')
+                                     ->whereDate('dateArrive', '=' , Carbon::today()->toDateString() )
+                                     ->orderby('dateArrive' , 'desc')
+                                     ->first();
+            if(empty($nextypatient))
+                return response()->json(['ref'=>'no']);
+            return response()->json(['ref'=>'yes']);
+        }
     }
 
 
