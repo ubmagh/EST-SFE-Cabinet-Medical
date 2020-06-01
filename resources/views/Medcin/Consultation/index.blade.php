@@ -64,7 +64,16 @@ Medcin: Consultation à Cabinet
         <div class="col-9 grid-margin my-4">
             <div class="card h-100 ">
                 <div class="card-body h-100 pt-3 px-1">
-                    <form method="POST" class="h-100" action="/Consultation" id="example-vertical-wizard">
+                    <div class=" w-100 grid-margin  stretch-card LoaderSec" style="height: 480px;" >
+                        <div class="loader-demo-box border-0">
+                            <div class="dot-opacity-loader">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <form method="POST" class="h-100 d-none ContentSec" action="/Consultation" id="example-vertical-wizard">
                         <div class="h-100">
                             {{ csrf_field() }}
 
@@ -240,8 +249,18 @@ Medcin: Consultation à Cabinet
 
         <div class="col-3 my-4">
             <div class="card">
-                <div class="card-body">
 
+                <div class="card-body w-100 grid-margin  stretch-card LoaderSec" style="height: 480px;" >
+                        <div class="loader-demo-box border-0">
+                            <div class="dot-opacity-loader">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                </div>
+
+                <div class="card-body d-none ContentSec">
                     <div class="border-bottom text-center pb-4">
                         <img src="../../images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3" />
                         <h5 class="h6 text-center mb-2"> {{ $patient->id_civile }} </h5>
@@ -631,6 +650,16 @@ Medcin: Consultation à Cabinet
             CreateTypeAHead(elem);
         });
         CreateTypeAHeadExa($('.SuggestExa'));
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.LoaderSec').forEach(node=>{
+            node.classList.add('d-none');
+        });
+        document.querySelectorAll('.ContentSec').forEach(node=>{
+            node.classList.remove('d-none');
+        });
     });
 
 </script>
