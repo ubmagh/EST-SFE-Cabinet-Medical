@@ -35,7 +35,8 @@
                         for(let i=0;i<5;i++)
                             $("#steps-uid-0-t-" + i).attr('href','');
                             $('#steps-uid-0-p-5').append(` <div class="row w-100 text-center my-3" > <a href="`+resp.ordonnanceurl+`" class="btn btn-info text-center mx-auto"> <h3 class="h3"> <i class="fas fa-print"></i> Imprimer l'ordonnance </h3> </a> </div> `);
-                            $('#steps-uid-0-p-5').append(` <div class="row w-100 text-center my-3" > <a href="`+'{{ url("/Consultation") }}'+`" class="btn btn-info text-center mx-auto"> <h3 class="h3"> <i class="fas fa-arrow-right"></i> Patient suivant </h3> </a> </div> `);
+                            $('#steps-uid-0-p-5').append(` <div class="row w-100 text-center my-3" > <a href="`+resp.ordonnanceurl+`" class="btn btn-info text-center mx-auto"> <h3 class="h3"> <i class="fas fa-print"></i> Imprimer l'ordonnance </h3> </a> </div> `);
+                            $('#steps-uid-0-p-5').append(` <div class="row w-100 text-center my-3" > <a href="/Consultation" class="btn btn-info text-center mx-auto"> <h3 class="h3"> <i class="fas fa-arrow-right"></i> Patient suivant </h3> </a> </div> `);
                             $('.actions.clearfix').addClass('d-none');
                     }
                 },

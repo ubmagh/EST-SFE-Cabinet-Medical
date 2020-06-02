@@ -55,12 +55,47 @@ return [
             'visibility' => 'public',
         ],
 
+
+
         'Signatures' => [
             'driver' => 'local',
             'root' => storage_path('Signatures/'),
             'url' => env('APP_URL').'/Signature',
             'visibility' => 'private',
         ],
+
+        
+        'ConsultationImages' => [
+            'driver' => 'local',
+            'root' => storage_path('ConsultationFiles/Images/'),
+            'visibility' => 'private',
+        ],
+
+        'ConsultationVideos' => [
+            'driver' => 'local',
+            'root' => storage_path('ConsultationFiles/Videos/'),
+            'visibility' => 'private',
+        ],
+
+        'ConsultationZips' => [
+            'driver' => 'local',
+            'root' => storage_path('ConsultationFiles/Zips/'),
+            'visibility' => 'private',
+        ],
+
+        'ConsultationPDFs' => [
+            'driver' => 'local',
+            'root' => storage_path('ConsultationFiles/PDFs/'),
+            'visibility' => 'private',
+        ],
+
+        'ConsultationTMP' => [
+            'driver' => 'local',
+            'root' => storage_path('ConsultationFiles/TMP/'),
+            'visibility' => 'private',
+        ],
+
+
 
         's3' => [
             'driver' => 's3',

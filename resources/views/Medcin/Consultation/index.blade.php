@@ -660,7 +660,7 @@ Medcin: Consultation à Cabinet
                                 <div class="row py-3 my-3 px-0 border border-secondary rounded mx-auto w-100 d-block text-center " id="file`+nbrfile+`">
                                     <div class="input-group mb-2 mt-1 col-11 mx-auto">
                                         
-                                        <input type="file" class="custom-file-input"  name="Files[]" id="customFile`+nbrfile+`">
+                                        <input type="file" class="custom-file-input" accept=".bmp,.jpg,.jpeg,.png,.avi,.mpg,.mpeg,.mov,.mp4,.pdf,.zip" name="Files[]" id="customFile`+nbrfile+`">
                                         <label class="custom-file-label" for="customFile`+nbrfile+`">Choisir un fichier</label>
                                         <small class="text-muted"> choisissez une image, une video, un fichier.zip d'une taille de 25Mo au Max </small>
 
@@ -669,7 +669,24 @@ Medcin: Consultation à Cabinet
         `;
         $(Toappend).insertBefore('#FilesBeforeRow');
 
-        
+        $("#customFile"+nbrfile).on("change", function(e) {
+            console.log( this.files[0] );
+            // check file type
+            let type=this.files[0].type;
+            if( type.search('zip')==-1 && type.search('image')==-1 && type.search('video')==-1 && type.search('pdf')==-1 ){
+                swal(" Le type de fichier est insupporté.");
+                e.preventDefault();
+                return;
+            }
+            // check size 
+            if( this.files[0].size/1024/1024 > 25 ){
+                swal(" le fichier choisi a une taille grande que 25 Mo.");
+                e.preventDefault();
+                return;
+            }
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
 
         if (nbrfile == 1)
             $('#Delfile').removeClass('d-none');

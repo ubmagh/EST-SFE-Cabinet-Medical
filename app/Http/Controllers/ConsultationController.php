@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Medicament;
 use App\Ordonnance;
 use App\Examen;
+use App\Fichier;
 use App\Operations_Selon_Consultation;
 
 use Illuminate\Support\Facades\DB;
@@ -24,6 +25,7 @@ use App\Operations_Cabinet;
 use App\Secretaire;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ConsultationController extends Controller
 {
@@ -135,8 +137,7 @@ class ConsultationController extends Controller
             'Files.*.file' =>  ' Fichier corrupté ',
         ]
         );
-
-
+    
 
     //**************************INSERT INTO CONSULTATIONS********************************************** */
         $ListeAttentes = salleAttente::whereNotNull('startTime')
@@ -158,9 +159,10 @@ class ConsultationController extends Controller
 
         $ListeAttentes->ConsultationID=$consultation->id;
         $ListeAttentes->save();
+
         //***************************INSERT INTO Exams******************************************** *//
         $examsTitles = $request->input('ExaTitres');
-        if( count($examsTitles) ){
+        if( is_array($examsTitles) && count($examsTitles) ){
             $examsvalues = $request->input('ExaValues');
             foreach($examsTitles as $num => $title){
                 $exaObj = new Examen();
@@ -172,7 +174,7 @@ class ConsultationController extends Controller
         }
       //***************************INSERT Operations******************************************** */
       $Operations = $request->input('Operations');
-        if( count($Operations) ){
+        if( is_array($Operations) && count($Operations) ){
 
             $Remarquez = $request->input('Remarquez');
             foreach($Operations as $num => $Operation ){
@@ -216,6 +218,51 @@ class ConsultationController extends Controller
         $medi_par_ordo->save();   
        }   
        
+
+       //****************************************  files placing            ****************   ************** */
+       $Files = $request->Files;
+       if( is_array($Files) && count($Files)>0 ){
+           foreach($Files as $File){
+   
+               $currentName = Storage::disk('ConsultationTMP')->put('',$File);
+               $fileType = mime_content_type( storage_path('ConsultationFiles\TMP').'\\'.$currentName );
+               $size = $File->getSize();
+               $originalName = $File->getClientOriginalName();
+   
+               if( strstr($fileType,'image') ){
+                   $type= "image";
+                   rename(storage_path('ConsultationFiles\TMP').'\\'.$currentName ,storage_path('ConsultationFiles\Images\\').$currentName) ;
+               }
+               else if( strstr($fileType,'video') ){
+                   $type= "video";
+                   rename(storage_path('ConsultationFiles\TMP').'\\'.$currentName ,storage_path('ConsultationFiles\Videos\\').$currentName) ;
+               }else{
+   
+                   $tmp=explode(".",$originalName);
+                   $ext = array_pop( $tmp );
+                   switch($ext){
+                       case "pdf":
+                           $type= "pdf";
+                           rename(storage_path('ConsultationFiles\TMP').'\\'.$currentName ,storage_path('ConsultationFiles\PDFs\\').$currentName) ;
+                       break;
+                       case "zip":
+                           $type= "zip";
+                           rename(storage_path('ConsultationFiles\TMP').'\\'.$currentName ,storage_path('ConsultationFiles\Zips\\').$currentName) ;
+                       break;
+                   }
+               }
+   
+               $fichier = new Fichier();
+               $fichier->Type= $type;
+               $fichier->CurrentName= $currentName;
+               $fichier->OriginalName= $originalName;
+               $fichier->Size= $size;
+               $fichier->ConsultationId= $consultation->id;
+               $fichier->save();
+           }
+       }
+
+
        // TODO : add Files + error returned + vérify everything + optimise + PDF Developpe
        return response()->json(['status'=>'Good','ordonnanceurl'=>url('/Ordonnance/'.$ordonnance->id)]);
     }
