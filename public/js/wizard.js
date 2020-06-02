@@ -21,10 +21,14 @@
             finishBtn.attr("href", "");
             finishBtn.empty();
             finishBtn.html('<i class="fas fa-spinner"></i>   ');
+            let formy = document.getElementById('example-vertical-wizard');
+            var fd = new FormData(formy);
             $.ajax({
                 url: "/Consultation",
                 type: "POST",
-                data: $("#example-vertical-wizard").serialize(),
+                data: fd,
+                contentType: false,
+                processData: false,
                 success: function (resp) {
                     if(resp.status=="Good"){
                         $('#steps-uid-0-p-5').empty();
@@ -97,6 +101,15 @@
                                     .removeClass("d-none")
                                     .addClass("show");
                                 if (errortab > 3) errortab = 3;
+                            }
+                            if (key.search("Files") != -1 ) {
+                                $("#fileError").html()? null:$("#fileError").html(
+                                    error.responseJSON.errors[key]
+                                );
+                                $("#fileAlert")
+                                    .removeClass("d-none")
+                                    .addClass("show");
+                                if (errortab > 4) errortab = 4;
                             }
                         }
                         /////////////////////

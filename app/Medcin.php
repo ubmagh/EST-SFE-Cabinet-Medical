@@ -19,7 +19,7 @@ class Medcin extends Authenticatable
     public $timestamps = false;
     public $table="medcins";
     protected $fillable = [
-        'Nom', 'Prenom', 'Specialite', 'Signature', 'Adresse', 'Tel', 'Email', 'Pseudo', 'password', 'remember_token', 'DernierLog', 'created_at'
+        'Nom', 'Prenom', 'Specialite', 'Signature', 'Adresse', 'Tel', 'Email', 'Pseudo', 'password', 'remember_token', 'DernierLog', 'PrixDeConsultation', 'created_at'
     ];
     protected $hidden = [
         'password', 'remember_token',

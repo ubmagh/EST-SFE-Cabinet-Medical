@@ -73,7 +73,7 @@ Medcin: Consultation à Cabinet
                             </div>
                         </div>
                     </div>
-                    <form method="POST" class="h-100 d-none ContentSec" action="/Consultation" id="example-vertical-wizard">
+                    <form method="POST" class="h-100 d-none ContentSec" enctype="multipart/form-data" action="/Consultation" id="example-vertical-wizard">
                         <div class="h-100">
                             {{ csrf_field() }}
 
@@ -223,7 +223,18 @@ Medcin: Consultation à Cabinet
                             <h3> <i class="fas fa-file-import"></i> Inclure des fichiers </h3>
                             <section>
                                
-
+                                <div class="row my-2 px-0 w-100 d-block text-center" id="FilesBeforeRow">
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-info mt-4" id="addfile"><i
+                                                class="fas fa-plus fa-lg text-white"></i></button>
+                                        <button type="button" class="btn btn-danger d-none mt-4" id="Delfile"><i
+                                                class="fas fa-times fa-lg text-white"></i></button>
+                                    </div>
+                                </div>
+                                <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
+                                        id="fileAlert">
+                                        <span id="fileError"></span>
+                                </div>
 
                             </section>
 
@@ -398,7 +409,7 @@ Medcin: Consultation à Cabinet
     @endif
 <script src="{{ asset('/js/wizard.js') }}"></script>
 <script>
-    var i = 1,j = 1,nbrOps=1;
+    var i = 1,j = 1,nbrOps=1,nbrfile=1;
 
     function addInput(indice) {
         var input = `<tr class="row mt-2" id="row` + indice + `" class="mt-1"> 
@@ -643,6 +654,38 @@ Medcin: Consultation à Cabinet
         if (nbrOps== 1)
             $('#DelOp').addClass('d-none');
     });
+
+    $('#addfile').click(()=>{
+        let Toappend = `
+                                <div class="row py-3 my-3 px-0 border border-secondary rounded mx-auto w-100 d-block text-center " id="file`+nbrfile+`">
+                                    <div class="input-group mb-2 mt-1 col-11 mx-auto">
+                                        
+                                        <input type="file" class="custom-file-input"  name="Files[]" id="customFile`+nbrfile+`">
+                                        <label class="custom-file-label" for="customFile`+nbrfile+`">Choisir un fichier</label>
+                                        <small class="text-muted"> choisissez une image, une video, un fichier.zip d'une taille de 25Mo au Max </small>
+
+                                    </div>
+                                </div>
+        `;
+        $(Toappend).insertBefore('#FilesBeforeRow');
+
+        
+
+        if (nbrfile == 1)
+            $('#Delfile').removeClass('d-none');
+        nbrfile++;
+    });
+
+    $('#Delfile').click(() => {
+        if (nbrfile <= 1)
+            return;
+        $('#file' + (nbrfile - 1)).remove();
+        nbrfile--;
+        if (nbrfile== 1)
+            $('#Delfile').addClass('d-none');
+    });
+
+    
 
 
     document.addEventListener('DOMContentLoaded', function () {

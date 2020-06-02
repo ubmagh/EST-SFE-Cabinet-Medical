@@ -25,6 +25,7 @@ class medcinSeeder extends Seeder
             'Pseudo'    => 'medcin' ,
             'password'   => Hash::make("password") ,
             'remember_token'    =>  null,
+            'PrixDeConsultation'    => 100,
             'DernierLog'    =>  json_encode(['last'=>'','first'=>'']),
             'created_at'    => date('Y-m-d H:i:s')
         ]);

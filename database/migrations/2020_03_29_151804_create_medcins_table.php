@@ -26,6 +26,7 @@ class CreateMedcinsTable extends Migration
             $table->text('password');
             $table->text('remember_token')->nullable();
             $table->json('DernierLog')->nullable();
+            $table->double('PrixDeConsultation');
             $table->timestamp('created_at')->useCurrent();
         });
     }

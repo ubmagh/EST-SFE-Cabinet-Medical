@@ -39,6 +39,7 @@ class MedcinController extends Controller
             'Specialite'    =>  'required|min:2|regex:/^[a-zA-Z0-9éèàç]+(([\',. -][a-zA-Z0-9éèàç ])?[0-9a-zA-Zéèàç]*)*$/i',
             'Tel'   =>  'required|min:9|max:14|regex:/^[0-9+\- ]*$/i',
             'Adresse'   =>  'nullable|max:100',
+            'Prix'  =>  'required|min:0|regex:/^\d+(\.\d{1,2})?$/i',
         ],
         [
             'Nom.required'  =>  " Saisissez Le nom. ",
@@ -68,6 +69,9 @@ class MedcinController extends Controller
             'Tel.max' =>  " Numéro de Téléphone invalide ",
             'Tel.regex' =>  " Numéro de Téléphone invalide ",
             'Adresse.max' =>  " 100 Caractères au Max. ",
+            'Prix.required' =>  " Entrez le Prix de consultation ",
+            'Prix.min' =>  " Prix invalide ! ",
+            'Prix.regex' =>  " Prix invalide! ",
         ]);
 
         $res = Medcin::create([
@@ -81,8 +85,9 @@ class MedcinController extends Controller
             'Signature' =>  ' ',
             'Adresse' =>  $request->input('Adresse'),
             'DernierLog' =>  json_encode(['last'=>'','first'=>'']),
+            'PrixDeConsultation'    =>  doubleval($request->input('Prix')),
             'remember_token'    =>  null,
-            'created_at'    => date('Y-m-d H:i:s')
+            'created_at'    =>  date('Y-m-d H:i:s')
         ]);
 
         if($res){
@@ -191,6 +196,16 @@ class MedcinController extends Controller
                 'Adresse.max' =>  " 100 Caractères au Max. ",
             ]);
             $medcin->Adresse = $request->input('Adresse');
+        }
+        
+        if($medcin->PrixDeConsultation != $request->input('Prix')){
+                    $Rules['Prix']=  'required|min:0|regex:/^\d+(\.\d{1,2})?$/i';
+                    $Messages = array_merge($Messages,[
+                        'Prix.required' =>  " Entrez le Prix de consultation ",
+                        'Prix.min' =>  " Prix invalide ! ",
+                        'Prix.regex' =>  " Prix invalide! ",
+                    ]);
+                    $medcin->PrixDeConsultation = doubleval($request->input('Prix')) ;
         }
 
 

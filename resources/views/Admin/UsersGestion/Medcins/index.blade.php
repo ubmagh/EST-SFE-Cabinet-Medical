@@ -60,6 +60,7 @@
                                                     data-Email="{{ $medcin['Email'] }}"
                                                     data-Adresse="{{ $medcin['Adresse'] }}"
                                                     data-Specialite="{{ $medcin['Specialite'] }}"
+                                                    data-prix="{{ $medcin['PrixDeConsultation'] }}"
                                                     data-Tel="{{ $medcin['Tel'] }}">
                                                     <i class="far fa-edit"></i> Modifier
                                                 </button>
@@ -185,6 +186,16 @@
                     <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
                         id="Create_AdresseModal">
                         <span id="CreateAdresseError"></span>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label for="Prix">Prix de consultation en DH: </label>
+                        <input name="Prix" id="Prix" type="text" min="0" 
+                            class="form-control" placeholder="100.00">
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
+                        id="Create_PrixModal">
+                        <span id="CreatePrixError"></span>
                     </div>
 
                     <div class="row w-100 ml-1">
@@ -320,6 +331,16 @@
                     <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
                         id="Edit_AdresseModal">
                         <span id="EditAdresseError"></span>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label for="PrixEdit">Prix de consultation en DH: </label>
+                        <input name="Prix" id="PrixEdit" type="text" min="0" 
+                            class="form-control" placeholder="100.00">
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
+                        id="Edit_PrixModal">
+                        <span id="EditPrixError"></span>
                     </div>
 
 
@@ -490,6 +511,10 @@ $('#createForm').submit(function (e) {
                         $('#CreateAdresseError').html(error.responseJSON.errors.Adresse);
                         $('#Create_AdresseModal').removeClass('d-none').addClass('show');
                     }
+                    if (errors.Prix) {
+                        $('#CreatePrixError').html(error.responseJSON.errors.Prix);
+                        $('#Create_PrixModal').removeClass('d-none').addClass('show');
+                    }
                 } else {
                     $("#createForm").hide();
                     $("#createErrorMSG").html(error.responseJSON.message);
@@ -510,6 +535,7 @@ $('#createForm').submit(function (e) {
         const Tel = button.data('tel');
         const Adresse = button.data('adresse');
         const Specialite = button.data('specialite');
+        const prix = button.data('prix');
 
 
         let modal = $(this);
@@ -521,6 +547,7 @@ $('#createForm').submit(function (e) {
         modal.find('.modal-body #TelEdit').val(Tel);
         modal.find('.modal-body #AdresseEdit').val(Adresse);
         modal.find('.modal-body #SpecialiteEdit').val(Specialite);
+        modal.find('.modal-body #PrixEdit').val(prix);
     });
 
     /// submit Edditing form
@@ -575,6 +602,10 @@ $('#createForm').submit(function (e) {
                     if (response.errors.Adresse) {
                         $('#EditAdresseError').html(error.responseJSON.errors.Adresse);
                         $('#Edit_AdresseModal').removeClass('d-none').addClass('show');
+                    }
+                    if (response.errors.Prix) {
+                        $('#EditPrixError').html(error.responseJSON.errors.Prix);
+                        $('#Edit_PrixModal').removeClass('d-none').addClass('show');
                     }
                 } else {
                     $("#EditForm").hide();
