@@ -296,6 +296,34 @@ Secretaire : Liste d'Attente
 
 
 @section('script')
+
+@if( count($liste_attente)>0 && $liste_attente[0]->startTime!=null)
+
+    <script>
+            var did=false;
+            setInterval(()=>{
+                $.ajax({
+                    type:'GET',
+                    url: "{{url('CheckPatientStatut')}}",
+                    data: {
+                        pa: {{ $liste_attente[0]->id }}
+                    },
+                    success:function(resp){
+                        if(resp.finished=="yes")
+                           window.location.reload();
+                    },
+                    error:function(resp){
+                        if(!did){
+                        swal("Une erreur du serveur lors de recherche de statut du patient consulté, Essayez d'actualiser cette page.");
+                        did=true;
+                        }
+                    },
+                });
+            },3000);
+    </script>    
+
+@endif
+
 <script>
 
 function submitRdv(rdvID){

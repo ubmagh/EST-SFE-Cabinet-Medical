@@ -114,6 +114,8 @@ Route::group(['middleware' => ['auth:secretaire']], function () {
     // Confreres routes
     Route::get('Confreres', 'ConfrereController@Secretaire_gestion_view');
     
+    // Verifier l'etat du patient pour actualiser le panneau de secretaire
+    Route::get('CheckPatientStatut', 'SalleAttenteController@check_patient_sec');
     
 });
 

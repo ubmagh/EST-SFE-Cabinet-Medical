@@ -386,6 +386,7 @@ Medcin: Consultation à Cabinet
 @section('script')
     @if( $EmptySa || !$found )
         <script>
+        let did=false;
             setInterval(()=>{
                 $.ajax({
                     type:'GET',
@@ -400,7 +401,10 @@ Medcin: Consultation à Cabinet
                            window.location.reload();
                     },
                     error:function(resp){
+                        if(!did){
                         swal("Une erreur du serveur lors de recherche de patient suivant, Essayez d'actualiser cette page.");
+                        did=true;
+                        }
                     },
                 });
             },3500);

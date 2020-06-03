@@ -129,11 +129,14 @@
                         $("#steps-uid-0-t-" + errortab).click();
                     }
                 },
+                complete: function(){
+                    submitting = false;
+                    finishBtn.empty();
+                    finishBtn.attr("href", href);
+                    finishBtn.append(html);
+                  }
             });
-            submitting = false;
-            finishBtn.empty();
-            finishBtn.attr("href", href);
-            finishBtn.append(html);
+            
         },
         labels: {
             cancel: "Annuler",

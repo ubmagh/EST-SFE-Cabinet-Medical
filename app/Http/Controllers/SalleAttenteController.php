@@ -281,6 +281,20 @@ class SalleAttenteController extends Controller
     }
 
 
+    public function check_patient_sec(Request $request){
+        $id= $request->input('pa');
+        if(!ctype_digit($id))
+            return response()->json(['error'=>'dataInvalide'],402);
+        $currentPatient = SalleAttente::find($id);
+        if(empty($currentPatient))
+            return response()->json(['error'=>'dataInvalide'],402);
+        
+        if($currentPatient->ConsultationID)
+            return response()->json(['finished'=>'yes']);
+        return response()->json(['finished'=>'no'],);
+    }
+
+
 
     /**
      * Store a newly created resource in storage.

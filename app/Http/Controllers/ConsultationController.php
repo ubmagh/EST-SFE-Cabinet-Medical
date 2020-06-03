@@ -263,7 +263,6 @@ class ConsultationController extends Controller
        }
 
 
-       // TODO : add Files + error returned + vérify everything + optimise + PDF Developpe
        return response()->json(['status'=>'Good','ordonnanceurl'=>url('/Ordonnance/'.$ordonnance->id)]);
     }
 
