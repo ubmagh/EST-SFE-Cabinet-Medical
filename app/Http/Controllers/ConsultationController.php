@@ -207,36 +207,38 @@ class ConsultationController extends Controller
             $facture->Date=date('Y-m-d');
             $facture->save();
 
+            
+        $medicaments = $request->input('medicament');
+        if($medicaments && is_array($medicaments)){
 
-      //***************************INSERT INTO ORDONNANCES******************************************** */
+            //***************************INSERT INTO ORDONNANCES******************************************** */
 
-        //$consultation = DB::table('consultations')->latest('id')->first();
-        $ordonnance = new Ordonnance();
-        $ordonnance->ConsultationId = $consultation->id ; 
-        $ordonnance->Description = strlen($request->input('AddContent'))>0 ? $request->input('AddContent'):null ;
-        $ordonnance->save();
+                //$consultation = DB::table('consultations')->latest('id')->first();
+                $ordonnance = new Ordonnance();
+                $ordonnance->ConsultationId = $consultation->id ; 
+                $ordonnance->Description = strlen($request->input('AddContent'))>0 ? $request->input('AddContent'):null ;
+                $ordonnance->save();
 
-      //***************************INSERT INTO MEDICAMENT_PAR_ORDONNANCES******************************************** */
-       
-      
-       
-       //$ordonnance = DB::table('ordonnances')->latest('id')->first();
-     
-       $medicaments = $request->input('medicament');
-        
+            //***************************INSERT INTO MEDICAMENT_PAR_ORDONNANCES******************************************** */
+            
+            
+            //$ordonnance = DB::table('ordonnances')->latest('id')->first();
+                
+            
+                
+                foreach ($medicaments as $key=>$medicament){
+                
+                $medi_par_ordo = new Medicament_par_ordonnance();
 
-        if($medicaments)
-        foreach ($medicaments as $key=>$medicament){
-        
-        $medi_par_ordo = new Medicament_par_ordonnance();
+                
+                $medi_par_ordo->Periode=$request->input('Periods')[$key];
+                $medi_par_ordo->NbrParJour=$request->input('unites')[$key];
+                $medi_par_ordo->MedicamentId=$medicament;
+                $medi_par_ordo->OrdonnanceId=$ordonnance->id;
+                $medi_par_ordo->save();   
+            }   
 
-        
-        $medi_par_ordo->Periode=$request->input('Periods')[$key];
-        $medi_par_ordo->NbrParJour=$request->input('unites')[$key];
-        $medi_par_ordo->MedicamentId=$medicament;
-        $medi_par_ordo->OrdonnanceId=$ordonnance->id;
-        $medi_par_ordo->save();   
-       }   
+        }
        
 
        //****************************************  files placing            ****************   ************** */
@@ -282,8 +284,9 @@ class ConsultationController extends Controller
            }
        }
 
-
-       return response()->json(['status'=>'Good','ordonnanceurl'=>url('/Ordonnance/'.$ordonnance->id)]);
+       if( isset($ordonnance) )
+            return response()->json(['status'=>'Good','ordonnanceurl'=>url('/Ordonnance/'.$ordonnance->id)]);
+        return response()->json(['status'=>'Good','ordonnanceurl'=>'none' ]);
     }
 
 

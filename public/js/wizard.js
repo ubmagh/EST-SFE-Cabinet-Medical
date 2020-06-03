@@ -33,11 +33,24 @@
                     if(resp.status=="Good"){
                         $('#steps-uid-0-p-5').empty();
                         for(let i=0;i<5;i++)
-                            $("#steps-uid-0-t-" + i).attr('href','');
-                            $('#steps-uid-0-p-5').append(` <div class="row w-100 text-center my-3" > <a href="`+resp.ordonnanceurl+`" class="btn btn-info text-center mx-auto"> <h3 class="h3"> <i class="fas fa-print"></i> Imprimer l'ordonnance </h3> </a> </div> `);
-                            $('#steps-uid-0-p-5').append(` <div class="row w-100 text-center my-3" > <a href="`+resp.ordonnanceurl+`" class="btn btn-info text-center mx-auto"> <h3 class="h3"> <i class="fas fa-print"></i> Imprimer l'ordonnance </h3> </a> </div> `);
-                            $('#steps-uid-0-p-5').append(` <div class="row w-100 text-center my-3" > <a href="/Consultation" class="btn btn-info text-center mx-auto"> <h3 class="h3"> <i class="fas fa-arrow-right"></i> Patient suivant </h3> </a> </div> `);
-                            $('.actions.clearfix').addClass('d-none');
+                            $("#steps-uid-0-t-" + i).attr('href','');                     
+                        
+                        $('#steps-uid-0-p-5').append(`
+                            <div class=" col-md-11 mx-auto py-4 my-4">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        <span class="sr-only">Close</span>
+                                    </button>
+                                    Consultation Bien Enregistrée ! 
+                                </div>
+                            </div>
+                        `); 
+                        
+                        if(resp.ordonnanceurl!='none')
+                            $('#steps-uid-0-p-5').append(` <div class="row w-100 text-center mt-5 mb-3" > <a href="`+resp.ordonnanceurl+`" target="_blank" class="btn btn-info text-center text-wite mx-auto"> <h3 class="h3"> <i class="fas fa-print"></i> Imprimer l'ordonnance </h3> </a> </div> `);
+                        $('#steps-uid-0-p-5').append(` <div class="row w-100 text-center my-3" > <a href="/Consultation" class="btn btn-info text-center mx-auto"> <h3 class="h3"> <i class="fas fa-arrow-right"></i> Patient suivant </h3> </a> </div> `);
+                        $('.actions.clearfix').addClass('d-none');
                     }
                 },
                 error: function (error) {
