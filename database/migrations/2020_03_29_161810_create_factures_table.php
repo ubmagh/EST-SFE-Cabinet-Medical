@@ -15,11 +15,12 @@ class CreateFacturesTable extends Migration
     {
         Schema::create('factures', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('ConsultationId')->unsigned();
-            $table->date('Date');
+            $table->bigInteger('ConsultationId')->unsigned()->nullable();
+            $table->string('Motif',100);
+            $table->date('Date')->useCurrent();
             $table->decimal('Somme');
-            $table->decimal('Paye')->nullable();
-            $table->decimal('Remise');
+            $table->decimal('Paye')->default(0);
+            $table->decimal('Remise')->default(0);
 
             $table->foreign('ConsultationId')->references('id')->on('consultations')->onDelete('cascade');
 

@@ -10,6 +10,8 @@ use App\Medicament;
 use App\Ordonnance;
 use App\Examen;
 use App\Fichier;
+use App\Operations_Cabinet;
+use App\Facture;
 use App\Operations_Selon_Consultation;
 
 use Illuminate\Support\Facades\DB;
@@ -21,7 +23,6 @@ use App\salleAttente;
 use  Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Medicament_par_ordonnance;
-use App\Operations_Cabinet;
 use App\Secretaire;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -160,6 +161,12 @@ class ConsultationController extends Controller
         $ListeAttentes->ConsultationID=$consultation->id;
         $ListeAttentes->save();
 
+        if($consultation->Type == "normale")
+            $somme = doubleval($medecin->PrixDeConsultation);
+        else
+            $somme = doubleval(0);
+
+
         //***************************INSERT INTO Exams******************************************** *//
         $examsTitles = $request->input('ExaTitres');
         if( is_array($examsTitles) && count($examsTitles) ){
@@ -172,9 +179,10 @@ class ConsultationController extends Controller
                 $exaObj->save();
             }        
         }
-      //***************************INSERT Operations******************************************** */
-      $Operations = $request->input('Operations');
+      //***************************INSERT Operations ++ Facture ******************************************** */
+        $Operations = $request->input('Operations');
         if( is_array($Operations) && count($Operations) ){
+
 
             $Remarquez = $request->input('Remarquez');
             foreach($Operations as $num => $Operation ){
@@ -184,9 +192,21 @@ class ConsultationController extends Controller
                 $OpeObj->OperationId = $Operation ;
                 $OpeObj->Remarque = strlen($Remarquez[$num])>0 ? $Remarquez[$num] : null  ;
                 $OpeObj->save();
+                $Operation = Operations_Cabinet::find($Operation);
+                $somme += doubleval( $Operation->Prix );
             }
-
+            
         }
+
+            # creating Facture
+
+            $facture = new Facture();
+            $facture->Motif = "Facture de consultation pour : ".$patient->Nom.' '.$patient->Prenom;
+            $facture->ConsultationId = $consultation->id;
+            $facture->Somme=$somme;
+            $facture->Date=date('Y-m-d');
+            $facture->save();
+
 
       //***************************INSERT INTO ORDONNANCES******************************************** */
 

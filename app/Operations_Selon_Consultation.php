@@ -12,4 +12,9 @@ class Operations_Selon_Consultation extends Model
     protected $fillable = [
          'ConsultationID', 'OperationId', 'Remarque',
     ];
+
+    public function Operation(){
+        return $this->BelongsTo('App\Operations_Cabinet' , 'OperationId');
+    }
+
 }

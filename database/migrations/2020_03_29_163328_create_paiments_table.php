@@ -15,12 +15,10 @@ class CreatePaimentsTable extends Migration
     {
         Schema::create('paiments', function (Blueprint $table) {
             $table->id();
-            $table->string('Motif',100); 
             $table->decimal('Montant');
             $table->date('date');
             $table->bigInteger('FactureId')->unsigned()->nullable();
             $table->string('Type');
-
             $table->foreign('FactureId')->references('id')->on('factures')->onDelete('cascade');
         });
     }

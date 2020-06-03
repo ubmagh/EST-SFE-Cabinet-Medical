@@ -10,6 +10,6 @@ class Facture extends Model
     public $timestamps = false;
     public $table="factures";
     protected $fillable = [
-        'ConsultationId', 'Date', 'Somme', 'Paye', 'Remise',
+        'Motif', 'ConsultationId', 'Date', 'Somme', 'Paye', 'Remise',
     ];
 }

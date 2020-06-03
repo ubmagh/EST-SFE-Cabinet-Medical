@@ -12,4 +12,10 @@ class Operations_Cabinet extends Model
     protected $fillable = [
         'Intitule', 'Prix', 'Description',
     ];
+
+    public function Operations_Selon_Consultation()
+    {
+      return $this->hasMany('App\Operations_Selon_Consultation' , 'OperationId');
+    }
+
 }
