@@ -35,6 +35,7 @@ header {
 #logo {
   float: left;
   margin-top: 8px;
+  margin-right: 12px;
 }
 
 #logo img {
@@ -130,8 +131,6 @@ table .unit {
   background: #DDDDDD;
 }
 
-table .qty {
-}
 
 table .total {
   background: #57B223;

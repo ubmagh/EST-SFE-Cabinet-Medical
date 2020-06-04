@@ -17,6 +17,8 @@ class OrdonnanceController extends Controller
 
     public function GetOrdonnancePDF(Request $request, $ordonnanceid)
     {
+        set_time_limit(0);
+
             
        //************************************ORDONNANCE PDF********************************************* */
 
@@ -32,9 +34,15 @@ class OrdonnanceController extends Controller
         ['consultation' => $consultation ,'nom'=>$nom, 'patient'=>$patient, 'cabinet'=>$cabinet
         , 'medecin'=>$medcin, 'ordonnance'=>$ordonnance, 'medi'=>$medi]);
         $customPaper = array(0, 0, 792.00, 1224.00);
-        $pdf_ordonnance->setPaper($customPaper);;
-       return $pdf_ordonnance->stream();
+        $pdf_ordonnance->setPaper($customPaper);
+       return $pdf_ordonnance->stream('ordonnance.pdf');
        
+       /*
+       return view('Medcin.Consultation.ordonnance',
+       ['consultation' => $consultation ,'nom'=>$nom, 'patient'=>$patient, 'cabinet'=>$cabinet
+       , 'medecin'=>$medcin, 'ordonnance'=>$ordonnance, 'medi'=>$medi]);
+       */
+
     }
 
 }
