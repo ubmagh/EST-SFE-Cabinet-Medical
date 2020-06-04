@@ -9,10 +9,6 @@
   clear: both;
 }
 
-a {
-  color: #0087C3;
-  text-decoration: none;
-}
 
 body {
   position: relative;
@@ -27,8 +23,8 @@ body {
 }
 
 header {
-  padding: 10px 0;
-  margin-bottom: 20px;
+  padding: 0;
+  margin-bottom: 30px;
   border-bottom: 1px solid #AAAAAA;
 }
 
@@ -53,6 +49,8 @@ header {
 }
 
 #client {
+  margin-top: 20px;
+  margin-bottom: 25px;
   padding-left: 6px;
   border-left: 6px solid #0087C3;
   float: left;
@@ -103,18 +101,14 @@ table td {
 
 table th {
   white-space: nowrap;        
-  font-weight: normal;
+  font-weight: 600;
+  font-size: large;
 }
 
 table td {
-  text-align: right;
-}
-
-table td h3{
-  color: #57B223;
-  font-size: 1.2em;
-  font-weight: normal;
-  margin: 0 0 0.2em 0;
+  text-align: center;
+  font-size: medium;
+  word-wrap: break-word;
 }
 
 table .no {
@@ -123,9 +117,6 @@ table .no {
   background: #57B223;
 }
 
-table .desc {
-  text-align: left;
-}
 
 table .unit {
   background: #DDDDDD;
@@ -173,7 +164,10 @@ table tfoot tr td:first-child {
 
 #thanks{
   font-size: 2em;
-  margin-bottom: 50px;
+  margin-left: 70%;
+  margin-top: 52%;
+  display: block;
+  position: relative;
 }
 
 #notices{
@@ -185,6 +179,11 @@ table tfoot tr td:first-child {
   font-size: 1.2em;
 }
 
+
+p{
+  font-size: medium; 
+}
+
 footer {
   color: #777777;
   width: 100%;
@@ -194,5 +193,10 @@ footer {
   border-top: 1px solid #AAAAAA;
   padding: 8px 0;
   text-align: center;
+}
+
+.Signature{
+  display: block;
+  z-index: -101;
 }
 
