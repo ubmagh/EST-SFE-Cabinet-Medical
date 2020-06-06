@@ -10,7 +10,7 @@ class confrere extends Model
     public $timestamps = false;
     public $table="confreres";
     protected $fillable = [
-            "Nom","Prenom","Tel",'Fax',"Email","adresse","Ville","Specialite",
+            "Nom","Tel",'Fax',"Email","adresse","Ville","Specialite",'date_ajout'
     ];
 
 

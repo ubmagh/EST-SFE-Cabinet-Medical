@@ -15,15 +15,14 @@ class CreateConfreresTable extends Migration
     {
         Schema::create('confreres', function (Blueprint $table) {
             $table->id();
-            $table->string("Nom",30);
-            $table->string("Prenom",30);
+            $table->string("Nom",50);
             $table->string("Tel",14)->nullable();
             $table->string('Fax',14)->nullable();
             $table->string("Email",90)->nullable();
             $table->string("adresse",50);
             $table->string("Ville",40);
             $table->string("Specialite",50);
-            $table->timestamp("date_ajout");
+            $table->timestamp("date_ajout")->useCurrent();
         });
     }
 

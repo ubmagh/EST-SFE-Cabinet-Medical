@@ -29,9 +29,8 @@ Liste des confrères
                             <thead>
 
                                 <tr>
-                                    <th class="text-center">Num Confrère</th>
+                                    <th class="text-center">#</th>
                                     <th class="text-center">Nom</th>
-                                    <th class="text-center">Prénom</th>
                                     <th class="text-center">Téléphone</th>
                                     <th class="text-center">Email</th>
                                     <th class="text-center">Actions</th>
@@ -41,9 +40,8 @@ Liste des confrères
                                 @foreach($confrere as $confreres)
                                     <tr>
 
-                                        <td class="text-center">{{ $confreres->id }}</td>
+                                        <td class="text-center">{{ $counter++ }}</td>
                                         <td class="text-center">{{ $confreres->Nom }}</td>
-                                        <td class="text-center">{{ $confreres->Prenom }}</td>
                                         <td class="text-center">{{ $confreres->Tel }}</td>
                                         <td class="text-center">{{ $confreres->Email }}</td>
                                         <td class="px-0 text-center">
@@ -51,7 +49,6 @@ Liste des confrères
 
                                             <!-- -------------------- Show BUTTON   ------------------------- -->
                                             <button data-id="{{ $confreres->id }}" data-Nom="{{ $confreres->Nom }}"
-                                                data-Prenom="{{ $confreres->Prenom }}"
                                                 data-Tel="{{ $confreres->Tel }}" data-Fax="{{ $confreres->Fax }}"
                                                 data-Email="{{ $confreres->Email }}"
                                                 data-adresse="{{ $confreres->adresse }}"
@@ -63,7 +60,6 @@ Liste des confrères
 
                                             <!-- -------------------- EDIT BUTTON   ------------------------- -->
                                             <button data-id="{{ $confreres->id }}" data-Nom="{{ $confreres->Nom }}"
-                                                data-Prenom="{{ $confreres->Prenom }}"
                                                 data-Tel="{{ $confreres->Tel }}" data-Fax="{{ $confreres->Fax }}"
                                                 data-Email="{{ $confreres->Email }}"
                                                 data-adresse="{{ $confreres->adresse }}"
@@ -105,35 +101,43 @@ Liste des confrères
                                         </button>
                                     </div>
 
-                                    <form id="addform" action="####here" method="POST">
+                                    <form id="addform" action="#here" method="POST">
                                         <div class="modal-body">
                                             {{ csrf_field() }}
 
 
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput1">Nom</label>
-                                                <input name="Nom" type="text" class="form-control"
+                                                <input name="Nom" type="text" class="form-control" maxlength="60"
                                                     placeholder="Entrer le nom">
                                             </div>
-
-                                            <div class="form-group">
-                                                <label for="exampleFormControlInput1">Prénom</label>
-                                                <input name="Prenom" type="text" class="form-control"
-                                                    placeholder="Entrer le prénom">
+                                            <div class="alert alert-danger mt-n3 alert-dismissible fade show d-none" id="CM_Nom" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    <span class="sr-only">Close</span>
+                                                </button>
+                                                <span id="CM_Nom_MSG"> </span>
                                             </div>
+
 
                                             <div class="form-group">
                                                 <label for="Tel">Téléphone</label>
-                                                <input name="Tel" type="tel" class="form-control"
-                                                    placeholder="Entrer le numéro de téléphone">
+                                                <input name="Tel" type="tel" class="form-control" maxlength="14"
+                                                    placeholder="Entrer le numéro de téléphone" />
                                             </div>
-
+                                             <div class="alert alert-danger mt-n3 alert-dismissible fade show d-none" id="CM_Tel" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    <span class="sr-only">Close</span>
+                                                </button>
+                                                <span id="CM_Tel_MSG"> </span>
+                                            </div>
 
 
                                             <div class="form-group">
                                                 <label for="Fax">Fax</label>
-                                                <input name="Fax" type="tel" class="form-control"
-                                                    placeholder="Entrer le numéro de fax">
+                                                <input name="Fax" type="tel" class="form-control" maxlength="14"
+                                                    placeholder="Entrer le numéro de fax" />
                                             </div>
 
 
@@ -151,20 +155,20 @@ Liste des confrères
 
                                             <div class="form-group">
                                                 <label for="adresse">Adresse</label>
-                                                <input name="adresse" type="text" class="form-control"
+                                                <input name="adresse" type="text" class="form-control" maxlength="50"
                                                     placeholder="Entrer l'adresse">
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput1">Ville</label>
-                                                <input name="Ville" type="text" class="form-control"
+                                                <input name="Ville" type="text" class="form-control" maxlength="40"
                                                     placeholder="Entrer la ville">
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="Specialite">Spécialité</label>
-                                                <input name="Specialite" type="text" class="form-control"
-                                                    placeholder="Entrer l'occupation">
+                                                <input name="Specialite" type="text" maxlength="50" class="form-control"
+                                                    placeholder="Entrer la Specialité"> 
                                             </div>
 
 
@@ -178,14 +182,16 @@ Liste des confrères
 
                                     <div id="msgSucc" role="alert" style="background: rgb(214,233,198);background: linear-gradient(0deg, rgba(214,233,198,1) 0%, 
     rgba(198,233,229,1) 100%);" class="alert alert-success d-none">
-                                        <i class="fa fa-check"></i> <strong>Succés!</strong> Le confrère est ajouté avec
+                                        <i class="fa fa-check"></i> <strong>Succés!</strong> confrère ajouté avec
                                         succés !
                                     </div>
 
                                     <div id="msgDanger" style="background: rgb(235,204,209);background: linear-gradient(0deg, rgba(235,204,209,1) 0%, 
       rgba(235,204,221,0.927608543417367) 100%);" role="alert" class="alert alert-danger d-none">
-                                        <i class="fa fa-times"></i> <strong>Danger !</strong> Le confrère n'est pas
+                                        <i class="fa fa-times"></i> <strong>Une Erreur servenue  !</strong> Le confrère n'est pas
                                         ajouté !
+
+                                        <div id="err_msg">  </div>
                                     </div>
 
                                 </div>
@@ -224,11 +230,6 @@ Liste des confrères
                                                     placeholder="Entrer le nom">
                                             </div>
 
-                                            <div class="form-group">
-                                                <label for="Prenom">Prénom</label>
-                                                <input id="prenom" name="Prenom" type="text" class="form-control"
-                                                    placeholder="Entrer le prénom">
-                                            </div>
 
                                             <div class="form-group">
                                                 <label for="Tel">Téléphone</label>
@@ -395,7 +396,7 @@ Liste des confrères
                                             <div class="form-group">
                                                 <label for="Specialite">Spécialité</label>
                                                 <input id="specialite" name="Specialite" type="text"
-                                                    class="form-control" placeholder="Entrer l'occupation" readonly>
+                                                    class="form-control" placeholder="Entrer la Specialité" readonly>
                                             </div>
 
 
@@ -430,7 +431,6 @@ Liste des confrères
     $('#modal_edit').on('show.bs.modal', function (event) {
         let button = $(event.relatedTarget);
         var Nom = button.data('nom');
-        var Prenom = button.data('prenom');
         var Tel = button.data('tel');
         var Email = button.data('email');
         var Fax = button.data('fax');
@@ -442,7 +442,6 @@ Liste des confrères
         let modal = $(this);
         modal.find('.modal-body #id').val(id);
         modal.find('.modal-body #nom').val(Nom);
-        modal.find('.modal-body #prenom').val(Prenom);
         modal.find('.modal-body #tel').val(Tel);
         modal.find('.modal-body #email').val(Email);
         modal.find('.modal-body #fax').val(Fax);
@@ -493,10 +492,28 @@ Liste des confrères
                 },
 
                 error: function (error) {
-                    console.log(error)
+                    const errors = error.responseJSON.errors;
+                    
+                    if(errors){
+
+                        if(errors.Nom){
+                            $('#CM_Nom_MSG').html(errors.Nom[0]);
+                            $('#CM_Nom').removeClass('d-none');
+                        }
+                        if(errors.Tel){
+                            $('#CM_Tel_MSG').html(errors.Tel[0]);
+                            $('#CM_Tel').removeClass('d-none');
+                        }
+
+
+
+
+                    }else{                    
                     $("#msgDanger").removeClass('d-none').addClass('d-block');
+                    $('#err_msg').html(error);
                     $("#addform").addClass('d-none');
-                    location.reload();
+                    }
+
                 }
 
             });
