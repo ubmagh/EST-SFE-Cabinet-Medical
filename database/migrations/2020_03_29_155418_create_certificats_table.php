@@ -15,12 +15,12 @@ class CreateCertificatsTable extends Migration
     {
         Schema::create('certificats', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('ConsultationId')->unsigned();
+            $table->bigInteger('PatientId')->unsigned();
             $table->string('Motif');
             $table->string( 'Type',30);
             $table->string('Duree',30)->nullable();
 
-            $table->foreign('ConsultationId')->references('id')->on('consultations')->onDeletes('cascade');
+            $table->foreign('PatientId')->references('id')->on('patients')->onDeletes('cascade');
             
 
         });
