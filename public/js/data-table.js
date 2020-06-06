@@ -1,6 +1,6 @@
-(function ($) {
+(function($) {
     "use strict";
-    $(function () {
+    $(function() {
         $("#order-listing").DataTable({
             aLengthMenu: [
                 [5, 10, 15, -1],
@@ -12,15 +12,17 @@
                 search: dataTable_Search_label,
                 lengthMenu: dataTable_nbr_lines_language,
                 info: " Affiche du page _PAGE_ sur _PAGES_ pages",
-                zeroRecords: " Aucun donnée à afficher ",
+                zeroRecords: " Aucune donnée à afficher ",
                 paginate: {
                     next: "suivant",
                     previous: "précédent",
                 },
             },
-            order: [[0, dataTable_Order_string]],
+            order: [
+                [0, dataTable_Order_string]
+            ],
         });
-        $("#order-listing").each(function () {
+        $("#order-listing").each(function() {
             var datatable = $(this);
             // SEARCH - Add the placeholder for Search and Turn this into in-line form control
             var search_input = datatable
