@@ -12,4 +12,10 @@ class confrere extends Model
     protected $fillable = [
             "Nom","Prenom","Tel",'Fax',"Email","adresse","Ville","Specialite",
     ];
+
+
+    public function confrere()
+    {
+      return $this->hasMany('App\Lettre_au_confrere' , 'ConfrereID');
+    }
 }

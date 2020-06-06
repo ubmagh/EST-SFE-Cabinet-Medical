@@ -13,4 +13,8 @@ class Lettre_au_confrere extends Model
         'ConfrereID','Titre','Message','Fichiers','date','MedcinId',
     ];
     
+
+    public function confrere(){
+        return $this->BelongsTo('App\confrere' , 'ConfrereID');
+     }
 }

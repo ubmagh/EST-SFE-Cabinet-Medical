@@ -116,7 +116,9 @@ Route::group(['middleware' => ['auth:secretaire']], function () {
     
     // Verifier l'etat du patient pour actualiser le panneau de secretaire
     Route::get('CheckPatientStatut', 'SalleAttenteController@check_patient_sec');
-    
+
+      // Confreres routes
+      Route::resource('Confreres', 'ConfrereController');
 });
 
 #################################   Secretary Routes End   ################################
@@ -139,6 +141,9 @@ Route::group(['middleware' => ['auth:medcin']], function () {
     Route::resource('Consultation', 'ConsultationController');
     Route::get('Medicament/Search', 'MedicamentController@autocomplete_Medcin_Medica');
     Route::get('Examens/Example', 'ExamenController@ExamsNamesExamples');
+
+    // lettre au confreres route
+    Route::resource('lettreAuxConf', 'LettreAuConfrereController');
 
     // Ordonnance Route
     Route::get('/Ordonnance/{ordonnanceid}', 'OrdonnanceController@GetOrdonnancePDF');
