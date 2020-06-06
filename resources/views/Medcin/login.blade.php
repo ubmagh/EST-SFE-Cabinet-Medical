@@ -6,7 +6,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Medcin: login</title>
+  <title>Medecin: login</title>
   <!-- plugins:css -->
   <!-- endinject -->
   <!-- plugin css for this page -->
@@ -33,7 +33,7 @@
                     </div>
                   
                     <div class="col-md-9 col-sm-12 d-flex align-content-center align-items-center ml-lg-0">
-                      <h1 class="h1 display-4 text-sm-center text-md-left mx-sm-auto mr-md-auto mt-sm-3 text-info"> Connexion Medcin </h1>
+                      <h1 class="h1 display-4 text-sm-center text-md-left mx-sm-auto mr-md-auto mt-sm-3 text-info"> Connexion Medecin </h1>
                     </div>
                   </div>
                 

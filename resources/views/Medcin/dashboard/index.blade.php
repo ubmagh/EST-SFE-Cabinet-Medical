@@ -1,6 +1,6 @@
 @extends('Medcin.Parts.pageLayout')
 
-@section('title','Medcin : Acceuil')
+@section('title','Medecin : Acceuil')
 
 @section('content')
 <div class="content-wrapper">

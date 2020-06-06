@@ -37,7 +37,7 @@
 
                 <div class="mb-4 mt-4">
                     <a href="{{url('/Medcin')}}" class="btn btn-block btn-success auth-form-btn  py-3">
-                        <span class="display-4">    <i class="fas fa-user-md fa-lg"></i>  Se Connecter comme Medcin</span>
+                        <span class="display-4">    <i class="fas fa-user-md fa-lg"></i>  Se Connecter comme Medecin</span>
                       </a>
                 </div>
 

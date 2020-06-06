@@ -1,6 +1,6 @@
 @extends('Admin.Parts.pageLayout')
 
-@section('title','Medcin : Paramètres de compte')
+@section('title','Medecin : Paramètres de compte')
 
 @section('content')
 
@@ -44,7 +44,7 @@
 
 
 <div class="card card-fluid">
-    <h6 class="card-header"> Paramètres  du compte Medcin : </h6>
+    <h6 class="card-header"> Paramètres  du compte Medecin : </h6>
     <div class="card-body">
     <form method="post" action="{{ url('MedcinParametres') }}" enctype="multipart/form-data">
 

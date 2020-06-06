@@ -1,7 +1,7 @@
 @extends('Medcin.Parts.pageLayout')
 
 @section('title')
-Medcin: Consultation à Cabinet
+Medecin: Consultation à Cabinet
 @endsection
 
 @section('css')

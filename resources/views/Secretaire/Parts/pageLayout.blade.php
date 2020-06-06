@@ -257,7 +257,7 @@ les variables de ce template
             </li>
             <li class="nav-item">
               <a href="{{ url('Confreres') }}" class="nav-link">
-                <i class="fas fa-user-tag menu-icon"></i>
+                <i class="fas fa-user-friends menu-icon"></i>
                   <span class="menu-title">Confrères</span>
               </a>
             </li>

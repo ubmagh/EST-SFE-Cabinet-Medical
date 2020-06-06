@@ -18,7 +18,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body mb-4">
-                <h4 class="card-title h3"> La liste des utilisateurs Medcins :</h4>
+                <h4 class="card-title h3"> La liste des utilisateurs Medecins :</h4>
 
                 <div class="row mt-n3">
                     <div class="col-12">
@@ -93,7 +93,7 @@
     <div class="modal-dialog model-notify modal-md modal-right modal-info" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Créer un utilisateur medcin: </h5>
+                <h5 class="modal-title" id="exampleModalLabel">Créer un utilisateur medecin: </h5>
                 <button type="button" id="closeCreateModal" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -234,7 +234,7 @@
     <div class="modal-dialog model-notify modal-md modal-right modal-info" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="EditModalLabel">Modifier un medcin :</h5>
+                <h5 class="modal-title" id="EditModalLabel">Modifier un medecin :</h5>
                 <button type="button" id="closeEditModal" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -380,7 +380,7 @@
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel-3">Supprimer un medcin </h5>
+                <h5 class="modal-title" id="exampleModalLabel-3">Supprimer un medecin </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -437,7 +437,7 @@
     @section('script')
     <script>
 
-        const dataTable_Place_Holder = "medcin";
+        const dataTable_Place_Holder = "medecin";
         const dataTable_Search_label = "Chercher: ";
         const dataTable_nbr_lines_language = "Afficher _MENU_ lignes";
         const dataTable_Order_string = "asc"; /// "desc" for descendent order
