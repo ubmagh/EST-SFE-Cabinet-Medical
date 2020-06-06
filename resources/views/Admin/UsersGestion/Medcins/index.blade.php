@@ -1,6 +1,6 @@
 @extends('Admin.Parts.pageLayout')
 
-@section('title','Administrateur : medcins')
+@section('title','Administrateur : Gestion des medecins')
 
 @section('css')
 

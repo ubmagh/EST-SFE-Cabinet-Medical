@@ -199,6 +199,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('AdminParametres', 'CabinetController@Admin_Account_Settings');
     Route::post('AdminParametres', 'CabinetController@Admin_Account_Settings_change');
 
+    Route::resource('Operations','OperationsCabinetController');
 
 });
 

@@ -311,52 +311,10 @@
               </div>
             </li>
             <li class="nav-item mega-menu">
-              <a href="#" class="nav-link">
-                <i class="ti-layers menu-icon"></i>
-                <span class="menu-title">Sample Pages</span>
-                <i class="menu-arrow"></i></a>
-              <div class="submenu">
-                <div class="col-group-wrapper row">
-                  <div class="col-group col-md-3">
-                    <p class="category-heading">User Pages</p>
-                    <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/login.html">Login</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/login-2.html">Login 2</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/register.html">Register</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/register-2.html">Register 2</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/lock-screen.html">Lockscreen</a></li>
-                    </ul>
-                  </div>
-                  <div class="col-group col-md-3">
-                    <p class="category-heading">Error Pages</p>
-                    <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/error-400.html">400</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/error-404.html">404</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/error-500.html">500</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/error-505.html">505</a></li>
-                    </ul>
-                  </div>
-                  <div class="col-group col-md-3">
-                    <p class="category-heading">E-commerce</p>
-                    <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/invoice.html">Invoice</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/pricing-table.html">Pricing Table</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/orders.html">Orders</a></li>
-                    </ul>
-                  </div>
-                  <div class="col-group col-md-3">
-                    <p class="category-heading">General</p>
-                    <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/search-results.html">Search Results</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/profile.html">Profile</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/timeline.html">Timeline</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/news-grid.html">News grid</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/portfolio.html">Portfolio</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/faq.html">FAQ</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+              <a href="{{ url('Operations') }}" class="nav-link">
+                <i class="fas fa-microscope menu-icon"></i>
+                <span class="menu-title"> Opérations</span>
+              </a>
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
