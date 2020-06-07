@@ -13,7 +13,18 @@ Liste des confrères
 
 <div class="content-wrapper">
     <div class="card h-100">
-        <div class="card-body">
+        
+        <div class="card-body w-100 grid-margin  stretch-card LoaderSec" style="height: 480px;" >
+                        <div class="loader-demo-box border-0">
+                            <div class="dot-opacity-loader">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+
+        <div class="card-body d-none ContentSec">
             <div class="d-block w-100 mb-n5 text-center mt-3">
                 <a name="" id="" class="btn btn-primary mx-auto text-center text-white mb-n5 mt-3" role="button"
                     data-toggle="modal" data-target="#AddModal" type="button"> <i class="fa fa-plus-circle fa-lg"
@@ -32,7 +43,7 @@ Liste des confrères
                                     <th class="text-center">#</th>
                                     <th class="text-center">Nom</th>
                                     <th class="text-center">Téléphone</th>
-                                    <th class="text-center">Email</th>
+                                    <th class="text-center">Spécialité</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -43,7 +54,7 @@ Liste des confrères
                                         <td class="text-center">{{ $counter++ }}</td>
                                         <td class="text-center">{{ $confreres->Nom }}</td>
                                         <td class="text-center">{{ $confreres->Tel }}</td>
-                                        <td class="text-center">{{ $confreres->Email }}</td>
+                                        <td class="text-center">{{ $confreres->Specialite }}</td>
                                         <td class="px-0 text-center">
 
 
@@ -106,40 +117,49 @@ Liste des confrères
                                             {{ csrf_field() }}
 
 
-                                            <div class="form-group">
+                                            <div class="form-group mt-2">
                                                 <label for="exampleFormControlInput1">Nom</label>
                                                 <input name="Nom" type="text" class="form-control" maxlength="60"
                                                     placeholder="Entrer le nom">
+                                                <div class="alert alert-danger  alert-dismissible fade show d-none" id="CM_Nom" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        <span class="sr-only">Close</span>
+                                                    </button>
+                                                    <span id="CM_Nom_MSG"> </span>
+                                                </div>
                                             </div>
-                                            <div class="alert alert-danger mt-n3 alert-dismissible fade show d-none" id="CM_Nom" role="alert">
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                    <span class="sr-only">Close</span>
-                                                </button>
-                                                <span id="CM_Nom_MSG"> </span>
-                                            </div>
+                                            
 
 
                                             <div class="form-group">
                                                 <label for="Tel">Téléphone</label>
                                                 <input name="Tel" type="tel" class="form-control" maxlength="14"
                                                     placeholder="Entrer le numéro de téléphone" />
+                                                <div class="alert alert-danger alert-dismissible fade show d-none" id="CM_Tel" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        <span class="sr-only">Close</span>
+                                                    </button>
+                                                    <span id="CM_Tel_MSG"> </span>
+                                                </div>
                                             </div>
-                                             <div class="alert alert-danger mt-n3 alert-dismissible fade show d-none" id="CM_Tel" role="alert">
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                    <span class="sr-only">Close</span>
-                                                </button>
-                                                <span id="CM_Tel_MSG"> </span>
-                                            </div>
+                                             
 
 
                                             <div class="form-group">
                                                 <label for="Fax">Fax</label>
                                                 <input name="Fax" type="tel" class="form-control" maxlength="14"
                                                     placeholder="Entrer le numéro de fax" />
+                                                <div class="alert alert-danger alert-dismissible fade show d-none" id="CM_Fax" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        <span class="sr-only">Close</span>
+                                                    </button>
+                                                    <span id="CM_Fax_MSG"> </span>
+                                                </div>
                                             </div>
-
+                                            
 
 
 
@@ -148,7 +168,15 @@ Liste des confrères
                                                 <label for="Email">Email</label>
                                                 <input name="Email" type="email" class="form-control"
                                                     placeholder="name@example.com">
+                                                <div class="alert alert-danger alert-dismissible fade show d-none" id="CM_Ema" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        <span class="sr-only">Close</span>
+                                                    </button>
+                                                    <span id="CM_Ema_MSG"> </span>
+                                                </div>
                                             </div>
+                                            
 
 
 
@@ -157,19 +185,45 @@ Liste des confrères
                                                 <label for="adresse">Adresse</label>
                                                 <input name="adresse" type="text" class="form-control" maxlength="50"
                                                     placeholder="Entrer l'adresse">
+                                                <div class="alert alert-danger alert-dismissible fade show d-none" id="CM_Addr" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        <span class="sr-only">Close</span>
+                                                    </button>
+                                                    <span id="CM_Addr_MSG"> </span>
+                                                </div>
                                             </div>
+                                                                                       
 
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput1">Ville</label>
                                                 <input name="Ville" type="text" class="form-control" maxlength="40"
                                                     placeholder="Entrer la ville">
+                                                <div class="alert alert-danger  alert-dismissible fade show d-none" id="CM_Ville" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        <span class="sr-only">Close</span>
+                                                    </button>
+                                                    <span id="CM_Ville_MSG"> </span>
+                                                </div>
                                             </div>
+                                            
+
+
 
                                             <div class="form-group">
                                                 <label for="Specialite">Spécialité</label>
                                                 <input name="Specialite" type="text" maxlength="50" class="form-control"
-                                                    placeholder="Entrer la Specialité"> 
+                                                    placeholder="Entrer la Specialité">
+                                                <div class="alert alert-danger  alert-dismissible fade show d-none" id="CM_Spec" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        <span class="sr-only">Close</span>
+                                                    </button>
+                                                    <span id="CM_Spec_MSG"> </span>
+                                                </div> 
                                             </div>
+                                           
 
 
                                             <button type="button" class="btn btn-danger" data-dismiss="modal"><i
@@ -224,10 +278,17 @@ Liste des confrères
 
 
 
-                                            <div class="form-group">
+                                            <div class="form-group mt-n4">
                                                 <label for="Nom">Nom</label>
                                                 <input id="nom" name="Nom" type="text" class="form-control"
                                                     placeholder="Entrer le nom">
+                                                <div class="alert alert-danger alert-dismissible fade show d-none" id="EM_Nom" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        <span class="sr-only">Close</span>
+                                                    </button>
+                                                    <span id="EM_Nom_MSG"> </span>
+                                                </div>
                                             </div>
 
 
@@ -235,6 +296,13 @@ Liste des confrères
                                                 <label for="Tel">Téléphone</label>
                                                 <input id="tel" name="Tel" type="tel" class="form-control"
                                                     placeholder="Entrer le numéro de téléphone">
+                                                <div class="alert alert-danger alert-dismissible fade show d-none" id="EM_Tel" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        <span class="sr-only">Close</span>
+                                                    </button>
+                                                    <span id="EM_Tel_MSG"> </span>
+                                                </div>
                                             </div>
 
 
@@ -243,6 +311,13 @@ Liste des confrères
                                                 <label for="Fax">Fax</label>
                                                 <input id="fax" name="Fax" type="tel" class="form-control"
                                                     placeholder="Entrer le numéro de fax">
+                                                <div class="alert alert-danger alert-dismissible fade show d-none" id="EM_Fax" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        <span class="sr-only">Close</span>
+                                                    </button>
+                                                    <span id="EM_Fax_MSG"> </span>
+                                                </div>
                                             </div>
 
 
@@ -253,6 +328,13 @@ Liste des confrères
                                                 <label for="Email">Email</label>
                                                 <input id="email" name="Email" type="email" class="form-control"
                                                     placeholder="name@example.com">
+                                                <div class="alert alert-danger alert-dismissible fade show d-none" id="EM_Ema" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        <span class="sr-only">Close</span>
+                                                    </button>
+                                                    <span id="EM_Ema_MSG"> </span>
+                                                </div>
                                             </div>
 
 
@@ -262,18 +344,39 @@ Liste des confrères
                                                 <label for="adresse">Adresse</label>
                                                 <input id="adresse" name="adresse" type="text" class="form-control"
                                                     placeholder="Entrer l'adresse">
+                                                <div class="alert alert-danger alert-dismissible fade show d-none" id="EM_Addr" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        <span class="sr-only">Close</span>
+                                                    </button>
+                                                    <span id="EM_Addr_MSG"> </span>
+                                                </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput1">Ville</label>
                                                 <input id="ville" name="Ville" type="text" class="form-control"
                                                     placeholder="Entrer la ville">
+                                                <div class="alert alert-danger alert-dismissible fade show d-none" id="EM_Ville" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        <span class="sr-only">Close</span>
+                                                    </button>
+                                                    <span id="EM_Ville_MSG"> </span>
+                                                </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="Specialite">Spécialité</label>
                                                 <input id="specialite" name="Specialite" type="text"
-                                                    class="form-control" placeholder="Entrer l'occupation">
+                                                    class="form-control" placeholder="Entrer la Spécialité">
+                                                <div class="alert alert-danger alert-dismissible fade show d-none" id="EM_Spec" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        <span class="sr-only">Close</span>
+                                                    </button>
+                                                    <span id="EM_Spec_MSG"> </span>
+                                                </div>
                                             </div>
 
 
@@ -368,44 +471,38 @@ Liste des confrères
                                         </button>
                                     </div>
 
-                                    <form id="editform">
                                         <div class="modal-body">
 
                                             <input type="hidden" id="id" name="id_confrere">
 
+                                            <div class="form-group">
+                                                <label for="Emaila">Email</label>
+                                                <input id="Emaila" name="Specialite" type="text" class="form-control" readonly>
+                                            </div>
 
                                             <div class="form-group">
                                                 <label for="Fax">Fax</label>
-                                                <input id="fax" name="Fax" type="tel" class="form-control"
-                                                    placeholder="Entrer le numéro de fax" readonly>
+                                                <input id="fax" name="Fax" type="tel" class="form-control" readonly>
                                             </div>
 
 
                                             <div class="form-group">
                                                 <label for="adresse">Adresse</label>
-                                                <input id="adresse" name="adresse" type="text" class="form-control"
-                                                    placeholder="Entrer l'adresse" readonly>
+                                                <input id="adresse" name="adresse" type="text" class="form-control" readonly>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput1">Ville</label>
-                                                <input id="ville" name="Ville" type="text" class="form-control"
-                                                    placeholder="Entrer la ville" readonly>
+                                                <input id="ville" name="Ville" type="text" class="form-control"  readonly>
                                             </div>
 
-                                            <div class="form-group">
-                                                <label for="Specialite">Spécialité</label>
-                                                <input id="specialite" name="Specialite" type="text"
-                                                    class="form-control" placeholder="Entrer la Specialité" readonly>
-                                            </div>
+                                            
 
 
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">
                                                 <i class="far fa-times-circle"></i> Fermer</button>
 
                                         </div>
-                                    </form>
-
 
                                 </div>
                             </div>
@@ -462,15 +559,60 @@ Liste des confrères
                 url: "/Confreres/" + id,
                 data: $('#editform').serialize(),
                 success: function (response) {
-                    $("#msgSucc-edit").removeClass('d-none').addClass('d-block');
-                    $("#editform").addClass('d-none');
-                    location.reload();
+
+                    if(response.statut=="Good"){
+                        $("#msgSucc-edit").removeClass('d-none').addClass('d-block');
+                        $("#editform").addClass('d-none');
+                        location.reload();
+                    }else{
+                        $("#msgDanger-edit").removeClass('d-none').addClass('d-block');
+                        $("#editform").addClass('d-none');
+                    }
                 },
 
                 error: function (error) {
-                    $("#msgDanger-edit").removeClass('d-none').addClass('d-block');
-                    $("#editform").addClass('d-none');
+                    const errors = error.responseJSON.errors;
+                    if(errors){
 
+                        if(errors.id_confrere){
+                            $("#msgDanger-edit").removeClass('d-none').addClass('d-block');
+                            $("#editform").addClass('d-none');
+                            return;
+                        }
+
+                        if(errors.Nom){
+                            $('#EM_Nom_MSG').html(errors.Nom[0]);
+                            $('#EM_Nom').removeClass('d-none');
+                        }
+                        if(errors.Tel){
+                            $('#EM_Tel_MSG').html(errors.Tel[0]);
+                            $('#EM_Tel').removeClass('d-none');
+                        }
+                        if(errors.Fax){
+                            $('#EM_Fax_MSG').html(errors.Fax[0]);
+                            $('#EM_Fax').removeClass('d-none');
+                        }
+                        if(errors.Email){
+                            $('#EM_Ema_MSG').html(errors.Email[0]);
+                            $('#EM_Ema').removeClass('d-none');
+                        }
+                        if(errors.adresse){
+                            $('#EM_Addr_MSG').html(errors.adresse[0]);
+                            $('#EM_Addr').removeClass('d-none');
+                        }
+                        if(errors.Ville){
+                            $('#EM_Ville_MSG').html(errors.Ville[0]);
+                            $('#EM_Ville').removeClass('d-none');
+                        }
+                        if(errors.Specialite){
+                            $('#EM_Spec_MSG').html(errors.Specialite[0]);
+                            $('#EM_Spec').removeClass('d-none');
+                        }
+
+                    }else{
+                        $("#msgDanger-edit").removeClass('d-none').addClass('d-block');
+                        $("#editform").addClass('d-none');
+                    }
                 }
             });
         };
@@ -486,14 +628,18 @@ Liste des confrères
                 url: "/Confreres",
                 data: $('#addform').serialize(),
                 success: function (response) {
-                    $("#msgSucc").removeClass('d-none').addClass('d-block');
-                    $("#addform").addClass('d-none');
+                    if(response.statut=="Good"){
+                        $("#msgSucc").removeClass('d-none').addClass('d-block');
+                        $("#addform").addClass('d-none');
                     location.reload();
+                    }else{
+                        $("#msgDanger").removeClass('d-none').addClass('d-block');
+                        $('#err_msg').html(error);
+                        $("#addform").addClass('d-none');
+                    }
                 },
-
                 error: function (error) {
                     const errors = error.responseJSON.errors;
-                    
                     if(errors){
 
                         if(errors.Nom){
@@ -504,9 +650,26 @@ Liste des confrères
                             $('#CM_Tel_MSG').html(errors.Tel[0]);
                             $('#CM_Tel').removeClass('d-none');
                         }
-
-
-
+                        if(errors.Fax){
+                            $('#CM_Fax_MSG').html(errors.Fax[0]);
+                            $('#CM_Fax').removeClass('d-none');
+                        }
+                        if(errors.Email){
+                            $('#CM_Ema_MSG').html(errors.Email[0]);
+                            $('#CM_Ema').removeClass('d-none');
+                        }
+                        if(errors.adresse){
+                            $('#CM_Addr_MSG').html(errors.adresse[0]);
+                            $('#CM_Addr').removeClass('d-none');
+                        }
+                        if(errors.Ville){
+                            $('#CM_Ville_MSG').html(errors.Ville[0]);
+                            $('#CM_Ville').removeClass('d-none');
+                        }
+                        if(errors.Specialite){
+                            $('#CM_Spec_MSG').html(errors.Specialite[0]);
+                            $('#CM_Spec').removeClass('d-none');
+                        }
 
                     }else{                    
                     $("#msgDanger").removeClass('d-none').addClass('d-block');
@@ -524,7 +687,6 @@ Liste des confrères
     $('#ModalDelete').on('show.bs.modal', function (event) {
         let button = $(event.relatedTarget);
         const id = button.data('id_delete');
-        let modal = $(this);
         $('#id_delete').val("" + id);
     });
 
@@ -562,7 +724,7 @@ Liste des confrères
         var Fax = button.data('fax');
         var adresse = button.data('adresse');
         var Ville = button.data('ville');
-        var Specialite = button.data('specialite');
+        var Emaila = button.data('email');
         var id = button.data('id');
 
         let modal = $(this);
@@ -570,7 +732,7 @@ Liste des confrères
         modal.find('.modal-body #fax').val(Fax);
         modal.find('.modal-body #adresse').val(adresse);
         modal.find('.modal-body #ville').val(Ville);
-        modal.find('.modal-body #specialite').val(Specialite);
+        modal.find('.modal-body #Emaila').val(Emaila);
 
 
     });
@@ -583,9 +745,18 @@ Liste des confrères
     const dataTable_Order_string = "asc"; /// "desc" for descendent order
     const dataTable_can_sort_columns__ = [{
         "orderable": false,
-        "targets": [5]
+        "targets": [4]
     }];
 
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.LoaderSec').forEach(node=>{
+            node.classList.add('d-none');
+        });
+        document.querySelectorAll('.ContentSec').forEach(node=>{
+            node.classList.remove('d-none');
+        });
+    });
 </script>
 
 
