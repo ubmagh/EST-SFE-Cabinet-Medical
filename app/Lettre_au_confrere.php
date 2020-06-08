@@ -10,7 +10,7 @@ class Lettre_au_confrere extends Model
     public $timestamps = false;
     public $table="lettre_au_confreres";
     protected $fillable = [
-        'ConfrereID','Titre','Message','Fichiers','date','MedcinId',
+        'ConfrereID', 'Titre', 'Message', 'date', 'MedcinId', 'PatientId',
     ];
     
 

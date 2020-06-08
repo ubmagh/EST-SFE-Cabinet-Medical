@@ -18,12 +18,13 @@ class CreateLettreAuConfreresTable extends Migration
             $table->bigInteger('ConfrereID')->unsigned();
             $table->string('Titre');
             $table->longText('Message')->nullable();
-            $table->json('Fichiers')->nullable();
-            $table->timestamp('date');
+            $table->timestamp('date')->UseCurrent();
             $table->bigInteger('MedcinId')->unsigned();
+            $table->bigInteger('PatientId')->unsigned()->nullable();
 
-        $table->foreign('ConfrereID')->references('id')->on('confreres')->onDelete('cascade');
-        $table->foreign('MedcinId')->references('id')->on('medcins');
+            $table->foreign('PatientId')->references('id')->on('patients')->onDelete('cascade');
+            $table->foreign('ConfrereID')->references('id')->on('confreres')->onDelete('cascade');
+            $table->foreign('MedcinId')->references('id')->on('medcins');
             
         });
     }

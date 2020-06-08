@@ -143,7 +143,8 @@ Route::group(['middleware' => ['auth:medcin']], function () {
     Route::get('Examens/Example', 'ExamenController@ExamsNamesExamples');
 
     // lettre au confreres route
-    Route::resource('lettreAuxConf', 'LettreAuConfrereController');
+    Route::resource('LettreAuConfrere', 'LettreAuConfrereController'); // Crud
+    Route::get('LettresAuConfreres', 'LettreAuConfrereController@GetListe');// list des lettres
 
     // Ordonnance Route
     Route::get('/Ordonnance/{ordonnanceid}', 'OrdonnanceController@GetOrdonnancePDF');
