@@ -37,11 +37,6 @@ class OrdonnanceController extends Controller
         $pdf_ordonnance->setPaper($customPaper);
        return $pdf_ordonnance->stream('ordonnance.pdf');
        
-       /*
-       return view('Medcin.Consultation.ordonnance',
-       ['consultation' => $consultation ,'nom'=>$nom, 'patient'=>$patient, 'cabinet'=>$cabinet
-       , 'medecin'=>$medcin, 'ordonnance'=>$ordonnance, 'medi'=>$medi]);
-       */
 
     }
 

@@ -29,4 +29,9 @@ class Medcin extends Authenticatable
     {
       return $this->hasMany('App\Consultation' , 'MedcinId');
     }
+
+    public function lettre()
+    {
+      return $this->hasMany('App\lettre_au_confreres' , 'MedcinId');
+    }
 }

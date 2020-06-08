@@ -18,6 +18,10 @@ class Lettre_au_confrere extends Model
         return $this->BelongsTo('App\confrere' , 'ConfrereID');
      }
 
+     public function medcin(){
+        return $this->BelongsTo('App\Medcin' , 'MedcinId');
+     }
+
      public function patient(){
         return $this->BelongsTo('App\Patient' , 'PatientId');
      }

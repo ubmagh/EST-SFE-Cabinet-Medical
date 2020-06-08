@@ -163,11 +163,24 @@ class LettreAuConfrereController extends Controller
             return redirect('LettreAuConfrere')->with(['status'=> 'good', 'letterId'=>$lettre->id  ]);
         return redirect('LettreAuConfrere')->with('status', 'err');
 
-      $lettre_pdf = PDF::loadview('Medcin.lettreAuxConf.lettre', ['confrere'=>$conf, 
-      'medecin'=>$medecin, 'lettre'=>$lettre]);
-         return $lettre_pdf->download('lettre.pdf');
+      
+    }
 
-        
+    public function destroy($Deletedid){
+
+        $lettre = Lettre_au_confrere::findOrFail($Deletedid);
+        $lettre->delete();
+    
+    }
+
+    public function printLetter($id){
+
+        $lettre = Lettre_au_confrere::findOrFail($id);
+        $conf = $lettre->confrere;
+        $medecin = $lettre->medcin;
+        $lettre_pdf = PDF::loadview('Medcin.lettreAuxConf.lettre', ['confrere'=>$conf, 'medecin'=>$medecin, 'lettre'=>$lettre]);
+         return $lettre_pdf->stream('lettre.pdf');
 
     }
+
 }
