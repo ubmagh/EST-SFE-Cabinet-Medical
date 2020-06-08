@@ -69,7 +69,7 @@ Lettres aux confrères
                                                 {{ $Lettre->Titre }}
                                             </td>
                                             <td class="text-center">
-                                               <a name="" id="" class="btn btn-warning text-white" href="{{ url('LettreAuConfrere/Imprimer/'.$Lettre->lettreID) }}" target="_blank" > <i class="fas fa-print fa-lg"></i>  </a>
+                                               <a name="" id="" class="btn btn-warning text-white" href="{{ url('Lettre/'.$Lettre->lettreID) }}" target="_blank" > <i class="fas fa-print fa-lg"></i>  </a>
                                                <a name="" id="" class="btn btn-info text-white" href="{{ url('LettreAuConfrere').'?modify='.$Lettre->lettreID }}"  > <i class="fas fa-edit fa-lg"></i>  </a>
                                                <button type="button" name="" id="" class="btn btn-danger text-white" href="#" role="button"> <i class="fas fa-trash fa-lg"></i>  </button>
                                             </td>

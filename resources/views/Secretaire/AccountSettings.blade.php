@@ -1,4 +1,4 @@
-@extends('Admin.Parts.pageLayout')
+@extends('Secretaire.Parts.pageLayout')
 
 @section('title','Secretaire : Paramètres de compte')
 

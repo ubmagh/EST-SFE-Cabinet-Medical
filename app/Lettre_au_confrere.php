@@ -17,4 +17,8 @@ class Lettre_au_confrere extends Model
     public function confrere(){
         return $this->BelongsTo('App\confrere' , 'ConfrereID');
      }
+
+     public function patient(){
+        return $this->BelongsTo('App\Patient' , 'PatientId');
+     }
 }

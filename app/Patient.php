@@ -30,5 +30,10 @@ class Patient extends Model
     {
       return $this->hasMany('App\Consultation' , 'PatientId');
     }
+
+    public function lettre()
+    {
+      return $this->hasMany('App\Lettre_au_confrere' , 'PatientId');
+    }
     
 }

@@ -1,4 +1,4 @@
-@extends('Admin.Parts.pageLayout')
+@extends('Medcin.Parts.pageLayout')
 
 @section('title','Medecin : Paramètres de compte')
 

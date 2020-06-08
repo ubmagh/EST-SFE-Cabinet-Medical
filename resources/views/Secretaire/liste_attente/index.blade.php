@@ -643,6 +643,7 @@ function submitRdv(rdvID){
 
 <script src="{{ asset('/js/typeahead.bundle.min.js') }}"></script>
 <script>
+    
     var data = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -767,5 +768,5 @@ function submitRdv(rdvID){
         });
     });
 
-</script>
+    </script>
 @endsection
