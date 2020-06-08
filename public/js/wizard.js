@@ -1,4 +1,4 @@
-(function ($) {
+(function($) {
     var verticalForm = $("#example-vertical-wizard");
     let submitting = false;
     verticalForm.children("div").steps({
@@ -6,7 +6,7 @@
         bodyTag: "section",
         transitionEffect: "slideLeft",
         stepsOrientation: "vertical",
-        onFinished: function (event, currentIndex) {
+        onFinished: function(event, currentIndex) {
 
             $('.alert').removeClass('show').addClass('d-none');
 
@@ -29,12 +29,12 @@
                 data: fd,
                 contentType: false,
                 processData: false,
-                success: function (resp) {
-                    if(resp.status=="Good"){
+                success: function(resp) {
+                    if (resp.status == "Good") {
                         $('#steps-uid-0-p-5').empty();
-                        for(let i=0;i<5;i++)
-                            $("#steps-uid-0-t-" + i).attr('href','');                     
-                        
+                        for (let i = 0; i < 5; i++)
+                            $("#steps-uid-0-t-" + i).attr('href', '');
+
                         $('#steps-uid-0-p-5').append(`
                             <div class=" col-md-11 mx-auto py-4 my-4">
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -45,15 +45,17 @@
                                     Consultation Bien Enregistrée ! 
                                 </div>
                             </div>
-                        `); 
-                        
-                        if(resp.ordonnanceurl!='none')
-                            $('#steps-uid-0-p-5').append(` <div class="row w-100 text-center mt-5 mb-3" > <a href="`+resp.ordonnanceurl+`" target="_blank" class="btn btn-info text-center text-wite mx-auto"> <h3 class="h3"> <i class="fas fa-print"></i> Imprimer l'ordonnance </h3> </a> </div> `);
+                        `);
+
+                        if (resp.ordonnanceurl != 'none')
+                            $('#steps-uid-0-p-5').append(` <div class="row w-100 text-center mt-5 mb-3" > <a href="` + resp.ordonnanceurl + `" target="_blank" class="btn btn-info text-center text-wite mx-auto"> <h3 class="h3"> <i class="fas fa-print"></i> Imprimer l'ordonnance </h3> </a> </div> `);
+
+                        $('#steps-uid-0-p-5').append(` <div class="row w-100 text-center my-3" > <a href="` + resp.letter + `" target="_blank" class="btn btn-warning text-center mx-auto"> <h3 class="h3"> <i class="fas fa-envelope "></i> Créer une lettre au confrère </h3> </a> </div> `);
                         $('#steps-uid-0-p-5').append(` <div class="row w-100 text-center my-3" > <a href="/Consultation" class="btn btn-info text-center mx-auto"> <h3 class="h3"> <i class="fas fa-arrow-right"></i> Patient suivant </h3> </a> </div> `);
                         $('.actions.clearfix').addClass('d-none');
                     }
                 },
-                error: function (error) {
+                error: function(error) {
                     const response = error.responseJSON;
                     const errors = response.errors;
 
@@ -88,7 +90,7 @@
                         //////// /// // 
                         for (var key in errors) {
                             // examens show validation msg
-                            if (key.search("ExaValues") != -1 || key.search("ExaTitres") != -1 ) {
+                            if (key.search("ExaValues") != -1 || key.search("ExaTitres") != -1) {
                                 $("#ExaError").html(
                                     error.responseJSON.errors[key]
                                 );
@@ -98,7 +100,7 @@
                                 if (errortab > 1) errortab = 1;
                             }
                             // OPerations show validation msg
-                            if (key.search("Operations") != -1 || key.search("Remarquez") != -1 ) {
+                            if (key.search("Operations") != -1 || key.search("Remarquez") != -1) {
                                 $("#OpsError").html(
                                     error.responseJSON.errors[key]
                                 );
@@ -107,8 +109,8 @@
                                     .addClass("show");
                                 if (errortab > 2) errortab = 2;
                             }
-                            if (key.search("medicament") != -1 || key.search("unites") != -1 || key.search("Periods") != -1 ) {
-                                $("#MedsError").html()? null:$("#MedsError").html(
+                            if (key.search("medicament") != -1 || key.search("unites") != -1 || key.search("Periods") != -1) {
+                                $("#MedsError").html() ? null : $("#MedsError").html(
                                     error.responseJSON.errors[key]
                                 );
                                 $("#MedsAlert")
@@ -116,8 +118,8 @@
                                     .addClass("show");
                                 if (errortab > 3) errortab = 3;
                             }
-                            if (key.search("Files") != -1 ) {
-                                $("#fileError").html()? null:$("#fileError").html(
+                            if (key.search("Files") != -1) {
+                                $("#fileError").html() ? null : $("#fileError").html(
                                     error.responseJSON.errors[key]
                                 );
                                 $("#fileAlert")
@@ -142,14 +144,14 @@
                         $("#steps-uid-0-t-" + errortab).click();
                     }
                 },
-                complete: function(){
+                complete: function() {
                     submitting = false;
                     finishBtn.empty();
                     finishBtn.attr("href", href);
                     finishBtn.append(html);
-                  }
+                }
             });
-            
+
         },
         labels: {
             cancel: "Annuler",

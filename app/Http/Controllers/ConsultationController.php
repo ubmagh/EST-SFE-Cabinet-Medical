@@ -285,7 +285,7 @@ class ConsultationController extends Controller
        }
 
        if( isset($ordonnance) )
-            return response()->json(['status'=>'Good','ordonnanceurl'=>url('/Ordonnance/'.$ordonnance->id)]);
+            return response()->json(['status'=>'Good','ordonnanceurl'=>url('/Ordonnance/'.$ordonnance->id), 'letter'=>url('Lettre/'.$patient->id)]);
         return response()->json(['status'=>'Good','ordonnanceurl'=>'none' ]);
     }
 
