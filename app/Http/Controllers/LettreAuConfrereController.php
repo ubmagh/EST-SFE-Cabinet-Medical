@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\confrere;
 use App\Patient;
+use App\Cabinet;
 use App\Lettre_au_confrere;
 use App\Http\Controllers\Redirect;
 use DB;
@@ -26,6 +27,11 @@ class LettreAuConfrereController extends Controller
         if(isset($modify) && ctype_digit($modify)){
             $modifyletter = Lettre_au_confrere::findOrFail($modify);
             return view('Medcin.lettreAuxConf.index', ['name'=>$name, 'confrere'=>$confrere,'modifyletter'=>$modifyletter]);
+        }
+        $patient = $request->input('patient');
+        if(isset($patient) && ctype_digit($patient)){
+            $patient = Patient::findOrFail($patient);
+            return view('Medcin.lettreAuxConf.index', ['name'=>$name, 'confrere'=>$confrere,'patient'=>$patient]);
         }
         
 
@@ -178,7 +184,10 @@ class LettreAuConfrereController extends Controller
         $lettre = Lettre_au_confrere::findOrFail($id);
         $conf = $lettre->confrere;
         $medecin = $lettre->medcin;
-        $lettre_pdf = PDF::loadview('Medcin.lettreAuxConf.lettre', ['confrere'=>$conf, 'medecin'=>$medecin, 'lettre'=>$lettre]);
+        $cabinet = Cabinet::first();
+        $lettre_pdf = PDF::loadview('Medcin.lettreAuxConf.lettre', ['confrere'=>$conf, 'cabinet'=>$cabinet, 'medecin'=>$medecin, 'lettre'=>$lettre]);
+        $customPaper = array(0, 0, 792.00, 1224.00);
+        $lettre_pdf->setPaper($customPaper);
          return $lettre_pdf->stream('lettre.pdf');
 
     }

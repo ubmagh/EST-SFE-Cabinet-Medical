@@ -210,6 +210,44 @@ Lettre au confrère
                                             </div>
                                         </div>
 
+                                    @elseif( isset($patient) )
+                                        
+                                        <div class="form-group col-md-10 row mx-auto" id="PatientDetails">
+                                            <div class="col-lg-2">
+                                                <label> Patient :</label>
+                                            </div>
+                                            <div class="col-lg-10">
+                                                <div class="card rounded border mb-2">
+                                                    <div class="card-body p-3">
+                                                        <div class="media">
+                                                            <i class="ti-user icon-md align-self-center mr-3 "></i>
+                                                            <div class="media-body">
+                                                                <h6 class="mb-1" id="PatientName">{{ $patient->Nom.' '.$patient->Prenom }}</h6>
+                                                                <p class="mb-0 text-muted" id="PatientID">
+                                                                    Identifiant : {{ $patient->id_civile }}
+                                                                </p>
+                                                            </div>
+                                                            <button type="button" class="float-right" id="removePatient"
+                                                                style="border: none; background-color: transparent; cursor: pointer;"><i
+                                                                    class="fa fa-times fa-lg text-danger"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="id_civile" id="id_civile" value="{{ $patient->id_civile }}" />
+
+                                        <div class="form-group row col-md-10 mx-auto d-none" id="PatientSearch">
+                                            <div class="col-lg-2">
+                                                <label class="col-form-label">Patient : </label>
+                                            </div>
+                                            <div class="col-lg-10" id="custom-templates" >
+                                                <input class="form-control typeahead" id="id_civile2" autocomplete="off"
+                                                    type="text" placeholder="chercher le patient par nom ou identifiant">
+                                                <small class="text-muted"> inclure des informations à propos du patient </small>
+                                            </div>
+                                        </div>
+
                                     @else
 
                                         <div class="form-group d-none col-md-10 row mx-auto" id="PatientDetails">
