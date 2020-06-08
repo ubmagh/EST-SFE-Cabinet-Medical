@@ -14,7 +14,7 @@ use DB;
 use Illuminate\Support\Facades\Validator;
 use PDF;
 
-
+use Carbon\Carbon;
 class LettreAuConfrereController extends Controller
 {
 
@@ -185,7 +185,12 @@ class LettreAuConfrereController extends Controller
         $conf = $lettre->confrere;
         $medecin = $lettre->medcin;
         $cabinet = Cabinet::first();
-        $lettre_pdf = PDF::loadview('Medcin.lettreAuxConf.lettre', ['confrere'=>$conf, 'cabinet'=>$cabinet, 'medecin'=>$medecin, 'lettre'=>$lettre]);
+        $patient = ( $lettre->PatientId ) ? $lettre->patient: null;
+        $age="";
+        if($patient){
+        $age= Carbon::parse( substr($patient->DateNaissance,0,17) )->age;
+        }
+        $lettre_pdf = PDF::loadview('Medcin.lettreAuxConf.lettre', ['confrere'=>$conf, 'cabinet'=>$cabinet, 'medecin'=>$medecin, 'lettre'=>$lettre, 'patient'=>$patient,'age'=>$age]);
         $customPaper = array(0, 0, 792.00, 1224.00);
         $lettre_pdf->setPaper($customPaper);
          return $lettre_pdf->stream('lettre.pdf');

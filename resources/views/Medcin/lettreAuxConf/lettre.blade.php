@@ -111,9 +111,22 @@
 
         </div>
 
-        
+        @if( $patient )
+            <div style="position: relative; display: block; margin-top: 10%; margin-bottom: 0px; max-width: 40%;">
+                <h5 style="font-size: medium; margin-bottom: 0px;"> infos du Patient : </h5>
+                <div style="margin-top: 0px; margin-left : 24px;">
+                    <p style="margin-top: 8px;"> Nom:  {{ $patient->Nom }} {{ $patient->Prenom }} </p>
+                    <p style="margin-top: -3px;"> Identifiant Civile: {{ $patient->id_civile }} </p>
+                    @if($patient->typeMutuel)
+                        <p style="margin-top: -3px;"> Mutuel : {{ $patient->typeMutuel }}  - ref : {{ $patient->ref_mutuel }} </p>
+                    @endif
+                    <p style="margin-top: -3px;">Age : {{ $age }} ans </p>
 
-        <div style="margin-top:  13%; margin-left: 65%">
+                </div>
+            </div>
+        @endif
+
+        <div style="margin-top:  -60px; margin-left: 65%; float: left; position: relative; display: block;">
 
             <span style="font-size: 1.1em; color: #2D1832;">
                 Le {{ date_format(  DateTime::createFromFormat("Y-m-d H:i:s", $lettre->date),"d / m / Y") }}
