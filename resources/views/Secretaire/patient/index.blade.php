@@ -11,7 +11,7 @@ Liste des patients
 @section('content')
 
 
-<div class="content-wrapper">
+<div class="content-wrapper" style="max-width: 85% !important;">
     <div class="card h-100">
         <div class="card-body">
             <div class="d-block w-100 mb-n5 text-center mt-3">

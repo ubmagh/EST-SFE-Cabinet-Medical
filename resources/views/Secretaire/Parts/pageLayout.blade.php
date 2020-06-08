@@ -95,12 +95,12 @@ les variables de ce template
             </li>
             <li class="nav-item">
               <a href="{{ url('/patient') }}" class="nav-link">
-                <i class="ti-receipt menu-icon"></i>
+                <i class="fas fa-users menu-icon"></i>
                 <span class="menu-title">Patients</span></a>
             </li>
             <li class="nav-item">
               <a href="{{ url('/Medicaments') }}" class="nav-link">
-                <i class="ti-receipt menu-icon"></i>
+                <i class="fas fa-pills menu-icon"></i>
                 <span class="menu-title">Medicaments</span></a>
             </li>
           </ul>
