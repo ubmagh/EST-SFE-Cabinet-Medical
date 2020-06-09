@@ -299,6 +299,15 @@ Medecin: Consultation à Cabinet
                             </span>
                         </p>
 
+                        <p class="clearfix">
+                            <span class="float-left">
+                                Sexe
+                            </span>
+                            <span class="float-right text-muted">
+                                {{ $patient->Sexe }}
+                            </span>
+                        </p>
+
                         @if($patient->age)
                             <p class="clearfix">
                                 <span class="float-left">
@@ -373,8 +382,10 @@ Medecin: Consultation à Cabinet
 
                     </div>
 
-                    <button class="btn btn-success btn-block mb-2"><i class="far fa-id-card"></i>
-                        Voir le dossier médical</button>
+                    <a href="{{ url('DossierMedical',$patient->id) }}" target="_blank" class="btn btn-success btn-block mb-2">
+                        <i class="far fa-id-card"></i>
+                        Voir le dossier médical
+                    </a>
                 </div>
             </div>
         </div>

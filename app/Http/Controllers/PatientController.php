@@ -6,6 +6,7 @@ use App\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 
 class PatientController extends Controller
 {
@@ -78,4 +79,16 @@ class PatientController extends Controller
     
     }
    
+
+    public function fichepourMedecin($id){
+
+        $patient = Patient::findOrFail($id);
+        $user= Auth::guard('medcin')->user();
+        $name= $user->Nom.' '.$user->Prenom;
+        $age= Carbon::parse( substr($patient->DateNaissance,0,17) )->age;
+        return view('Medcin.Parts.FichePatient',['name'=>$name, 'patient'=>$patient, 'age'=>$age]);
+
+    }
+
+
 }

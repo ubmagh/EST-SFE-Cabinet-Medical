@@ -94,7 +94,6 @@ Liste des patients
 
 
 
-
                                     </tr>
                                 @endforeach
                             </tbody>

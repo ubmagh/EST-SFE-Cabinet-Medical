@@ -146,7 +146,12 @@ Route::group(['middleware' => ['auth:medcin']], function () {
     Route::resource('LettreAuConfrere', 'LettreAuConfrereController'); // Crud
     Route::get('LettresAuConfreres', 'LettreAuConfrereController@GetListe');// list des lettres
     Route::get('LettreAuConfrerePatient','LettreAuConfrereController@autocomplete_patient');
-    Route::get('Lettre/{id}','LettreAuConfrereController@printLetter');
+    Route::get('Lettre/{id}','LettreAuConfrereController@printLetter'); // imprimer une lettre
+
+
+
+    // Fiche Patient
+    Route::get('FichePatient/{id}','PatientController@fichepourMedecin'); // imprimer une lettre
 
 
 
