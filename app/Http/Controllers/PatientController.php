@@ -91,4 +91,26 @@ class PatientController extends Controller
     }
 
 
+
+    public function DossierMedical_mainForSearch(Request $request){
+
+        $user= Auth::guard('medcin')->user();
+        $name= $user->Nom.' '.$user->Prenom;
+
+        $q = filter_var( $request->input('q'), FILTER_SANITIZE_STRING);
+        if($q){
+
+            $patients = Patient::where('Nom','LIKE','%'.$q.'%')->orWhere('Prenom','LIKE','%'.$q.'%')->orWhere('id_civile','LIKE','%'.$q.'%')->OrderBy('Nom')->paginate(14);
+        return view('Medcin.DossierMedical.searchView',[ 'name'=>$name,'patients'=>$patients,'q'=>$q ]);
+            
+        }
+
+        $patients = Patient::OrderBy('Nom')->paginate(14);        
+        return view('Medcin.DossierMedical.searchView',[ 'name'=>$name,'patients'=>$patients ]);
+
+
+    }
+
+
+
 }

@@ -75,11 +75,19 @@
               </div>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="{{ url('DossierMedical') }}">
+                <i class="far fa-id-card menu-icon"></i>
+                <span class="menu-title">Dossier Medical</span>
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="{{ url('LettresAuConfreres') }}">
                 <i class="fas fa-user-friends menu-icon"></i>
                 <span class="menu-title">Lettre au Confrère</span>
               </a>
             </li>
+
+            
             
             
           </ul>
