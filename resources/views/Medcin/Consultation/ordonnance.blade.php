@@ -66,7 +66,7 @@
 
                           <td class="desc">{{ $medis->medicament->Nom }}</td>
                           @if( $medis->medicament->Quand!='indifinie' )
-                            <td class="unit">{{ $medis->NbrParJour.' '.$medis->medicament->Prise.', '.$medis->medicament->Quand}}</td>
+                            <td class="unit">{{ $medis->NbrParJour.' '.$medis->medicament->Prise}} {{ $medis->medicament->Quand!="indifini"? ', '.$medis->medicament->Quand:"" }}</td>
                           @else
                             <td class="unit">{{ $medis->NbrParJour.' '.$medis->medicament->Prise }}</td>
                           @endif
@@ -101,7 +101,7 @@
                   Analyses à faire :
               </h3>
           </div>
-          <div class="notice afaire">
+          <div class="notice">
             <p>
               {{ $consultation->ExamensAfaire }}
             </p>

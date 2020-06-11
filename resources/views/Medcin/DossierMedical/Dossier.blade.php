@@ -2,6 +2,13 @@
 
 @section('title','Dossier Medical: '.$patient->Nom.' '.$patient->Prenom)
 
+
+@section('css')
+
+
+  <link rel="stylesheet" href="{{ asset('vendors/lightgallery/css/lightgallery.css') }}">
+@endsection
+
 @section('content')
 
 <div class="content-wrapper" style="max-width: 85% !important;">
@@ -160,9 +167,11 @@
                                             <a class="nav-link" id="pillsMed{{$consultation->id}}" data-toggle="pill" href="#ContentMed{{$consultation->id}}" role="tab" aria-controls="ContentMed{{$consultation->id}}" aria-selected="false"><i class="fas fa-prescription-bottle-alt fa-lg"></i> Medicaments </a>
                                         </li>
                                     @endif
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="pillsFA{{$consultation->id}}" data-toggle="pill" href="#ContentFA{{$consultation->id}}" role="tab" aria-controls="ContentFA{{$consultation->id}}" aria-selected="false"><i class="fas fa-file-medical fa-lg"></i> Fichiers Ajoutés </a>
-                                    </li>
+                                    @if( count( $consultation->Fichier ) )
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="pillsFA{{$consultation->id}}" data-toggle="pill" href="#ContentFA{{$consultation->id}}" role="tab" aria-controls="ContentFA{{$consultation->id}}" aria-selected="false"><i class="fas fa-file-medical fa-lg"></i> Fichiers Ajoutés </a>
+                                        </li>
+                                    @endif
                                 </ul>                                
 
                                 <div class="tab-content border-0 mt-3" id="pills-tabContent" style="min-height: 350px;">
@@ -237,12 +246,12 @@
                                                     <div class="col-md-10 text-left mx-auto">
                                                         @foreach ( $consultation->OperationSelonConsu as $opSelConsu )
 
-                                                            <li class="font-weight-bold my-2" style="text-indent: 50px; font-size: large;"> {{ $opSelConsu->Operation->Intitule }} 
+                                                            <li class="font-weight-bold mb-2" style="text-indent: 50px; font-size: large;"> {{ $opSelConsu->Operation->Intitule }} 
                                                                 <span class="font-weight-normal">
                                                                     {{ $opSelConsu->Operation->Description? " : ".$opSelConsu->Operation->Description:"" }} 
                                                                 </span>
                                                             </li>
-                                                            <ul class=" mb-3  list-arrow col-11 mx-auto">
+                                                            <ul class=" mb-5  list-arrow col-11 mx-auto">
                                                                 <li class="ml-5">
                                                                     {{ $opSelConsu->Remarque ? $opSelConsu->Remarque:"" }}
                                                                 </li>
@@ -305,19 +314,120 @@
                                             </div>
                                         </div>
                                     @endif
-                                    <div class="tab-pane fade" id="ContentFA{{$consultation->id}}" role="tabpanel" aria-labelledby="pillsFA{{$consultation->id}}">
-                                        <div class="media">
-                                            <img class="mr-3 w-25 rounded" src="../../images/samples/300x300/14.jpg" alt="sample image">
-                                            <div class="media-body row px-4">
-                                            <p>
-                                                I'm really more an apartment person. This man is a knight in shiningqsdqsdqsdqsdiiqjjoiduqosi armor. Oh I beg to differ, I think we have a lot to discuss. After all, you are a client. You all right, Dexter?
-                                            </p>
-                                            <p>
-                                                I'm generally confused most of the time. Cops, another community I'm not part of. You're a killer. I catch killers. Hello, Dexter Morgan.
-                                            </p>
+                                    @if( count( $consultation->Fichier ) )
+                                        <div class="tab-pane fade" id="ContentFA{{$consultation->id}}" role="tabpanel" aria-labelledby="pillsFA{{$consultation->id}}">
+                                            <div class="media">
+                                                <div class="media-body row px-4">
+
+                                                    <div class="col-12 px-4 mt-n5">
+                                                        <ul class=" mb-3 mt-n5 list-arrow col-11 mx-auto">
+                                                            <li class="ml-5">
+                                                                Images : 
+                                                            </li>
+                                                        </ul>
+                                                        
+                                                        <div id="lightgallery" class="row lightGallery mx-3">
+                                                            @foreach ( $consultation->Fichier as $file )
+                                                                @if($file->Type=="image")
+                                                                    <a href="{{ url('Ressource/Image',$file->id) }}" class="image-tile "><img src="{{ url('Ressource/Image',$file->id) }}"  alt="{{ $file->OriginalName }}"></a>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 px-4">
+                                                        <ul class=" mb-1 mt-3  list-arrow col-11 mx-auto">
+                                                            <li class="ml-5">
+                                                                Videos : 
+                                                            </li>
+                                                        </ul>
+                                                        <div class="d-none">
+
+                                                            @foreach ( $consultation->Fichier as $file )
+                                                                @if($file->Type=="video")
+                                                                    <div style="display:none;" id="video{{$file->id}}">
+                                                                        <video class="lg-video-object lg-html5" controls preload="none">
+                                                                            <source src="{{ url('Ressource/Video',$file->id) }}" type="video/mp4">
+                                                                            Votre Navigateur  ne supporte pas les video de HTML5.
+                                                                        </video>
+                                                                    </div>
+                                                                @endif
+                                                            @endforeach
+
+                                                        </div>
+                                                        <ul id="video-gallery" class="row lightGallery mt-2">
+
+                                                            @foreach ( $consultation->Fichier as $file )
+                                                                @if($file->Type=="video")
+
+                                                                    <li data-poster="{{ asset('images\lightbox\Black.png') }}" class="list-unstyled image-tile col-xl-3 col-lg-3 col-md-3 col-md-4 col-6" data-sub-html="{{ $file->OriginalName }}" data-html="#video{{$file->id}}" >
+                                                                        <img src="{{ asset('images\lightbox\thumb.png') }}" />
+                                                                    </li>
+                                                                    
+                                                                @endif
+                                                            @endforeach
+                                                            
+                                                        </ul>
+                                                    </div>
+
+                                                    <div class="col-12 px-4">
+                                                        <ul class=" mb-1 mt-3  list-arrow col-11 mx-auto">
+                                                            <li class="ml-5">
+                                                                Les fichiers PDF : 
+                                                            </li>
+                                                        </ul>
+                                                        <ul class="row lightGallery mt-2">
+
+                                                            @foreach ( $consultation->Fichier as $file )
+                                                                @if($file->Type=="pdf")
+
+                                                                    <li  class="list-unstyled image-tile col-xl-3 col-lg-3 col-md-3 col-md-4 col-6 text-center" >
+                                                                        <a href="{{ url('Ressource/PDF',$file->id) }}" target="_blank">
+                                                                            <img src="{{ asset('images\Thumbs\pdf.png') }}" class=" w-75 mb-n5" />
+                                                                            <p class="mt-n5 text-truncate"> {{ $file->OriginalName }} </p>
+                                                                        </a>
+                                                                    </li>
+                                                                    
+                                                                @endif
+                                                            @endforeach
+                                                            
+                                                        </ul>
+                                                    </div>
+
+
+
+                                                    <div class="col-12 px-4">
+                                                        <ul class=" mb-3 mt-3  list-arrow col-11 mx-auto">
+                                                            <li class="ml-5">
+                                                                Les fichiers Zip : 
+                                                            </li>
+                                                        </ul>
+                                                        <ul class="row lightGallery mt-2">
+
+                                                            @foreach ( $consultation->Fichier as $file )
+                                                                @if($file->Type=="zip")
+
+                                                                    <li  class="list-unstyled image-tile col-xl-3 col-lg-3 col-md-3 col-md-4 col-6 text-center" >
+                                                                        <a href="{{ url('Ressource/ZIP',$file->id) }}" target="_blank">
+                                                                            <img src="{{ asset('images\Thumbs\zip.png') }}" class="mb-n5" style="width: 63%;" />
+                                                                            <p class="mt-3 text-truncate"> {{ $file->OriginalName }} </p>
+                                                                        </a>
+                                                                    </li>
+                                                                    
+                                                                @endif
+                                                            @endforeach
+                                                            
+                                                        </ul>
+                                                    </div>
+
+
+
+
+
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 </div>                                
                                 
 
@@ -334,7 +444,7 @@
         </div>
 
 
-        <div class="row col-md-6 mx-auto text-center mt-3 mb-4">
+        <div class="row col-md-6 mx-auto d-flex justify-content-center mt-3 mb-4">
             {{ $consultations->links() }}
         </div>
 
@@ -394,4 +504,7 @@
     @endif
 
 </script>
+
+    <script src="{{ asset('vendors/lightgallery/js/lightgallery-all.min.js') }}" ></script>
+    <script src="{{ asset('js/light-gallery.js') }}" ></script>
 @endsection

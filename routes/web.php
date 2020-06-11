@@ -159,6 +159,10 @@ Route::group(['middleware' => ['auth:medcin']], function () {
     Route::get('DossierMedical','PatientController@DossierMedical_mainForSearch'); // imprimer une lettre
     Route::get('DossierMedical/{id}','PatientController@DossierMedical_GetIt'); // imprimer une lettre
 
+    Route::get('Ressource/Image/{id}','FichierController@GetImage');
+    Route::get('Ressource/Video/{id}','FichierController@GetVideo');
+    Route::get('Ressource/PDF/{id}','FichierController@GetPDF');
+    Route::get('Ressource/ZIP/{id}','FichierController@GetZIP');
 
     // Ordonnance Route
     Route::get('/Ordonnance/{ordonnanceid}', 'OrdonnanceController@GetOrdonnancePDF');

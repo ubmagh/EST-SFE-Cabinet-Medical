@@ -41,4 +41,9 @@ class Consultation extends Model
         return $this->hasOne('App\Ordonnance','ConsultationId');
     }
 
+    public function Fichier()
+    {
+        return $this->hasMany('App\Fichier','ConsultationId');
+    }
+
 }

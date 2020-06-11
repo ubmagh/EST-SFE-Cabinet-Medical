@@ -12,4 +12,9 @@ class Fichier extends Model
     protected $fillable = [
         'Date', 'Type', 'CurrentName', 'OriginalName', 'Size', 'ConsultationId',
     ];
+
+    public function Consultation(){
+        return $this->BelongsTo('App\Consultation' , 'ConsultationId');
+    }
+
 }
