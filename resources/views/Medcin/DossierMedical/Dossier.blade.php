@@ -87,7 +87,7 @@
 
         <div class="card-body py-4 d-none ContentSec">
 
-            <div class="row w-50 mx-auto text-center mt-4 mb-3">
+            <div class="row w-50 mx-auto text-center mt-4 mb-5">
                 <h2 class="mx-auto d-block font-weight-light h2"> Liste des consultations: </h2>
                 <div class="col-12 d-block">
                     <hr class="d-block text-secondary mx-auto" />
@@ -145,71 +145,170 @@
                                     <li class="nav-item">
                                         <a class="nav-link active" id="pillsDC{{$consultation->id}}" data-toggle="pill" href="#ContentDC{{$consultation->id}}" role="tab" aria-controls="ContentDC{{$consultation->id}}" aria-selected="true"> <i class="fas fa-info fa-lg"></i> Détails de la Consultation</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="pillsEX{{$consultation->id}}" data-toggle="pill" href="#ContentEX{{$consultation->id}}" role="tab" aria-controls="ContentEX{{$consultation->id}}" aria-selected="false"><i class="fas fa-stethoscope fa-lg"></i> Mesures & Examens</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="pillsOps{{$consultation->id}}" data-toggle="pill" href="#ContentOps{{$consultation->id}}" role="tab" aria-controls="ContentOps{{$consultation->id}}" aria-selected="false"><i class="fas fa-microscope fa-lg"></i> Opérations </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="pillsMed{{$consultation->id}}" data-toggle="pill" href="#ContentMed{{$consultation->id}}" role="tab" aria-controls="ContentMed{{$consultation->id}}" aria-selected="false"><i class="fas fa-prescription-bottle-alt fa-lg"></i> Medicaments </a>
-                                    </li>
+                                    @if( count($consultation->Examen))
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="pillsEX{{$consultation->id}}" data-toggle="pill" href="#ContentEX{{$consultation->id}}" role="tab" aria-controls="ContentEX{{$consultation->id}}" aria-selected="false"><i class="fas fa-stethoscope fa-lg"></i> Mesures & Examens</a>
+                                        </li>
+                                    @endif
+                                    @if(count( $consultation->OperationSelonConsu ))
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="pillsOps{{$consultation->id}}" data-toggle="pill" href="#ContentOps{{$consultation->id}}" role="tab" aria-controls="ContentOps{{$consultation->id}}" aria-selected="false"><i class="fas fa-microscope fa-lg"></i> Opérations </a>
+                                        </li>
+                                    @endif
+                                    @if( !empty( $consultation->Ordonnance ))
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="pillsMed{{$consultation->id}}" data-toggle="pill" href="#ContentMed{{$consultation->id}}" role="tab" aria-controls="ContentMed{{$consultation->id}}" aria-selected="false"><i class="fas fa-prescription-bottle-alt fa-lg"></i> Medicaments </a>
+                                        </li>
+                                    @endif
                                     <li class="nav-item">
                                         <a class="nav-link" id="pillsFA{{$consultation->id}}" data-toggle="pill" href="#ContentFA{{$consultation->id}}" role="tab" aria-controls="ContentFA{{$consultation->id}}" aria-selected="false"><i class="fas fa-file-medical fa-lg"></i> Fichiers Ajoutés </a>
                                     </li>
                                 </ul>                                
 
-                                <div class="tab-content border-0 mt-3" id="pills-tabContent">
-                                    <div class="tab-pane fade show active" id="ContentDC{{$consultation->id}}" role="tabpanel" aria-labelledby="pillsDC{{$consultation->id}}">
+                                <div class="tab-content border-0 mt-3" id="pills-tabContent" style="min-height: 350px;">
+                                    <div class="tab-pane fade show active" id="ContentDC{{$consultation->id}}" role="tabpanel" aria-labelledby="pillsDC{{$consultation->id}}" >
                                         <div class="media">
-                                            <img class="mr-3 w-25 rounded" src="../../images/samples/300x300/12.jpg" alt="sample image">
-                                            <div class="media-body">
-                                                <h5 class="mt-0">I'm doing mental jumping jacks.</h5>
-                                                <p>Only you could make those words cute. Oh I beg to differ, I think we have a lot to discuss. After all, you are a client. I am not a killer. I feel like a 
-                                                    jigsaw puzzle missing a piece. And I'm not even sure what the picture should be.
-                                                </p>
+                                            <div class="media-body row px-4">
+                                                <div  class="col-7">
+                                                    <li class="font-weight-bold"> Type de Consultation : </li>
+                                                    <p class="my-3 " style="text-indent: 50px; font-size: medium;"> {{ $consultation->Type }} </p>
+                                                    <li class="font-weight-bold mt-3"> Titre de consultation : </li>
+                                                    <p class="my-3 " style="text-indent: 50px; font-size: medium;"> {{ $consultation->Description }} </p>
+                                                    @if($consultation->ExamensAfaire)
+                                                        <li class="font-weight-bold"> Analyses à faire : </li>
+                                                        <p class="my-3 " style="text-indent: 50px; font-size: medium;line-break: normal; word-break: break-all;">
+                                                          {{$consultation->ExamensAfaire}}
+                                                        </p>
+                                                    @endif
+                                                </div>
+                                                <div  class="col-5">
+                                                    <li class="font-weight-bold"> Date et Heure : </li>
+                                                    <p class="my-3 dateTimeHour" style="text-indent: 50px; font-size: medium;"> {{ $consultation->Date }} </p>
+
+                                                    <li class="font-weight-bold"> Secretaire : </li>
+                                                    <p class="my-3" style="text-indent: 50px; font-size: medium;"> {{ $consultation->salleAttente->Secretaire->Nom.' '.$consultation->salleAttente->Secretaire->Prenom }} </p>
+                                                    
+
+                                                    @if($consultation->Urgent)
+                                                        <div class="badge badge-pill badge-danger px-3 py-2 mt-3"  style="font-size: 18px;"> <i class="ti-alert ti-lg mr-2"></i> Consultation Urgente </div>
+                                                    @endif
+                                                    @if( $consultation->salleAttente )
+                                                        @if($consultation->salleAttente->rdvID)
+                                                            <div class="badge badge-pill badge-info text-white px-3 py-2 mt-3"  style="font-size: 18px;">
+                                                            <i class="far fa-clock mr-2" style="font-size: 28px;"></i>Consultation à RendezVous</div>
+                                                        @endif
+                                                    @endif
+
+                                                </div>
+                                                
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="ContentEX{{$consultation->id}}" role="tabpanel" aria-labelledby="pillsEX{{$consultation->id}}">
-                                        <div class="media">
-                                            <img class="mr-3 w-25 rounded" src="http://www.urbanui.com/" alt="sample image">
-                                            <div class="media-body">
-                                            <p>I'm thinking two circus clowns dancing. You? Finding a needle in a haystack isn't hard when every straw is computerized. Tell him time is of the essence. 
-                                                Somehow, I doubt that. You have a good heart, Dexter.</p>
+                                    @if( count($consultation->Examen) )
+                                        <div class="tab-pane fade" id="ContentEX{{$consultation->id}}" role="tabpanel" aria-labelledby="pillsEX{{$consultation->id}}">
+                                            <div class="media">
+                                                <div class="media-body row px-4">
+
+                                                    <div class="col-md-6 col-12">
+                                                        @foreach ($consultation->Examen as $num => $exa )
+                                                            @if( ! $num%2 )
+                                                                <li class="font-weight-bold my-2" style="text-indent: 50px; font-size: large;"> {{ $exa->Titre }} <span class="font-weight-normal"> {{ $exa->Valeur ? " :  ".$exa->Valeur:"" }} </span> </li>
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
+
+                                                    <div class="col-md-6 col-12">
+                                                        @foreach ($consultation->Examen as $num => $exa )
+                                                            @if( $num%2 )
+                                                                <li class="font-weight-bold my-2" style="text-indent: 50px; font-size: large;"> {{ $exa->Titre }} <span class="font-weight-normal"> {{ $exa->Valeur ? " :  ".$exa->Valeur:"" }} </span> </li>
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
+
+
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="ContentOps{{$consultation->id}}" role="tabpanel" aria-labelledby="pillsOps{{$consultation->id}}">
-                                        <div class="media">
-                                            <img class="mr-3 w-25 rounded" src="../../images/samples/300x300/14.jpg" alt="sample image">
-                                            <div class="media-body">
-                                            <p>
-                                                I'm really more an apartment person. This man is a knight in shining armor. Oh I beg to differ, I think we have a lot to discuss. After all, you are a client. You all right, Dexter?
-                                            </p>
-                                            <p>
-                                                I'm generally confused most of the time. Cops, another community I'm not part of. You're a killer. I catch killers. Hello, Dexter Morgan.
-                                            </p>
+                                    @endif
+                                    @if(count( $consultation->OperationSelonConsu ))
+                                        <div class="tab-pane fade" id="ContentOps{{$consultation->id}}" role="tabpanel" aria-labelledby="pillsOps{{$consultation->id}}">
+                                            <div class="media">
+                                                <div class="media-body px-4 row">
+                                                    <div class="col-md-10 text-left mx-auto">
+                                                        @foreach ( $consultation->OperationSelonConsu as $opSelConsu )
+
+                                                            <li class="font-weight-bold my-2" style="text-indent: 50px; font-size: large;"> {{ $opSelConsu->Operation->Intitule }} 
+                                                                <span class="font-weight-normal">
+                                                                    {{ $opSelConsu->Operation->Description? " : ".$opSelConsu->Operation->Description:"" }} 
+                                                                </span>
+                                                            </li>
+                                                            <ul class=" mb-3  list-arrow col-11 mx-auto">
+                                                                <li class="ml-5">
+                                                                    {{ $opSelConsu->Remarque ? $opSelConsu->Remarque:"" }}
+                                                                </li>
+                                                            </ul>
+                                                            
+                                                        @endforeach
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="ContentMed{{$consultation->id}}" role="tabpanel" aria-labelledby="pillsMed{{$consultation->id}}">
-                                        <div class="media">
-                                            <img class="mr-3 w-25 rounded" src="../../images/samples/300x300/14.jpg" alt="sample image">
-                                            <div class="media-body">
-                                            <p>
-                                                I'm really more an apartment person. This man is a knight in shiningqsdqsdqsdqsdiiqjjoiduqosi armor. Oh I beg to differ, I think we have a lot to discuss. After all, you are a client. You all right, Dexter?
-                                            </p>
-                                            <p>
-                                                I'm generally confused most of the time. Cops, another community I'm not part of. You're a killer. I catch killers. Hello, Dexter Morgan.
-                                            </p>
+                                    @endif
+                                    @if( !empty( $consultation->Ordonnance ))
+                                        <div class="tab-pane fade" id="ContentMed{{$consultation->id}}" role="tabpanel" aria-labelledby="pillsMed{{$consultation->id}}">
+                                            <div class="media">
+                                                <div class="media-body  row px-4">
+                                                    @if(count( $consultation->Ordonnance->MedicamentFromThisOrd))
+                                                        <div class="table-responsive mb-2 col-12 d-block">
+                                                            <table class="table w-100 table-bordered">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th> Nom </th>
+                                                                        <th> Prise </th>
+                                                                        <th> Période </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ( $consultation->Ordonnance->MedicamentFromThisOrd as $medicamentParOrd )
+                                                                        
+                                                                    <tr>
+                                                                        <td scope="row">{{ $medicamentParOrd->medicament->Nom }}</td>
+                                                                        <td> {{ $medicamentParOrd->NbrParJour }} {{ $medicamentParOrd->medicament->Prise }}  {{ $medicamentParOrd->medicament->Quand!="indifini"? ', '.$medicamentParOrd->medicament->Quand:" " }}  </td>
+                                                                        <td> {{ $medicamentParOrd->Periode }} </td>
+                                                                    </tr>
+
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    @endif
+                                            
+                                                    @if($consultation->Ordonnance->Description )
+                                                        <div class="col-12 d-block my-1">
+                                                            <hr class="w-50 mx-auto mb-5 mt-0" />
+                                                            <h4 class="h4 text-left font-weight-medium"> Contenue Ajouté à l'ordonnace :  </h4>
+                                                            <p class="my-3 d-block w-100 py-3 px-2" style="text-indent: 50px; font-size: medium;"> 
+                                                                {{ $consultation->Ordonnance->Description }}
+                                                            </p>    
+                                                            <hr class="w-50 mx-auto mt-5 mb-0"  />
+                                                        </div>
+                                                    @endif
+
+                                                    @if(count( $consultation->Ordonnance->MedicamentFromThisOrd))
+                                                        <div class="col-12 d-block text-center mt-2 ">
+                                                            <a href=" {{ url('/Ordonnance/'.$consultation->Ordonnance->id) }} " target="_blank" class="btn mx-auto btn-info text-white text-center text-wite mx-auto"> <h4 class="h4 font-weight-light"> <i class="fas fa-print"></i> Imprimer l'ordonnance </h4> </a>
+                                                        </div>
+                                                    @endif
+                                                </div>
+
+
                                             </div>
                                         </div>
-                                    </div>
+                                    @endif
                                     <div class="tab-pane fade" id="ContentFA{{$consultation->id}}" role="tabpanel" aria-labelledby="pillsFA{{$consultation->id}}">
                                         <div class="media">
                                             <img class="mr-3 w-25 rounded" src="../../images/samples/300x300/14.jpg" alt="sample image">
-                                            <div class="media-body">
+                                            <div class="media-body row px-4">
                                             <p>
                                                 I'm really more an apartment person. This man is a knight in shiningqsdqsdqsdqsdiiqjjoiduqosi armor. Oh I beg to differ, I think we have a lot to discuss. After all, you are a client. You all right, Dexter?
                                             </p>
@@ -274,6 +373,10 @@
 
         document.querySelectorAll('.DateTime').forEach( node=>{
             node.innerHTML =  '- '+ moment( node.innerHTML, "YYYY-MM-DD HH-ii-ss").format("dddd DD MMMM YYYY")+' -';
+        });
+
+        document.querySelectorAll('.dateTimeHour').forEach( node=>{
+            node.innerHTML =  ' '+ moment( node.innerHTML, "YYYY-MM-DD HH-ii-ss").format("dddd DD MMMM YYYY à HH:mm ")+' ';
         });
 
         document.querySelectorAll('.LoaderSec').forEach(node=>{

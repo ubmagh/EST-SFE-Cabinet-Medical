@@ -12,4 +12,15 @@ class Ordonnance extends Model
     protected $fillable = [
         'ConsultationId', 'Description',
     ];
+
+    public function consultation()
+     {
+     return $this->belongsTo('App\Consultation', 'ConsultationID');
+     }
+     
+     public function MedicamentFromThisOrd()
+     {
+         return $this->hasMany('App\Medicament_par_ordonnance','OrdonnanceId');
+     }
+
 }

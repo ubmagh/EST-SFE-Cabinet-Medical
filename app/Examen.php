@@ -12,4 +12,9 @@ class Examen extends Model
     protected $fillable = [
         'Titre', 'Valeur', 'ConsultationId',
     ];
+
+    public function consultation()
+    {
+        return $this->belongsTo('App\consultations','ConsultationId');
+    }
 }

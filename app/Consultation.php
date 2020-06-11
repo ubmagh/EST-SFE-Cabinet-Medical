@@ -26,4 +26,19 @@ class Consultation extends Model
         return $this->hasOne('App\salleAttente','ConsultationID');
     }
 
+    public function Examen()
+    {
+        return $this->hasMany('App\Examen','ConsultationId');
+    }
+
+    public function OperationSelonConsu()
+    {
+        return $this->hasMany('App\Operations_Selon_Consultation','ConsultationID');
+    }
+
+    public function Ordonnance()
+    {
+        return $this->hasOne('App\Ordonnance','ConsultationId');
+    }
+
 }

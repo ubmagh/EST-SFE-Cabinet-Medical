@@ -17,4 +17,8 @@ class Medicament_par_ordonnance extends Model
         return $this->BelongsTo('App\Medicament' , 'MedicamentId');
      }
 
+
+     public function Ordonnance(){
+        return $this->BelongsTo('App\Ordonnance' , 'OrdonnanceId');
+     }
 }

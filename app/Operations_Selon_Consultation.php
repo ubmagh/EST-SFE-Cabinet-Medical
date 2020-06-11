@@ -17,4 +17,9 @@ class Operations_Selon_Consultation extends Model
         return $this->BelongsTo('App\Operations_Cabinet' , 'OperationId');
     }
 
+    public function consultation()
+    {
+        return $this->belongsTo('App\consultations','ConsultationID');
+    }
+
 }
