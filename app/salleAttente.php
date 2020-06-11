@@ -22,13 +22,19 @@ class salleAttente extends Model
 
     */
     
-    public function patient(){
+     public function patient(){
         return $this->BelongsTo('App\Patient' , 'PatientId');
      }
      
      public function Secretaire(){
           return $this->BelongsTo('App\Secretaire' , 'SecretaireID');
-       }
+     }
+       
+
+     public function consultation()
+     {
+     return $this->belongsTo('App\Consultation', 'ConsultationID');
+     }
      
 
 }

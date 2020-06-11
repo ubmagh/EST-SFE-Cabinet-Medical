@@ -25,7 +25,7 @@ les variables de ce template
   <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.addons.css') }}">
   @yield('css')
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-  <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" />
+  <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}" />
 </head>
 
 <body>
@@ -34,8 +34,7 @@ les variables de ce template
       <nav class="navbar top-navbar col-lg-12 col-12 p-0">
         <div class="container">
           <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo" href="index-2.html"><img src="http://www.urbanui.com/justdo/template/images/logo-white.svg" alt="logo"/></a>
-            <a class="navbar-brand brand-logo-mini" href="index-2.html"><img src="http://www.urbanui.com/justdo/template/images/logo-mini.svg" alt="logo"/></a>
+            <a href="#{{config('app.name')}}" class="text-white" title="{{ config('app.name') }}"> <i class="fas fa-plus fa-2x"></i> <i id="{{config('app.name')}}" class="fab fa-medium-m fa-2x"></i>.app</a>
           </div>
           <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
             <ul class="navbar-nav mr-lg-2">
@@ -46,7 +45,7 @@ les variables de ce template
               
               <li class="nav-item nav-profile dropdown">
                 <a class="nav-link mt-2" href="#" data-toggle="dropdown" id="profileDropdown">
-                  <p style="font-family: Source Sans Pro;"> <i class="far fa-user fa-lg"></i> <u> {{ $name }} </u> </p>
+                  <p style="font-family: Source Sans Pro; font-size: large;">  <i class="fas fa-user fa-lg ml-n1 mr-1"></i>  <u> {{ $name }} </u> </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                 <a class="dropdown-item" href="{{ url('SecretaireParametres') }}">

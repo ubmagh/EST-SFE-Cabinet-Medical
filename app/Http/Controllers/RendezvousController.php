@@ -81,8 +81,8 @@ class RendezvousController extends Controller
             $request,
             [
                 'id_civile' =>   'required|exists:patients',
-                'DateDebut' =>  ['bail','required','regex:\d{4}-[01]\d-[0-3]\d [0-2]\d:[0-5]\d','date_format:Y-m-d H:i','after_or_equal:now', new DateDebutnotBetweenTwoDateTimes($request->input('DateDebut'))],
-                'DateFin'   =>  [ 'bail','required','regex:\d{4}-[01]\d-[0-3]\d [0-2]\d:[0-5]\d','date_format:Y-m-d H:i','after:DateDebut', new DateFinnotBetweenTwoDateTimes($request->input('DateFin')) ],
+                'DateDebut' =>  ['bail','required','regex:/\d{4}-[01]\d-[0-3]\d [0-2]\d:[0-5]\d/i','date_format:Y-m-d H:i','after_or_equal:now', new DateDebutnotBetweenTwoDateTimes($request->input('DateDebut'))],
+                'DateFin'   =>  [ 'bail','required','regex:/\d{4}-[01]\d-[0-3]\d [0-2]\d:[0-5]\d/i','date_format:Y-m-d H:i','after:DateDebut', new DateFinnotBetweenTwoDateTimes($request->input('DateFin')) ],
                 'Description'   =>  'nullable|max:255'
             ],
             [

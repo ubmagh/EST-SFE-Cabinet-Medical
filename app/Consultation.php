@@ -17,7 +17,13 @@ class Consultation extends Model
         return $this->BelongsTo('App\Medcin' , 'MedcinId');
     }
 
-     public function patient(){
+    public function patient(){
         return $this->BelongsTo('App\Patient' , 'PatientId');
-     }
+    }
+
+    public function salleAttente()
+    {
+        return $this->hasOne('App\salleAttente','ConsultationID');
+    }
+
 }

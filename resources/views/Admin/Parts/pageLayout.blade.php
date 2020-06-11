@@ -17,7 +17,7 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
   <!-- endinject -->
-  <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" />
+  <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}" />
   @yield('css')
 
 </head>
@@ -34,104 +34,12 @@
           </div>
           <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
             <ul class="navbar-nav mr-lg-2">
-              
+              <a href="#{{config('app.name')}}" class="text-white" title="{{ config('app.name') }}"> <i class="fas fa-plus fa-2x"></i> <i id="{{config('app.name')}}" class="fab fa-medium-m fa-2x"></i>.app</a>
             </ul>
             <ul class="navbar-nav navbar-nav-right">
-              <li class="nav-item dropdown mr-1">
-                <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
-                  <i class="ti-email mx-0"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
-                  <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                        <img src="{{ asset('images/faces/face4.jpg')}}" alt="image" class="profile-pic">
-                    </div>
-                    <div class="preview-item-content flex-grow">
-                      <h6 class="preview-subject ellipsis font-weight-normal">David Grey
-                      </h6>
-                      <p class="font-weight-light small-text text-muted mb-0">
-                        The meeting is cancelled
-                      </p>
-                    </div>
-                  </a>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                        <img src="{{ asset('images/faces/face2.jpg')}}" alt="image" class="profile-pic">
-                    </div>
-                    <div class="preview-item-content flex-grow">
-                      <h6 class="preview-subject ellipsis font-weight-normal">Tim Cook
-                      </h6>
-                      <p class="font-weight-light small-text text-muted mb-0">
-                        New product launch
-                      </p>
-                    </div>
-                  </a>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                        <img src="{{ asset('images/faces/face3.jpg')}}" alt="image" class="profile-pic">
-                    </div>
-                    <div class="preview-item-content flex-grow">
-                      <h6 class="preview-subject ellipsis font-weight-normal"> Johnson
-                      </h6>
-                      <p class="font-weight-light small-text text-muted mb-0">
-                        Upcoming board meeting
-                      </p>
-                    </div>
-                  </a>
-                </div>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-                  <i class="ti-bell mx-0"></i>
-                  <span class="count"></span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-                  <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <div class="preview-icon bg-success">
-                        <i class="ti-info-alt mx-0"></i>
-                      </div>
-                    </div>
-                    <div class="preview-item-content">
-                      <h6 class="preview-subject font-weight-normal">Application Error</h6>
-                      <p class="font-weight-light small-text mb-0 text-muted">
-                        Just now
-                      </p>
-                    </div>
-                  </a>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <div class="preview-icon bg-warning">
-                        <i class="ti-settings mx-0"></i>
-                      </div>
-                    </div>
-                    <div class="preview-item-content">
-                      <h6 class="preview-subject font-weight-normal">Settings</h6>
-                      <p class="font-weight-light small-text mb-0 text-muted">
-                        Private message
-                      </p>
-                    </div>
-                  </a>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <div class="preview-icon bg-info">
-                        <i class="ti-user mx-0"></i>
-                      </div>
-                    </div>
-                    <div class="preview-item-content">
-                      <h6 class="preview-subject font-weight-normal">New user registration</h6>
-                      <p class="font-weight-light small-text mb-0 text-muted">
-                        2 days ago
-                      </p>
-                    </div>
-                  </a>
-                </div>
-              </li>
               <li class="nav-item nav-profile dropdown">
                 <a class="nav-link mt-2" href="#" data-toggle="dropdown" id="profileDropdown">
-                <p style="font-family: Source Sans Pro;"> <u> {{ $name }} </u> </p>
+                  <p style="font-family: Source Sans Pro; font-size: large;">  <u> {{ $name }} </u> </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                 <a class="dropdown-item" href="{{ url('/AdminParametres') }}">
@@ -351,9 +259,9 @@
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
-        <footer class="footer">
+       <footer class="footer">
           <div class="w-100 clearfix">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2018 <a href="http://www.urbanui.com/" target="_blank">Urbanui</a>. All rights reserved.</span>
+            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2020 <a href="#"> {{ config('app.name') }} </a>. All rights reserved.</span>
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
           </div>
         </footer>

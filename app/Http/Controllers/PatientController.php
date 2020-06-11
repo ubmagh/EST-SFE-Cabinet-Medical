@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Patient;
+use App\Consultation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
 
 class PatientController extends Controller
 {
@@ -108,9 +111,24 @@ class PatientController extends Controller
         $patients = Patient::OrderBy('Nom')->paginate(14);        
         return view('Medcin.DossierMedical.searchView',[ 'name'=>$name,'patients'=>$patients ]);
 
-
     }
 
+
+    public function DossierMedical_GetIt(Request $request, $id){
+
+        $user= Auth::guard('medcin')->user();
+        $name= $user->Nom.' '.$user->Prenom;
+        $patient = Patient::findOrFail($id);
+        $age= Carbon::parse( substr($patient->DateNaissance,0,17) )->age;
+        
+        $lastCons = Consultation::where('PatientId',$patient->id)->orderBy('Date','Desc')->First();
+        $nbrCons = Consultation::select(DB::raw("count(*) as num"))->where('PatientId',$patient->id)->first();
+        
+        $consultations = Consultation::where('PatientId',$patient->id)->orderBy('Date','Desc')->paginate(7);
+        
+        return view('Medcin.DossierMedical.Dossier',['name'=>$name,'patient'=>$patient, 'age'=>$age, 'lastCons'=>$lastCons, 'nbrCons'=>$nbrCons,'consultations'=>$consultations ]);
+
+    }
 
 
 }

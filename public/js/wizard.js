@@ -48,10 +48,10 @@
                         `);
 
                         if (resp.ordonnanceurl != 'none')
-                            $('#steps-uid-0-p-5').append(` <div class="row w-100 text-center mt-5 mb-3" > <a href="` + resp.ordonnanceurl + `" target="_blank" class="btn btn-info text-center text-wite mx-auto"> <h3 class="h3"> <i class="fas fa-print"></i> Imprimer l'ordonnance </h3> </a> </div> `);
+                            $('#steps-uid-0-p-5').append(` <div class="row w-100 text-center mt-5 mb-3" > <a href="` + resp.ordonnanceurl + `" target="_blank" class="btn btn-info text-white text-center text-wite mx-auto"> <h3 class="h3"> <i class="fas fa-print"></i> Imprimer l'ordonnance </h3> </a> </div> `);
 
-                        $('#steps-uid-0-p-5').append(` <div class="row w-100 text-center my-3" > <a href="` + resp.letter + `" target="_blank" class="btn btn-warning text-center mx-auto"> <h3 class="h3"> <i class="fas fa-envelope "></i> Créer une lettre au confrère </h3> </a> </div> `);
-                        $('#steps-uid-0-p-5').append(` <div class="row w-100 text-center my-3" > <a href="/Consultation" class="btn btn-info text-center mx-auto"> <h3 class="h3"> <i class="fas fa-arrow-right"></i> Patient suivant </h3> </a> </div> `);
+                        $('#steps-uid-0-p-5').append(` <div class="row w-100 text-center my-3" > <a href="` + resp.letter + `" target="_blank" class="btn text-white btn-warning text-center mx-auto"> <h3 class="h3"> <i class="fas fa-envelope "></i> Créer une lettre au confrère </h3> </a> </div> `);
+                        $('#steps-uid-0-p-5').append(` <div class="row w-100 text-center my-3" > <a href="/Consultation" class="btn btn-info text-white text-center mx-auto"> <h3 class="h3"> <i class="fas fa-arrow-right"></i> Patient suivant </h3> </a> </div> `);
                         $('.actions.clearfix').addClass('d-none');
                     }
                 },

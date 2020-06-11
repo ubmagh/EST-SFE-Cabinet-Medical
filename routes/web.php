@@ -157,6 +157,7 @@ Route::group(['middleware' => ['auth:medcin']], function () {
 
     /// Dossier Medical : /DossierMedical
     Route::get('DossierMedical','PatientController@DossierMedical_mainForSearch'); // imprimer une lettre
+    Route::get('DossierMedical/{id}','PatientController@DossierMedical_GetIt'); // imprimer une lettre
 
 
     // Ordonnance Route

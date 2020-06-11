@@ -27,7 +27,7 @@ class SalleAttenteController extends Controller
                                      ->where('Statut' , '=' , 'En cours')
                                      ->orderBy('DateTimeDebut', 'asc')
                                      ->get();
-      
+
         /* 
         #Cette Requette Avec Laravel Elequent a une ambiguité lors d'ordonnancements des lignes
         # J'utiliserai une requette sql normal pour ce prb
