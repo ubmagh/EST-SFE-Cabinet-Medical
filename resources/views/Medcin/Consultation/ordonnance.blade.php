@@ -18,7 +18,7 @@
                 src="{{ ltrim(public_path('/images/logo/').'/'.$cabinet->logo,'/') }}">
         </div>
         <div style="float: none; display: inline-block;  width: 50%; margin-bottom: 0px; padding-bottom: 0px;">
-            <div class="to" style="margin-top: 25px; display: inline-block; width:100%; margin-bottom: 0px; ">
+            <div class="to" style="margin-top: 25px; display: inline-block; width:100%; margin-bottom: 0px;  ">
                 <h2
                     style="display: block; text-align: left; margin-bottom: 0px; margin-top: 10px;word-wrap: break-word; ">
                     {{ $cabinet->Nom }} </h2>
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div
-            style=" float: none; display: block; width: 100%; margin-bottom: 0px; padding-bottom: 0px; margin-top: -30px;">
+            style=" float: right; display: inline; width: 50%; margin-bottom: 0px; padding-bottom: 0px; margin-top: -113px;">
             <div class="to" style="margin-top: 0px; width:100%; text-align: center; margin-bottom: 0px; ">
                 <h2 style=" margin-bottom: 0px;  word-wrap: break-word; "> Docteur : {{ $medecin->Nom.' '.$medecin->Prenom }} </h2>
                 <h3 class="name" style=" margin-top: 7px;  word-wrap: break-word;">Spécialité :
@@ -87,7 +87,7 @@
               </h3>
           </div>
           <div class="notice remarques">
-            <p>
+            <p style="white-space: pre-line">
               {{ $ordonnance->Description }}
             </p>
           </div>
@@ -101,8 +101,8 @@
                   Analyses à faire :
               </h3>
           </div>
-          <div class="notice">
-            <p>
+          <div class="">
+            <p style="white-space: pre-line">
               {{ $consultation->ExamensAfaire }}
             </p>
           </div>

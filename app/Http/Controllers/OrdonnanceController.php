@@ -33,6 +33,8 @@ class OrdonnanceController extends Controller
        $pdf_ordonnance = PDF::loadview('Medcin.Consultation.ordonnance',
         ['consultation' => $consultation ,'nom'=>$nom, 'patient'=>$patient, 'cabinet'=>$cabinet
         , 'medecin'=>$medcin, 'ordonnance'=>$ordonnance, 'medi'=>$medi]);
+
+        $pdf_ordonnance->setPaper('A4','portrait');
        return $pdf_ordonnance->stream('ordonnance.pdf');
        
 
