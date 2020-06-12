@@ -3,6 +3,11 @@
     src: url(SourceSansPro-Regular.ttf);
 }
 
+* {
+    margin: 0;
+    padding: 0
+}
+
 .clearfix:after {
     content: "";
     display: table;
@@ -11,14 +16,13 @@
 
 body {
     position: relative;
-    width: 21cm;
-    height: 29.7cm;
+    width: 95%;
     margin: 0 auto;
+    margin-top: 3%;
     color: #555555;
     background: #FFFFFF;
     font-family: Arial, sans-serif;
     font-size: 14px;
-    font-family: SourceSansPro;
 }
 
 header {
@@ -31,6 +35,7 @@ header {
     float: left;
     margin-top: 8px;
     margin-right: 12px;
+    margin-left: 12px;
 }
 
 #logo img {
@@ -42,20 +47,12 @@ header {
     text-align: right;
 }
 
-#details {
-    margin-bottom: 50px;
-}
-
 #client {
-    margin-top: 20px;
+    margin-top: 2px;
     margin-bottom: 25px;
     padding-left: 6px;
     border-left: 6px solid #0087C3;
     float: left;
-}
-
-#client .to {
-    color: #777777;
 }
 
 h2.name {
@@ -86,12 +83,12 @@ table {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 table th,
 table td {
-    padding: 20px;
+    padding: 13px;
     background: #EEEEEE;
     text-align: center;
     border-bottom: 1px solid #FFFFFF;
@@ -158,9 +155,8 @@ table tfoot tr td:first-child {
 }
 
 #thanks {
-    font-size: 2em;
-    margin-left: 70%;
-    margin-top: 52%;
+    font-size: 1.3em;
+    margin-left: 67%;
     display: block;
     position: relative;
 }
@@ -172,6 +168,7 @@ table tfoot tr td:first-child {
 
 #notices .notice {
     font-size: 1.2em;
+    word-wrap: break-word;
 }
 
 p {
@@ -183,6 +180,8 @@ footer {
     width: 100%;
     height: 30px;
     position: absolute;
+    display: block;
+    float: none;
     bottom: 0;
     border-top: 1px solid #AAAAAA;
     padding: 8px 0;
@@ -196,5 +195,4 @@ footer {
 
 .coo {
     font-size: larger;
-    margin-bottom: -8px;
 }

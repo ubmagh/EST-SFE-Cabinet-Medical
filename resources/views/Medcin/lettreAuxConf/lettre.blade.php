@@ -2,6 +2,11 @@
 <html lang="fr">
 
 <head>
+    <style media="all">
+            @page :first{
+                margin-bottom: 0.7in;
+            }
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -9,10 +14,12 @@
         href="{{ ltrim(public_path('css/styleOrdo.css'), '/') }}" />
 
     <title>Lettre au Confrère</title>
+    
 </head>
+
 <body>
 
-	<header class="clearfix">
+	 <header class="clearfix" >
         <div id="logo">
             <img
                 src="{{ ltrim(public_path('/images/logo/').'/'.$cabinet->logo,'/') }}">
@@ -28,7 +35,7 @@
             </div>
         </div>
         <div
-            style=" float: right; display: inline; width: 50%; margin-bottom: 0px; padding-bottom: 0px; margin-top: -113px;">
+            style=" float: right; position: relative; display: inline; width: 50%; margin-bottom: 0px; padding-bottom: 0px; margin-top: -70px;">
             <div class="to" style="margin-top: 0px; width:100%; text-align: center; margin-bottom: 0px; ">
                 <h2 style=" margin-bottom: 0px;  word-wrap: break-word; "> Docteur : {{ $medecin->Nom.' '.$medecin->Prenom }} </h2>
                 <h3 class="name" style=" margin-top: 7px;  word-wrap: break-word;">Spécialité :
@@ -38,9 +45,9 @@
     </header>
     
 
-    <main>
+    <main style="width: 95%;  margin: 0 auto;">
         
-        <div style="margin-left: 5%; max-width: 50%; w">
+        <div style="margin-left: 5%; max-width: 50%;">
             
             <p class="coo"> 
                 <span style="font-weight: bold;">A: </span>
@@ -102,17 +109,17 @@
             <h3 style="font-weight: normal;font-size: large;"> <span style="font-weight: bolder;"> Objet :</span> {{$lettre->Titre}} </h3>
         </div>
 
-        <div style="width: 84%; display: block; margin-left: auto; margin-left: auto;margin-right: auto; margin-top: 19px; " >
+        <div style="width: 84%; margin-left: auto; margin-right: auto; margin-top: 19px;line-break: auto; max-width: 100%; word-wrap: break-word; " >
 
 
-            <p style="  line-break: auto; ">
+            <p style="  ">
                 {!! $lettre->Message !!}
             </p>
 
         </div>
 
         @if( $patient )
-            <div style="position: relative; display: block; margin-top: 10%; margin-bottom: 0px; max-width: 40%;">
+            <div style="position: relative; display: inline-block; margin-top: 5%; margin-bottom: 0px; width: 45%; ">
                 <h5 style="font-size: medium; margin-bottom: 0px;"> infos du Patient : </h5>
                 <div style="margin-top: 0px; margin-left : 24px;">
                     <p style="margin-top: 8px;"> Nom:  {{ $patient->Nom }} {{ $patient->Prenom }} </p>
@@ -126,20 +133,19 @@
             </div>
         @endif
 
-        <div style="margin-top:  -60px; margin-left: 65%; float: left; position: relative; display: block;">
-
-            <span style="font-size: 1.1em; color: #2D1832;">
-                Le {{ date_format(  DateTime::createFromFormat("Y-m-d H:i:s", $lettre->date),"d / m / Y") }}
-            </span>
-            @if($medecin->Signature)
-                <img src="{{ storage_path('Signatures/'.$medecin->Signature) }}" class="Signature" alt="Signature" />
-            @endif
-            <h6 style="text-align: center; font-weight: light; font-size: x-large;color: black;">
-                {{ $medecin->Nom.' '.$medecin->Prenom }}
-            </h6>
 
 
-        </div> 
+        <div style=" font-size: 1.3em; width: 53%; margin-left:7%; display: inline-block; position: relative;">
+          <span style="font-size: 1.1em; color: #2D1832;">
+            Le {{ date_format(  DateTime::createFromFormat("Y-m-d H:i:s", $lettre->date),"d / m / Y") }}
+          </span>
+          @if($medecin->Signature)
+            <img src="{{ storage_path('Signatures/'.$medecin->Signature) }}" class="Signature" alt="Signature" />
+          @endif
+          <h6 style="text-align: center; font-size: 0.8em;color: black; margin-top: 10px; width: 100%;">
+            {{ $medecin->Nom.' '.$medecin->Prenom }}
+          </h6>
+        </div>
 
     </main>
 

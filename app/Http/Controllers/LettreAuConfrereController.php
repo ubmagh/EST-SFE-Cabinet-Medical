@@ -191,8 +191,7 @@ class LettreAuConfrereController extends Controller
         $age= Carbon::parse( substr($patient->DateNaissance,0,17) )->age;
         }
         $lettre_pdf = PDF::loadview('Medcin.lettreAuxConf.lettre', ['confrere'=>$conf, 'cabinet'=>$cabinet, 'medecin'=>$medecin, 'lettre'=>$lettre, 'patient'=>$patient,'age'=>$age]);
-        $customPaper = array(0, 0, 792.00, 1224.00);
-        $lettre_pdf->setPaper($customPaper);
+        $lettre_pdf->setPaper('A4','portrait');
          return $lettre_pdf->stream('lettre.pdf');
 
     }

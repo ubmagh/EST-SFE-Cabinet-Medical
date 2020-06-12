@@ -2,6 +2,11 @@
 <html lang="fr">
 
 <head>
+    <style media="all">
+            @page :first{
+                margin-bottom: 0.2in;
+            }
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -12,7 +17,7 @@
 </head>
 
 <body>
-    <header class="clearfix">
+    <header class="clearfix" >
         <div id="logo">
             <img
                 src="{{ ltrim(public_path('/images/logo/').'/'.$cabinet->logo,'/') }}">
@@ -28,7 +33,7 @@
             </div>
         </div>
         <div
-            style=" float: right; display: inline; width: 50%; margin-bottom: 0px; padding-bottom: 0px; margin-top: -113px;">
+            style=" float: right; position: relative; display: inline; width: 50%; margin-bottom: 0px; padding-bottom: 0px; margin-top: -70px;">
             <div class="to" style="margin-top: 0px; width:100%; text-align: center; margin-bottom: 0px; ">
                 <h2 style=" margin-bottom: 0px;  word-wrap: break-word; "> Docteur : {{ $medecin->Nom.' '.$medecin->Prenom }} </h2>
                 <h3 class="name" style=" margin-top: 7px;  word-wrap: break-word;">Spécialité :
@@ -38,8 +43,9 @@
     </header>
 
 
-    <main>
-        <div id="details" class="clearfix">
+    <main style="width: 95%;  margin: 0 auto;">
+
+        <div class="clearfix">
             <div id="client">
                 <h3>
                     Patient :
@@ -86,7 +92,7 @@
                   Remarques :
               </h3>
           </div>
-          <div class="notice remarques">
+          <div class="notice ">
             <p style="white-space: pre-line">
               {{ $ordonnance->Description }}
             </p>
@@ -101,11 +107,12 @@
                   Analyses à faire :
               </h3>
           </div>
-          <div class="">
+          <div class="notice ">
             <p style="white-space: pre-line">
               {{ $consultation->ExamensAfaire }}
             </p>
           </div>
+          <br><br>
         @endif
 
         <div id="thanks">
@@ -115,7 +122,7 @@
           @if($medecin->Signature)
             <img src="{{ storage_path('Signatures/'.$medecin->Signature) }}" class="Signature" alt="Signature" />
           @endif
-          <h6 style="text-align: center; font-size: 0.8em;color: black;">
+          <h6 style="text-align: center; font-size: 0.8em;color: black; margin-top: 10px; width: 100%;">
             {{ $medecin->Nom.' '.$medecin->Prenom }}
           </h6>
 
