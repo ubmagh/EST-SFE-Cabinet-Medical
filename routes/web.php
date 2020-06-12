@@ -142,6 +142,25 @@ Route::group(['middleware' => ['auth:medcin']], function () {
     Route::get('Medicament/Search', 'MedicamentController@autocomplete_Medcin_Medica');
     Route::get('Examens/Example', 'ExamenController@ExamsNamesExamples');
 
+    
+
+    // Consultation Cabinet Routes
+    Route::get('/ListeConsultations', 'ConsultationController@listeConsultaCabinet');
+    Route::delete('/ListeConsultationCabinet/delete/{Deletedid}', 'ConsultationController@destroyCabinet');
+    Route::put('/ListeConsultationCabinet/edit/{id}', 'ConsultationController@updateCabinet');
+
+
+    // Consultation à domicile Routes
+    Route::get('ListeConsultationAdomicile', 'ConsultationController@listeConsultaAdomicile');
+    Route::post('/ListeConsultationAdomicile/add', 'ConsultationController@StoreAdomicile');
+    
+
+    // Certificat 
+
+    Route::resource('Certificat', 'CertificatController' );
+
+
+
     // lettre au confreres route
     Route::resource('LettreAuConfrere', 'LettreAuConfrereController'); // Crud
     Route::get('LettresAuConfreres', 'LettreAuConfrereController@GetListe');// list des lettres

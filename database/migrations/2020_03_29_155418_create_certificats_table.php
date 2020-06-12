@@ -11,6 +11,21 @@ class CreateCertificatsTable extends Migration
      *
      * @return void
      */
+    /*
+    public function up()
+    {
+        Schema::create('certificats', function (Blueprint $table) {
+            $table->id();
+            $table->bigInteger('PatientId')->unsigned();
+            $table->string('Motif');
+            $table->string( 'Type',30);
+            $table->string('Duree',30)->nullable();
+
+            $table->foreign('PatientId')->references('id')->on('patients')->onDeletes('cascade');
+            
+
+        });
+    }*/
     public function up()
     {
         Schema::create('certificats', function (Blueprint $table) {

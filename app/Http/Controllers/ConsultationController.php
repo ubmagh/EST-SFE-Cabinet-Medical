@@ -15,6 +15,7 @@ use App\Facture;
 use App\Operations_Selon_Consultation;
 
 use Illuminate\Support\Facades\DB;
+use Exception;
 
 
 use App\Consultation;
@@ -298,6 +299,145 @@ class ConsultationController extends Controller
                         ->get();
         return response()->json($data);
     }
+
+
+
+    /// Oths Functions 
+    // liste consultation normale
+
+    public function listeConsultaCabinet (Request $request){
+        $user = Auth::guard('medcin')->user();
+        $name= $user->Nom.' '.$user->Prenom;
+        $medecin = $user->id;
+
+        $consultation = Consultation::where('Type', 'Normale')->orWhere('Type', 'Contrôle')
+                                    ->where('MedcinId', $medecin)
+                                    ->get();
+
+        return view ('Medcin.Consultation.listeConsultaCabinet', ['name'=>$name, 'consultation'=>$consultation]);
+    }
+
+    public function destroyCabinet($Deletedid){
+        
+        $consultation = Consultation::find($Deletedid);
+        $examens = DB::table('examens')->where('ConsultationId', $Deletedid);
+        $ordonnance = Ordonnance::where('ConsultationId', $Deletedid)->first();
+        $operations = Operations_Selon_Consultation::where('ConsultationId', $Deletedid)->first();
+
+        try{
+            
+            $Medicament_par_ordonnance = Medicament_par_ordonnance::where('OrdonnanceId', $ordonnance->id)->first();
+            $Medicament_par_ordonnance->delete();
+
+               if(!empty($ordonnance)){
+                $ordonnance->delete();}
+        
+                if(!empty($operations)){
+                $operations->delete();}
+        
+                if(!empty($examens)){
+                $examens->delete();}
+        
+
+            $consultation->delete();     
+
+
+        }
+
+        catch(Exception $e){
+
+
+        if(!empty($ordonnance)){
+        $ordonnance->delete();}
+
+        if(!empty($operations)){
+        $operations->delete();}
+
+        if(!empty($examens)){
+        $examens->delete();}
+
+
+        $consultation->delete(); 
+
+        }
+    }
+
+    public function updateCabinet(Request $request, $id){
+
+        $consultation = Consultation::find($id);
+
+      
+            if($request->input('Urgent') =='Oui'){
+            
+                $consultation->Urgent = 1 ;
+
+            }
+
+            if($request->input('Urgent')=='Non'){
+               
+                $consultation->Urgent = 0;
+
+            }
+            $consultation->Type = $request->input('Type'); 
+            $consultation->Description = $request->input('Description');
+            $consultation->ExamensAfaire = $request->input('ExamensAfaire');
+            
+  
+        $consultation->save();
+
+
+    }
+
+        // liste consultation à domicile
+
+
+    public function listeConsultaAdomicile (Request $request){
+
+            $user = Auth::guard('medcin')->user();
+            $name= $user->Nom.' '.$user->Prenom;
+            $medecin = $user->id;
+    
+            $consultation = Consultation::where('Type', 'à Domicile')
+                                        ->where('MedcinId', $medecin)
+                                        ->get();
+    
+            return view ('Medcin.Consultation.listeConsultaAdomicile', ['name'=>$name, 'consultation'=>$consultation]);
+        }
+
+        public function StoreAdomicile (Request $request){
+
+            $consultaAdomicile = new Consultation();
+
+            $consultaAdomicile->Type = $request->input('Type');
+            $consultaAdomicile->Description = $request->input('Description');
+
+            if($request->input('Urgent') =='Oui'){
+            
+                $consultaAdomicile->Urgent = 1 ;
+
+            }
+
+            if($request->input('Urgent')=='Non'){
+               
+                $consultaAdomicile->Urgent = 0;
+
+            }
+
+          $consultaAdomicile->ExamensAfaire = $request->input('ExamensAfaire');
+
+          $medecin = Auth::guard('medcin')->user();
+
+          $consultaAdomicile->MedcinId = $medecin->id;
+
+          $patient = Patient::where('id_civile', $request->input('Patient'))->first();
+
+          $consultaAdomicile->PatientId = $patient->id;
+
+          $consultaAdomicile->save();
+
+        }
+
+
 
     
 }

@@ -71,23 +71,36 @@
               <div class="submenu">
                 <ul class="submenu-item">
                   <li class="nav-item"><a  href="{{ url('/Consultation') }}" class="nav-link"> à Cabinet</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#Domicile"> à Domicile</a></li>
+                  <li class="nav-item"><a class="nav-link" href=""{{ url('/ListeConsultationAdomicile') }}"> à Domicile</a></li>
                 </ul>
               </div>
+            </li>
+            <li class="nav-item">
+              <a  class="nav-link" href="{{ url('/ListeConsultations') }}">
+                <i class=" ti-list
+                menu-icon"></i>
+                <span class="menu-title">Liste des consultations</span>
+              </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url('DossierMedical') }}">
                 <i class="far fa-id-card menu-icon"></i>
                 <span class="menu-title">Dossier Medical</span>
               </a>
-            </li>
+            </li> 
             <li class="nav-item">
               <a class="nav-link" href="{{ url('LettresAuConfreres') }}">
                 <i class="fas fa-user-friends menu-icon"></i>
                 <span class="menu-title">Lettre au Confrère</span>
               </a>
             </li>
-
+            <li class="nav-item">
+              <a  class="nav-link" href="{{ url('/Certificat') }}">
+                <i class="fas fa-certificate menu-icon"></i>
+                <span class="menu-title">Certificat</span>
+              </a>
+            </li>
+            
             
             
             
