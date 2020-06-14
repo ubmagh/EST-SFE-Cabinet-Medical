@@ -391,24 +391,96 @@ class ConsultationController extends Controller
         // liste consultation à domicile
 
 
-    public function listeConsultaAdomicile (Request $request){
+    public function ConsultationADomicile (Request $request){
 
             $user = Auth::guard('medcin')->user();
             $name= $user->Nom.' '.$user->Prenom;
-            $medecin = $user->id;
-    
-            $consultation = Consultation::where('Type', 'à Domicile')
-                                        ->where('MedcinId', $medecin)
-                                        ->get();
-    
-            return view ('Medcin.Consultation.listeConsultaAdomicile', ['name'=>$name, 'consultation'=>$consultation]);
+            
+            $operations = Operations_Cabinet::OrderBy('Intitule')->get();
+
+            return view ('Medcin.Consultation.ConsultationAdomicile', ['name'=>$name,'operations'=>$operations ]);
         }
 
-        public function StoreAdomicile (Request $request){
+    public function StoreAdomicile (Request $request){
+
+
+        $this->validate($request,
+        [
+            'id_civile' =>  "required|string|exists:patients,id_civile",
+            'Description'   =>  'required|max:200|string',
+            'analyses'   =>  'nullable|max:450|string',
+            'ExaTitres' =>  'array',
+            "ExaTitres.*"  => "required|string|min:2|max:50|distinct",
+            'ExaValues' =>  'array',
+            "ExaValues.*"  => "required_with:ExaTitres|string|max:255",
+            'Operations'    =>  'array',
+            'Operations.*'    =>  'required|exists:operations__cabinets,id|distinct',
+            'Remarquez' =>  'array',
+            'Remarquez.*' =>  'nullable|string|max:100',
+
+            'medicament'    =>  'array',
+            'medicament.*'  =>  'required|exists:medicaments,id|min:1|distinct',
+            'unites'    =>  'array',
+            'unites.*'  =>  'required_with:medicament.*|digits_between:1,50',//:D
+            'Periods'   =>  'array',
+            'Periods.*' =>  'required_with:medicament.*|string|min:2|max:20',
+            'AddContent'    =>  'nullable|string|max:500',
+            // validate files
+            'Files' =>  'array',
+            'Files.*'   =>  'required|max:25001|mimes:bmp,jpg,jpeg,png,avi,mpg,mpeg,mov,mp4,pdf,zip|file|bail',
+        ],
+        [
+            'id_civile.required' =>  "Choisissez le Patient",
+            'id_civile.string' =>  "Données invalides",
+            'id_civile.exists' =>  "Patient choisi est introuvable",
+            'Description.required'  =>  'Un titre pour la consultation est necessaire',
+            'Description.max'  =>  'utilisez 200 caractères au Max',
+            'Description.string'  =>  'saisie invalide !',
+            'analyses.max'  =>  'Maximum de 450 caractères.',
+            'analyses.string'  =>  ' saisie invalide ! ',
+            'ExaTitres.array'   =>  'Données invalides !',
+            'ExaTitres.*.min'   =>  'saisie invalide !',
+            'ExaTitres.*.required'   =>  'Remplissez tous les champs svp !',
+            'ExaTitres.*.max'   =>  '50 caractères au Max',
+            'ExaTitres.*.string'   =>  'saisie invalide !',
+            'ExaTitres.*.distinct'   =>  ' un examen est dupliqué !',
+            'ExaValues.array'   =>  'Données invalides !',
+            'ExaValues.*.required_with'   =>  'Remplissez tous les champs svp ',
+            'ExaValues.*.string'   =>  'saisie invalide !',
+            'ExaValues.*.max'   =>  '  trop de caractères pour le champs de valeur ',
+            'Operations.array'  =>  'Données invalides !',
+            'Operations.*.required'  =>  ' l\'opération n\'est pas choisi !',
+            'Operations.*.exists'  =>  ' Choix de l\'opération est invalide !',
+            'Operations.*.distinct'  =>  ' Opération dupliquée !',
+            'Remarquez.array'   =>  'Données invalides !',
+            'Remarquez.*.string'   =>  'saisie invalide, remplissez les champs !',
+            'Remarquez.*.max'   =>  ' trop de caractères pour le champs de valeur ',
+            'medicament.array'  =>  'Données invalides!',
+            'medicament.*.required' =>  'saisissez le nom du medicament',
+            'medicament.*.min' =>  'saisissez le nom du medicament',
+            'medicament.*.exists' =>  'Medicament saisi est introuvable',
+            'medicament.*.distinct' =>  'Medicament dupliqué !',
+            'unites.array'  =>  'Données invalides!',
+            'unites.*.required_with'    =>  'Veuillez remplisser le nom de medicament',
+            'unites.*.digits_between'    =>  ' nombre de prises est invalide! ',
+            'Periods.array' =>  'Données invalides !',
+            'Periods.*.required_with'   =>  'Veuillez remplisser le nom de medicament',
+            'Periods.*.string'   =>  'la saisie du Periode est invalide',
+            'Periods.*.min'   =>  'la Periode saisie est invalide',
+            'Periods.*.max'   =>  'la saisie du Periode est au Max 20 caractères',
+            'AddContent.string' =>  'Données saisies sont invalides ',
+            'AddContent.max' =>  'ce champ accepte au max 500 caractères',
+            'Files.array' =>  'Données invalides!',
+            'Files.*.required' =>  ' pour chaque champ ajouté, choisissez un fichier! ',
+            'Files.*.max' =>  ' fichier trop large, maximum taille est 25Mo ',
+            'Files.*.mimes' =>  ' types des fichiers supportés: bmp, jpg, jpeg, png, avi, mpg, mpeg, mov, mp4, pdf, zip',
+            'Files.*.file' =>  ' Fichier corrupté ',
+        ]
+        );
 
             $consultaAdomicile = new Consultation();
 
-            $consultaAdomicile->Type = $request->input('Type');
+            $consultaAdomicile->Type = "à Domicile";
             $consultaAdomicile->Description = $request->input('Description');
 
             if($request->input('Urgent') =='Oui'){

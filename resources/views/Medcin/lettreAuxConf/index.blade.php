@@ -151,14 +151,14 @@ Lettre au confrère
                                             @if( isset($modifyletter) )
                                                 @foreach($confrere as $confreres)
                                                     @if($modifyletter->ConfrereID==$confreres->id)
-                                                        <option value="{{ $confreres->id }}" selected >{{ $confreres->Nom }} </option>
+                                                        <option value="{{ $confreres->id }}" selected >{{ $confreres->Nom }} - {{ $confreres->Specialite }} </option>
                                                     @else
-                                                        <option value="{{ $confreres->id }}" >{{ $confreres->Nom }} </option>
+                                                        <option value="{{ $confreres->id }}" >{{ $confreres->Nom }} - {{ $confreres->Specialite }} </option>
                                                     @endif
                                                 @endforeach
                                             @else
                                                 @foreach($confrere as $confreres)
-                                                        <option value="{{ $confreres->id }}" >{{ $confreres->Nom }} </option>
+                                                        <option value="{{ $confreres->id }}" >{{ $confreres->Nom }} - {{ $confreres->Specialite }} </option>
                                                 @endforeach
                                             @endif
                                             </select>

@@ -32,7 +32,6 @@ class CreateCertificatsTable extends Migration
             $table->id();
             $table->bigInteger('PatientId')->unsigned();
             $table->string('Motif');
-            $table->string( 'Type',30);
             $table->string('Duree',30)->nullable();
 
             $table->foreign('PatientId')->references('id')->on('patients')->onDeletes('cascade');

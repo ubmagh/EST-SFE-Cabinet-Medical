@@ -53,7 +53,7 @@ class LettreAuConfrereController extends Controller
 
     public function autocomplete_patient(Request $request)
     {
-        $data = Patient::select("id_civile as ID_c", DB::raw(" CONCAT(Nom,' ',Prenom) as name ") )
+        $data = Patient::select("id_civile as ID_c", DB::raw(" CONCAT(Nom,' ',Prenom) as name "),"id as I" )
                         ->where("id_civile","LIKE","%{$request->input('query')}%")
                         ->orWhere("Prenom","LIKE","%{$request->input('query')}%")
                         ->orWhere("Nom","LIKE","%{$request->input('query')}%")

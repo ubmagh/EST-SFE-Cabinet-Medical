@@ -20,7 +20,7 @@
 
             finishBtn.attr("href", "");
             finishBtn.empty();
-            finishBtn.html('<i class="fas fa-spinner"></i>   ');
+            finishBtn.html('<i class="fas fa-spinner"></i>');
             let formy = document.getElementById('example-vertical-wizard');
             var fd = new FormData(formy);
             $.ajax({

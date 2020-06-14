@@ -174,7 +174,6 @@ Medecin: Consultation à Cabinet
                                         id="OpsAlert">
                                         <span id="OpsError"></span>
                                 </div>
-                                
                             </section>
 
 
@@ -208,7 +207,7 @@ Medecin: Consultation à Cabinet
                                     </tbody>
                                 </table>
                                 <hr class="mt-5" />
-                                <div class="form-group mt-3">
+                                <div class="form-group mt-3 d-none" id="addtionalContent">
                                     <label class=" font-weight-bold "> contenu additionnel à l'ordonndance : </label>
                                     <textarea class="form-control" name="AddContent"
                                         placeholder="antécédants, allergie, remarques sur les medicaments..."
@@ -464,6 +463,7 @@ Medecin: Consultation à Cabinet
         if (i == 1){
             $('#DelMedi').removeClass('d-none');
             $('#MedHeader').removeClass('d-none');
+            $('#addtionalContent').removeClass('d-none');
         }
            
         addInput(i);
@@ -478,6 +478,7 @@ Medecin: Consultation à Cabinet
         if (i == 1){
             $('#DelMedi').addClass('d-none');
             $('#MedHeader').addClass('d-none');
+            $('#addtionalContent').addClass('d-none');
         }
             
 
@@ -685,7 +686,6 @@ Medecin: Consultation à Cabinet
         $(Toappend).insertBefore('#FilesBeforeRow');
 
         $("#customFile"+nbrfile).on("change", function(e) {
-            console.log( this.files[0] );
             // check file type
             let type=this.files[0].type;
             if( type.search('zip')==-1 && type.search('image')==-1 && type.search('video')==-1 && type.search('pdf')==-1 ){

@@ -151,8 +151,8 @@ Route::group(['middleware' => ['auth:medcin']], function () {
 
 
     // Consultation à domicile Routes
-    Route::get('ListeConsultationAdomicile', 'ConsultationController@listeConsultaAdomicile');
-    Route::post('/ListeConsultationAdomicile/add', 'ConsultationController@StoreAdomicile');
+    Route::get('ADomicile', 'ConsultationController@ConsultationADomicile');
+    Route::post('/ADomicile', 'ConsultationController@StoreAdomicile');
     
 
     // Certificat 

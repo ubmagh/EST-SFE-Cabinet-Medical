@@ -71,7 +71,7 @@
               <div class="submenu">
                 <ul class="submenu-item">
                   <li class="nav-item"><a  href="{{ url('/Consultation') }}" class="nav-link"> à Cabinet</a></li>
-                  <li class="nav-item"><a class="nav-link" href=""{{ url('/ListeConsultationAdomicile') }}"> à Domicile</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{{ url('/ADomicile') }}"> à Domicile</a></li>
                 </ul>
               </div>
             </li>

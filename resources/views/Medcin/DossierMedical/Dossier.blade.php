@@ -197,6 +197,9 @@
                                                         <li class="font-weight-bold"> Secretaire : </li>
                                                         <p class="my-3" style="text-indent: 50px; font-size: medium;"> {{ $consultation->salleAttente->Secretaire->Nom.' '.$consultation->salleAttente->Secretaire->Prenom }} </p>
                                                         
+                                                        <li class="font-weight-bold"> Medecin : </li>
+                                                        <p class="my-3" style="text-indent: 50px; font-size: medium;"> Dr. {{ $consultation->medcin->Nom.' '.$consultation->medcin->Prenom }} </p>
+                                                        
 
                                                         @if($consultation->Urgent)
                                                             <div class="badge badge-pill badge-danger px-3 py-2 mt-3"  style="font-size: 18px;"> <i class="ti-alert ti-lg mr-2"></i> Consultation Urgente </div>
