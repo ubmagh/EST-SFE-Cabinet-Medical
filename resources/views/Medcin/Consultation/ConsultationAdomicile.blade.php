@@ -630,6 +630,7 @@ Consultation à domicile
                         $('.con').each(function(i,ele){
                             setTimeout(()=>$(ele).addClass('d-none'),100);
                         });
+                        $('#finishState').children().first().addClass('d-none');
                         $('#finishState').append(`
                             <div class=" col-md-11 mx-auto py-4 my-4">
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -646,6 +647,18 @@ Consultation à domicile
                             $('#finishState').append(` <div class="row w-100 text-center mt-5 mb-3" > <a href="` + resp.ordonnanceurl + `" target="_blank" class="btn btn-info text-white text-center text-wite mx-auto"> <h3 class="h3"> <i class="fas fa-print"></i> Imprimer l'ordonnance </h3> </a> </div> `);
 
                         $('#finishState').append(` <div class="row w-100 text-center my-3" > <a href="` + resp.letter + `" target="_blank" class="btn text-white btn-warning text-center mx-auto"> <h3 class="h3"> <i class="fas fa-envelope "></i> Créer une lettre au confrère </h3> </a> </div> `);
+                    }else{
+                        $('#finishState').append(`
+                            <div class=" col-md-11 mx-auto py-4 my-4">
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        <span class="sr-only">Close</span>
+                                    </button>
+                                    Consultation n'est pas Enregistrée ! une erreure servenue.
+                                </div>
+                            </div>
+                        `);
                     }
                 },
                 error: function(error) {

@@ -483,30 +483,148 @@ class ConsultationController extends Controller
             $consultaAdomicile->Type = "à Domicile";
             $consultaAdomicile->Description = $request->input('Description');
 
-            if($request->input('Urgent') =='Oui'){
-            
+            if($request->input('Urgent'))
                 $consultaAdomicile->Urgent = 1 ;
-
-            }
-
-            if($request->input('Urgent')=='Non'){
-               
+            else
                 $consultaAdomicile->Urgent = 0;
+            
+            
+            
+            $consultaAdomicile->ExamensAfaire = $request->input('analyses')? $request->input('analyses'):null ;
 
+            $medecin = Auth::guard('medcin')->user();
+
+            $consultaAdomicile->MedcinId = $medecin->id;
+
+            $patient = Patient::where('id_civile', $request->input('id_civile'))->first();
+
+            $consultaAdomicile->PatientId = $patient->id;
+
+            $consultaAdomicile->save();
+
+            $somme = doubleval($medecin->PrixDeConsultation);
+
+            //***************************INSERT INTO Exams******************************************** *//
+            $examsTitles = $request->input('ExaTitres');
+            if( is_array($examsTitles) && count($examsTitles) ){
+                $examsvalues = $request->input('ExaValues');
+                foreach($examsTitles as $num => $title){
+                    $exaObj = new Examen();
+                    $exaObj->Titre = $title ;
+                    $exaObj->Valeur = $examsvalues[$num] ;
+                    $exaObj->ConsultationId = $consultaAdomicile->id ;
+                    $exaObj->save();
+                }        
+            }
+            
+            //***************************INSERT Operations ++ Facture ******************************************** */
+            $Operations = $request->input('Operations');
+            if( is_array($Operations) && count($Operations) ){
+
+
+                $Remarquez = $request->input('Remarquez');
+                foreach($Operations as $num => $Operation ){
+
+                    $OpeObj = new Operations_Selon_Consultation();
+                    $OpeObj->ConsultationID = $consultaAdomicile->id ;
+                    $OpeObj->OperationId = $Operation ;
+                    $OpeObj->Remarque = strlen($Remarquez[$num])>0 ? $Remarquez[$num] : null  ;
+                    $OpeObj->save();
+                    $Operation = Operations_Cabinet::find($Operation);
+                    $somme += doubleval( $Operation->Prix );
+                }
+                
             }
 
-          $consultaAdomicile->ExamensAfaire = $request->input('ExamensAfaire');
+                # creating Facture
 
-          $medecin = Auth::guard('medcin')->user();
+                $facture = new Facture();
+                $facture->Motif = "Facture de consultation à domicile pour : ".$patient->Nom.' '.$patient->Prenom;
+                $facture->ConsultationId = $consultaAdomicile->id;
+                $facture->Somme=$somme;
+                $facture->Date=date('Y-m-d');
+                $facture->save();
 
-          $consultaAdomicile->MedcinId = $medecin->id;
+                
+            $medicaments = $request->input('medicament');
+            if($medicaments && is_array($medicaments)){
 
-          $patient = Patient::where('id_civile', $request->input('Patient'))->first();
+                //***************************INSERT INTO ORDONNANCES******************************************** */
 
-          $consultaAdomicile->PatientId = $patient->id;
+                    //$consultation = DB::table('consultations')->latest('id')->first();
+                    $ordonnance = new Ordonnance();
+                    $ordonnance->ConsultationId = $consultaAdomicile->id ; 
+                    $ordonnance->Description = strlen($request->input('AddContent'))>0 ? $request->input('AddContent'):null ;
+                    $ordonnance->save();
 
-          $consultaAdomicile->save();
+                //***************************INSERT INTO MEDICAMENT_PAR_ORDONNANCES******************************************** */
+                
+                
+                //$ordonnance = DB::table('ordonnances')->latest('id')->first();
+                    
+                
+                    
+                    foreach ($medicaments as $key=>$medicament){
+                    
+                    $medi_par_ordo = new Medicament_par_ordonnance();
 
+                    
+                    $medi_par_ordo->Periode=$request->input('Periods')[$key];
+                    $medi_par_ordo->NbrParJour=$request->input('unites')[$key];
+                    $medi_par_ordo->MedicamentId=$medicament;
+                    $medi_par_ordo->OrdonnanceId=$ordonnance->id;
+                    $medi_par_ordo->save();   
+                }   
+
+            }
+        
+
+        //****************************************  files placing            ****************   ************** */
+        $Files = $request->Files;
+        if( is_array($Files) && count($Files)>0 ){
+            foreach($Files as $File){
+    
+                $currentName = Storage::disk('ConsultationTMP')->put('',$File);
+                $fileType = mime_content_type( storage_path('ConsultationFiles\TMP').'\\'.$currentName );
+                $size = $File->getSize();
+                $originalName = $File->getClientOriginalName();
+    
+                if( strstr($fileType,'image') ){
+                    $type= "image";
+                    rename(storage_path('ConsultationFiles\TMP').'\\'.$currentName ,storage_path('ConsultationFiles\Images\\').$currentName) ;
+                }
+                else if( strstr($fileType,'video') ){
+                    $type= "video";
+                    rename(storage_path('ConsultationFiles\TMP').'\\'.$currentName ,storage_path('ConsultationFiles\Videos\\').$currentName) ;
+                }else{
+    
+                    $tmp=explode(".",$originalName);
+                    $ext = array_pop( $tmp );
+                    switch($ext){
+                        case "pdf":
+                            $type= "pdf";
+                            rename(storage_path('ConsultationFiles\TMP').'\\'.$currentName ,storage_path('ConsultationFiles\PDFs\\').$currentName) ;
+                        break;
+                        case "zip":
+                            $type= "zip";
+                            rename(storage_path('ConsultationFiles\TMP').'\\'.$currentName ,storage_path('ConsultationFiles\Zips\\').$currentName) ;
+                        break;
+                    }
+                }
+    
+                $fichier = new Fichier();
+                $fichier->Type= $type;
+                $fichier->CurrentName= $currentName;
+                $fichier->OriginalName= $originalName;
+                $fichier->Size= $size;
+                $fichier->ConsultationId= $consultaAdomicile->id;
+                $fichier->save();
+            }
+        }
+
+            if( isset($ordonnance) )
+                return response()->json(['status'=>'Good','ordonnanceurl'=>url('/Ordonnance/'.$ordonnance->id), 'letter'=>url('LettreAuConfrere?patient='.$patient->id)]);
+            return response()->json(['status'=>'Good','ordonnanceurl'=>'none' ]);
         }
 
 

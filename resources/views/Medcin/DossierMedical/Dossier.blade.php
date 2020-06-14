@@ -125,7 +125,9 @@
                                                 <i class="far fa-clock text-success" style="font-size: 28px;"></i>
                                             @endif
                                         @endif
-
+                                        @if($consultation->Type=="à Domicile")
+                                            <i class="fas fa-home text-white" style="font-size: 28px;"></i>
+                                        @endif
                                         </p>
                                         <p class="DateTime w-100 text-left ml-3">{{$consultation->Date}}</p>
                                         <span style="font-size: medium;">
@@ -194,8 +196,10 @@
                                                         <li class="font-weight-bold"> Date et Heure : </li>
                                                         <p class="my-3 dateTimeHour" style="text-indent: 50px; font-size: medium;"> {{ $consultation->Date }} </p>
 
-                                                        <li class="font-weight-bold"> Secretaire : </li>
-                                                        <p class="my-3" style="text-indent: 50px; font-size: medium;"> {{ $consultation->salleAttente->Secretaire->Nom.' '.$consultation->salleAttente->Secretaire->Prenom }} </p>
+                                                        @if($consultation->salleAttente)
+                                                            <li class="font-weight-bold"> Secretaire : </li>
+                                                            <p class="my-3" style="text-indent: 50px; font-size: medium;"> {{ $consultation->salleAttente->Secretaire->Nom.' '.$consultation->salleAttente->Secretaire->Prenom }} </p>
+                                                        @endif
                                                         
                                                         <li class="font-weight-bold"> Medecin : </li>
                                                         <p class="my-3" style="text-indent: 50px; font-size: medium;"> Dr. {{ $consultation->medcin->Nom.' '.$consultation->medcin->Prenom }} </p>
