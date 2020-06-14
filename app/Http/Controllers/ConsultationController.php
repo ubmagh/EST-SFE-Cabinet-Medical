@@ -305,16 +305,19 @@ class ConsultationController extends Controller
     /// Oths Functions 
     // liste consultation normale
 
-    public function listeConsultaCabinet (Request $request){
+    public function ListeDesConsultations (Request $request){
         $user = Auth::guard('medcin')->user();
         $name= $user->Nom.' '.$user->Prenom;
         $medecin = $user->id;
 
-        $consultation = Consultation::where('Type', 'Normale')->orWhere('Type', 'Contrôle')
+        DB::statement(DB::raw('SET @i = 0'));
+
+        $consultation = Consultation::select(DB::raw("  @i := @i + 1 AS num, consultations.*"))
                                     ->where('MedcinId', $medecin)
+                                    ->OrderBy('Date','DESC')
                                     ->get();
 
-        return view ('Medcin.Consultation.listeConsultaCabinet', ['name'=>$name, 'consultation'=>$consultation]);
+        return view ('Medcin.Consultation.listeDesConsultations', ['name'=>$name, 'consultation'=>$consultation]);
     }
 
     public function destroyCabinet($Deletedid){

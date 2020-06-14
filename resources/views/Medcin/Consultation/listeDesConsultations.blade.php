@@ -19,7 +19,7 @@ Liste des consultation
             
             <div class="row grid-margin">
               <div class="col-12">
-                
+                    <h3 class="h3 text-center mx-auto mt-4 mb-3 font-weight-light"> Liste des consultations : </h3>
               </div>
             </div>
             <div class="row">
@@ -29,20 +29,18 @@ Liste des consultation
                     <thead>
                       <tr class="bg-primary text-white">
                           <th class="text-center">#</th>
-                          <th class="text-center">Nom</th>
-                          <th class="text-center">Prénom</th>
+                          <th class="text-center">Patient</th>
                           <th class="text-center">Date</th>
                           <th class="text-center">Type de consultation</th>
-                          <th class="text-center">Description</th>
+                          <th class="text-center">Titre de consultation</th>
                           <th class="text-center">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
                         @foreach($consultation as $consultations)
                       <tr>
-                          <td class="text-center">{{$consultations->id}}</td>
-                          <td class="text-center">{{$consultations->patient->Nom}}</td>
-                          <td class="text-center">{{$consultations->patient->Prenom}}</td>
+                          <td class="text-center">{{$consultations->num}}</td>
+                          <td class="text-center"> <a href="{{ url('FichePatient',$consultations->patient->id) }}" target="_blank" > {{$consultations->patient->Nom}} {{$consultations->patient->Prenom}} </a></td>
                           <td class="text-center">{{$consultations->Date}}</td>
                           <td class="text-center">{{$consultations->Type}}</td>
                           <td class="text-center">{{$consultations->Description}}</td>
@@ -326,7 +324,7 @@ rgba(235,204,221,0.927608543417367) 100%);" role="alert" class="alert alert-dang
     const dataTable_Order_string = "asc"; /// "desc" for descendent order
     const dataTable_can_sort_columns__ = [{
         "orderable": false,
-        "targets": [6]
+        "targets": [5]
     }];
 </script>
 
