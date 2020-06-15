@@ -406,7 +406,6 @@ class ConsultationController extends Controller
 
     public function StoreAdomicile (Request $request){
 
-
         $this->validate($request,
         [
             'id_civile' =>  "required|string|exists:patients,id_civile",
@@ -481,105 +480,105 @@ class ConsultationController extends Controller
         ]
         );
 
-            $consultaAdomicile = new Consultation();
+        $consultaAdomicile = new Consultation();
 
-            $consultaAdomicile->Type = "à Domicile";
-            $consultaAdomicile->Description = $request->input('Description');
+        $consultaAdomicile->Type = "à Domicile";
+        $consultaAdomicile->Description = $request->input('Description');
 
-            if($request->input('Urgent'))
-                $consultaAdomicile->Urgent = 1 ;
-            else
-                $consultaAdomicile->Urgent = 0;
-            
-            
-            
-            $consultaAdomicile->ExamensAfaire = $request->input('analyses')? $request->input('analyses'):null ;
+        if($request->input('Urgent'))
+            $consultaAdomicile->Urgent = 1 ;
+        else
+            $consultaAdomicile->Urgent = 0;
+        
+        
+        
+        $consultaAdomicile->ExamensAfaire = $request->input('analyses')? $request->input('analyses'):null ;
 
-            $medecin = Auth::guard('medcin')->user();
+        $medecin = Auth::guard('medcin')->user();
 
-            $consultaAdomicile->MedcinId = $medecin->id;
+        $consultaAdomicile->MedcinId = $medecin->id;
 
-            $patient = Patient::where('id_civile', $request->input('id_civile'))->first();
+        $patient = Patient::where('id_civile', $request->input('id_civile'))->first();
 
-            $consultaAdomicile->PatientId = $patient->id;
+        $consultaAdomicile->PatientId = $patient->id;
 
-            $consultaAdomicile->save();
+        $consultaAdomicile->save();
 
-            $somme = doubleval($medecin->PrixDeConsultation);
+        $somme = doubleval($medecin->PrixDeConsultation);
 
-            //***************************INSERT INTO Exams******************************************** *//
-            $examsTitles = $request->input('ExaTitres');
-            if( is_array($examsTitles) && count($examsTitles) ){
-                $examsvalues = $request->input('ExaValues');
-                foreach($examsTitles as $num => $title){
-                    $exaObj = new Examen();
-                    $exaObj->Titre = $title ;
-                    $exaObj->Valeur = $examsvalues[$num] ;
-                    $exaObj->ConsultationId = $consultaAdomicile->id ;
-                    $exaObj->save();
-                }        
+        //***************************INSERT INTO Exams******************************************** *//
+        $examsTitles = $request->input('ExaTitres');
+        if( is_array($examsTitles) && count($examsTitles) ){
+            $examsvalues = $request->input('ExaValues');
+            foreach($examsTitles as $num => $title){
+                $exaObj = new Examen();
+                $exaObj->Titre = $title ;
+                $exaObj->Valeur = $examsvalues[$num] ;
+                $exaObj->ConsultationId = $consultaAdomicile->id ;
+                $exaObj->save();
+            }        
+        }
+        
+        //***************************INSERT Operations ++ Facture ******************************************** */
+        $Operations = $request->input('Operations');
+        if( is_array($Operations) && count($Operations) ){
+
+
+            $Remarquez = $request->input('Remarquez');
+            foreach($Operations as $num => $Operation ){
+
+                $OpeObj = new Operations_Selon_Consultation();
+                $OpeObj->ConsultationID = $consultaAdomicile->id ;
+                $OpeObj->OperationId = $Operation ;
+                $OpeObj->Remarque = strlen($Remarquez[$num])>0 ? $Remarquez[$num] : null  ;
+                $OpeObj->save();
+                $Operation = Operations_Cabinet::find($Operation);
+                $somme += doubleval( $Operation->Prix );
             }
             
-            //***************************INSERT Operations ++ Facture ******************************************** */
-            $Operations = $request->input('Operations');
-            if( is_array($Operations) && count($Operations) ){
+        }
 
+        # creating Facture
 
-                $Remarquez = $request->input('Remarquez');
-                foreach($Operations as $num => $Operation ){
+        $facture = new Facture();
+        $facture->Motif = "Facture de consultation à domicile pour : ".$patient->Nom.' '.$patient->Prenom;
+        $facture->ConsultationId = $consultaAdomicile->id;
+        $facture->Somme=$somme;
+        $facture->Date=date('Y-m-d');
+        $facture->save();
 
-                    $OpeObj = new Operations_Selon_Consultation();
-                    $OpeObj->ConsultationID = $consultaAdomicile->id ;
-                    $OpeObj->OperationId = $Operation ;
-                    $OpeObj->Remarque = strlen($Remarquez[$num])>0 ? $Remarquez[$num] : null  ;
-                    $OpeObj->save();
-                    $Operation = Operations_Cabinet::find($Operation);
-                    $somme += doubleval( $Operation->Prix );
-                }
+            
+        $medicaments = $request->input('medicament');
+        if($medicaments && is_array($medicaments)){
+
+            //***************************INSERT INTO ORDONNANCES******************************************** */
+
+                //$consultation = DB::table('consultations')->latest('id')->first();
+                $ordonnance = new Ordonnance();
+                $ordonnance->ConsultationId = $consultaAdomicile->id ; 
+                $ordonnance->Description = strlen($request->input('AddContent'))>0 ? $request->input('AddContent'):null ;
+                $ordonnance->save();
+
+            //***************************INSERT INTO MEDICAMENT_PAR_ORDONNANCES******************************************** */
+            
+            
+            //$ordonnance = DB::table('ordonnances')->latest('id')->first();
                 
-            }
-
-                # creating Facture
-
-                $facture = new Facture();
-                $facture->Motif = "Facture de consultation à domicile pour : ".$patient->Nom.' '.$patient->Prenom;
-                $facture->ConsultationId = $consultaAdomicile->id;
-                $facture->Somme=$somme;
-                $facture->Date=date('Y-m-d');
-                $facture->save();
+            
+                
+                foreach ($medicaments as $key=>$medicament){
+                
+                $medi_par_ordo = new Medicament_par_ordonnance();
 
                 
-            $medicaments = $request->input('medicament');
-            if($medicaments && is_array($medicaments)){
+                $medi_par_ordo->Periode=$request->input('Periods')[$key];
+                $medi_par_ordo->NbrParJour=$request->input('unites')[$key];
+                $medi_par_ordo->MedicamentId=$medicament;
+                $medi_par_ordo->OrdonnanceId=$ordonnance->id;
+                $medi_par_ordo->save();   
+            }   
 
-                //***************************INSERT INTO ORDONNANCES******************************************** */
-
-                    //$consultation = DB::table('consultations')->latest('id')->first();
-                    $ordonnance = new Ordonnance();
-                    $ordonnance->ConsultationId = $consultaAdomicile->id ; 
-                    $ordonnance->Description = strlen($request->input('AddContent'))>0 ? $request->input('AddContent'):null ;
-                    $ordonnance->save();
-
-                //***************************INSERT INTO MEDICAMENT_PAR_ORDONNANCES******************************************** */
-                
-                
-                //$ordonnance = DB::table('ordonnances')->latest('id')->first();
-                    
-                
-                    
-                    foreach ($medicaments as $key=>$medicament){
-                    
-                    $medi_par_ordo = new Medicament_par_ordonnance();
-
-                    
-                    $medi_par_ordo->Periode=$request->input('Periods')[$key];
-                    $medi_par_ordo->NbrParJour=$request->input('unites')[$key];
-                    $medi_par_ordo->MedicamentId=$medicament;
-                    $medi_par_ordo->OrdonnanceId=$ordonnance->id;
-                    $medi_par_ordo->save();   
-                }   
-
-            }
+        }
         
 
         //****************************************  files placing            ****************   ************** */
@@ -625,11 +624,35 @@ class ConsultationController extends Controller
             }
         }
 
-            if( isset($ordonnance) )
-                return response()->json(['status'=>'Good','ordonnanceurl'=>url('/Ordonnance/'.$ordonnance->id), 'letter'=>url('LettreAuConfrere?patient='.$patient->id)]);
-            return response()->json(['status'=>'Good','ordonnanceurl'=>'none' ]);
-        }
+        if( isset($ordonnance) )
+            return response()->json(['status'=>'Good','ordonnanceurl'=>url('/Ordonnance/'.$ordonnance->id), 'letter'=>url('LettreAuConfrere?patient='.$patient->id)]);
+        return response()->json(['status'=>'Good','ordonnanceurl'=>'none' ]);
+    }
 
+
+
+    public function ConsultationEditView( Request $request, $id){
+
+        $consultation = Consultation::findOrFail($id);
+        $user = Auth::guard('medcin')->user();
+        $name= $user->Nom.' '.$user->Prenom;
+
+        if( $consultation->MedcinId != $user->id )
+            abort(404);
+
+        $Mesures_Exams = $consultation->Examen;
+
+        $Operations = $consultation->OperationSelonConsu;
+
+        $ordonnance = $consultation->Ordonnance;
+
+        $patient = $consultation->patient;
+        
+        $Fichiers = $consultation->Fichier;
+
+        return view( 'Medcin.Consultation.EditConsultation', [ 'name'=>$name, 'consultation'=>$consultation, 'patient'=>$patient, 'Mesures_Exams'=>$Mesures_Exams, 'Operations'=>$Operations, 'ordonnance'=>$ordonnance, 'Fichiers'=>$Fichiers]);
+    }
+    
 
 
     
