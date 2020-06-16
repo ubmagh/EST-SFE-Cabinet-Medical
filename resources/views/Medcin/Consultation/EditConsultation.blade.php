@@ -291,6 +291,61 @@
                         <h2 class="h3 mt-4 mb-3 font-weight-light mx-auto"> Inclure des Fichiers :  </h2>
                     </div>
 
+                    @foreach ($Fichiers as $Fichier )
+
+                        <div class="col-md-8 mx-auto d-md-block ">
+                            <div class="card rounded border mb-2">
+                                <div class="card-body p-3">
+                                    <div class="media">
+                                        @switch($Fichier->Type)
+                                            @case('image')
+                                                <i class="far fa-file-image icon-md align-self-center mr-3 "></i>
+                                                @break
+                                            @case('video')
+                                                <i class="far fa-file-video icon-md align-self-center mr-3 "></i>
+                                                @break
+                                            @case('pdf')
+                                                <i class="far fa-file-pdf icon-md align-self-center mr-3 "></i>
+                                                @break
+                                            @case('zip')
+                                                <i class="far fa-file-archive icon-md align-self-center mr-3 "></i>
+                                                @break
+                                            @default
+                                        @endswitch
+                                        <div class="media-body">
+                                            <h6 class="mb-1"> {{ $Fichier->OriginalName }} </h6>
+                                            <p class="mb-0 text-muted toFormat">
+                                                {{ $Fichier->Size }}
+                                            </p>
+                                        </div>
+                                        @switch($Fichier->Type)
+                                            @case('image')
+                                                <a href="{{ url('Ressource/Image',$Fichier->id) }}" target="_blank" id="dossier" class="float-right mr-4"> <i class="fas fa-download fa-lg"></i> </a>
+                                                @break
+                                            @case('video')
+                                                <a href="{{ url('Ressource/Video',$Fichier->id) }}" target="_blank" id="dossier" class="float-right mr-4"> <i class="fas fa-download fa-lg"></i> </a>
+                                                @break
+                                            @case('pdf')
+                                                <a href="{{ url('Ressource/PDF',$Fichier->id) }}" target="_blank" id="dossier" class="float-right mr-4"> <i class="fas fa-download fa-lg"></i> </a>
+                                                @break
+                                            @case('zip')
+                                                <a href="{{ url('Ressource/ZIP',$Fichier->id) }}" target="_blank" id="dossier" class="float-right mr-4"> <i class="fas fa-download fa-lg"></i> </a>
+                                                @break
+                                            @default
+                                        @endswitch
+                                        <div class="form-check form-check-danger">
+                                          <label class="form-check-label mr-n5 text-danger">
+                                            <input type="checkbox" class="form-check-input " name="toDelete[]"  value="{{$Fichier->id}}" >
+                                            supprimer
+                                          </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                                
+                    @endforeach 
+
                     <div class="row my-2 px-0 w-100 d-block text-center" id="FilesBeforeRow">
                         <div class="text-center">
                             <button type="button" class="btn btn-info mt-4" id="addfile"><i
@@ -619,7 +674,7 @@
 
         $('#addfile').click(()=>{
         let Toappend = `
-                                <div class="row py-3 my-3 px-0 border border-secondary rounded mx-auto w-100 d-block text-center " id="file`+nbrfile+`">
+                                <div class="row py-3 my-3 px-0 border border-secondary rounded mx-auto d-block text-center col-md-8 col-12" id="file`+nbrfile+`">
                                     <div class="input-group mb-2 mt-1 col-11 mx-auto">
                                         
                                         <input type="file" class="custom-file-input" accept=".bmp,.jpg,.jpeg,.png,.avi,.mpg,.mpeg,.mov,.mp4,.pdf,.zip" name="Files[]" id="customFile`+nbrfile+`">
@@ -842,6 +897,34 @@
             })
 
         },4000);
+
+        function humanFileSize(bytes, si=true, dp=1) {
+            const thresh = si ? 1000 : 1024;
+
+            if (Math.abs(bytes) < thresh) {
+                return bytes + ' B';
+            }
+            const units = si 
+                ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'] 
+                : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+            let u = -1;
+            const r = 10**dp;
+
+            do {
+                bytes /= thresh;
+                ++u;
+            } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < units.length - 1);
+            return bytes.toFixed(dp) + ' ' + units[u];
+            }
+        
+        document.addEventListener('DOMContentLoaded', function () { 
+
+            $('.toFormat').each(function(i,el){
+                $(el).text( humanFileSize($(el).text()) );
+            });
+
+        });
+        
 
     </script>
     
