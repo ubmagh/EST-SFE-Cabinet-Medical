@@ -160,11 +160,36 @@
                     <div class="row w-100">
                         <h2 class="h3 mt-4 mb-3 font-weight-light mx-auto"> Opérations :  </h2>
                     </div>
+
+                    @if( !empty($Operations) )
+                        @foreach ( $Operations as $key=>$Ooperation )
+                            <div class="row py-3 my-3 px-0 border border-secondary rounded mx-auto w-100 d-block text-center " id="Op{{ $key+1 }}">
+                                <div class="input-group mb-2 mt-1 col-11 mx-auto">
+                                    <select class="custom-select col-12" name="Operations[]" id="">
+                                        <option selected disabled>choisir opération...</option>
+                                        @if( !empty($operationsC) )
+                                            @foreach($operationsC as $operation)
+                                                <option value="{{ $operation->id }} " {{ $Ooperation->OperationId==$operation->id? "selected":"" }}> {{ $operation->Intitule }} </option>
+                                            @endforeach
+                                        @else
+                                            <option disabled> Aucune opération n'est enregistrée </option>
+                                        @endif
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group col-11 d-block mx-auto mt-3 mb-0">
+                                <input type="text"
+                                    class="form-control" name="Remarquez[]" value="{{ $Ooperation->Remarque }}" maxlength="100" placeholder="Remarque pour l'opération.." />
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                    
                     <div class="row my-2 px-0 w-100 d-block text-center" id="OpsBeforeRow">
                         <div class="text-center">
                             <button type="button" class="btn btn-info mt-4" id="addOp"><i
                                     class="fas fa-plus fa-lg text-white"></i></button>
-                            <button type="button" class="btn btn-danger d-none mt-4" id="DelOp"><i
+                            <button type="button" class="btn btn-danger {{count($Operations)? "":"d-none"}} mt-4" id="DelOp"><i
                                     class="fas fa-times fa-lg text-white"></i></button>
                             </div>
                     </div>
@@ -193,11 +218,46 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+
+                                        @foreach ( $ordonnance->MedicamentFromThisOrd as $key=>$medpO )
+                                            <tr class="row mt-2" id="row{{$key+1}}" class="mt-1"> 
+                                                <td class="col-md-6 px-1 col-sm">
+                                                    <div class="card rounded border mb-2">
+                                                        <div class="card-body pl-2 pr-1 py-2">
+                                                            <div class="media py-1">
+                                                                <i class="fas fa-prescription-bottle-alt align-self-center mr-1 ml-n5 "></i>
+                                                                <div class="media-body">
+                                                                    {{ $medpO->medicament->Nom }}
+                                                                </div>
+                                                                <input type="hidden" name="medicament[]" value="{{ $medpO->medicament->id }}"/>
+                                                                <button type="button" class="float-right deleteMedicine" 
+                                                                    style="border: none; background-color: transparent; cursor: pointer;"><i
+                                                                        class="fa fa-times fa-lg text-danger"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td  class="col-md-3 px-1 col-sm">
+                                                    <div class="input-group">
+                                                        <input  name="unites[]" type="number" min="0" value="{{ $medpO->NbrParJour }}" class=" form-control  px-1">
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">{{ $medpO->medicament->Prise }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td  class="col-md-3 px-1 col-sm">
+                                                    <input  name="Periods[]" autocomplete="off" value="{{ $medpO->Periode }}" type="text" class=" form-control px-1" maxlength="20">
+                                                </td>
+                                            </tr>
+                                        @endforeach
+
                                         <tr id="buttonsRaw">
                                             <td colspan="3" class="text-center">
                                                 <button type="button" class="btn btn-info mt-4" id="addMedi"><i
                                                         class="fas fa-plus fa-lg text-white"></i></button>
-                                                <button type="button" class="btn btn-danger d-none mt-4" id="DelMedi"><i
+                                                <button type="button" class="btn btn-danger {{ $ordonnance? "":"d-none" }} mt-4" id="DelMedi"><i
                                                         class="fas fa-times fa-lg text-white"></i></button>
                                             </td>
                                         </tr>
@@ -208,13 +268,13 @@
                                                     id="MedsAlert">
                                                     <span id="MedsError"></span>
                                             </div>
-                    <hr class="mt-3 d-none" id="addtionalContentLine" />
-                    <div class="d-none" id="addtionalContent">
+                    <hr class="mt-3 {{ $ordonnance? "":"d-none" }} " id="addtionalContentLine" />
+                    <div class=" {{ $ordonnance? "":"d-none" }} " id="addtionalContent">
                         <div class="form-group mt-3 " >
                             <label class=" font-weight-bold "> contenu additionnel à l'ordonndance : </label>
                             <textarea class="form-control" name="AddContent"
                                 placeholder="antécédants, allergie, remarques sur les medicaments..."
-                                rows="12"></textarea>
+                                rows="12"> {{ $ordonnance->Description }} </textarea>
                         </div>
                         <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert" id="ContentAlert">
                             <span id="ContentError"></span>
@@ -334,7 +394,8 @@
         var j=1,nbrOps=1,i=1,nbrfile=1;
         
         {{ count($Mesures_Exams)? "j=".(count($Mesures_Exams)+1).";" : ""}}
-        
+        {{ count($Operations)? "nbrOps= ".( count($Operations)+1 ).";" : "" }}
+        {{ count($ordonnance->MedicamentFromThisOrd)? "i= ".( count($ordonnance->MedicamentFromThisOrd) +1 ).";" : "" }}
         
 
         // Exmas script
@@ -408,10 +469,10 @@
         let Toappend = `
                                     <div class="row py-3 my-3 px-0 border border-secondary rounded mx-auto w-100 d-block text-center " id="Op`+nbrOps+`">
                                         <div class="input-group mb-2 mt-1 col-11 mx-auto">
-                                            <select class="custom-select col-12" name="Operations[]" id="inputGroupSelect02">
+                                            <select class="custom-select col-12" name="Operations[]" id="">
                                                 <option selected disabled>choisir opération...</option>
-                                                @if( !empty($operations) )
-                                                    @foreach($operations as $operation)
+                                                @if( !empty($operationsC) )
+                                                    @foreach($operationsC as $operation)
                                                         <option value="{{ $operation->id }} "> {{ $operation->Intitule }} </option>
                                                     @endforeach
                                                 @else
@@ -767,13 +828,21 @@
             
         });
 
-        $(document).load(function(){
-            
+        let ob=0;
+        setTimeout(function(){
+
             @foreach ( $Mesures_Exams as $key => $mesure )
-                CreateTypeAHeadExa( $('#Exa{{$key+1}}') );
+                ob = $('#Exa{{$key+1}}'); 
+                CreateTypeAHeadExa( ob );
             @endforeach
 
-        });
+            $(".deleteMedicine").each(function(i, node){
+            BindDeleteEvent(node);
+
+            })
+
+        },4000);
+
     </script>
     
 

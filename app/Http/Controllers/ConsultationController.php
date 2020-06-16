@@ -650,7 +650,9 @@ class ConsultationController extends Controller
         
         $Fichiers = $consultation->Fichier;
 
-        return view( 'Medcin.Consultation.EditConsultation', [ 'name'=>$name, 'consultation'=>$consultation, 'patient'=>$patient, 'Mesures_Exams'=>$Mesures_Exams, 'Operations'=>$Operations, 'ordonnance'=>$ordonnance, 'Fichiers'=>$Fichiers]);
+        $operationsC = Operations_Cabinet::OrderBy('Intitule')->get();
+
+        return view( 'Medcin.Consultation.EditConsultation', [ 'name'=>$name, 'consultation'=>$consultation, 'patient'=>$patient, 'operationsC'=>$operationsC, 'Mesures_Exams'=>$Mesures_Exams, 'Operations'=>$Operations, 'ordonnance'=>$ordonnance, 'Fichiers'=>$Fichiers]);
     }
     
 
