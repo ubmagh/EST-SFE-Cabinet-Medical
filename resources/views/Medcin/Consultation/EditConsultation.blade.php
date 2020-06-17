@@ -12,7 +12,7 @@
 
     <div class="content-wrapper">
         <form action="{{ url( 'ConsultationEdit', $consultation->id) }}" enctype="multipart/form-data" id="DomForm" methode="POST">
-
+        @csrf
             <div class="card">
                 <div class="card-body">
                     <div class="row w-100">
@@ -65,7 +65,7 @@
                 </div>
             </div>
 
-            @csrf
+            
     
             <div class="card con my-4">
                 <div class="card-body">
@@ -197,6 +197,7 @@
                             id="OpsAlert">
                             <span id="OpsError"></span>
                     </div>
+                    <small class="text-muted text-center">* La modification des opérations peut affecter un changement de prix de consultation  </small>
                 </div>
             </div>
 
@@ -218,40 +219,41 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-
-                                        @foreach ( $ordonnance->MedicamentFromThisOrd as $key=>$medpO )
-                                            <tr class="row mt-2" id="row{{$key+1}}" class="mt-1"> 
-                                                <td class="col-md-6 px-1 col-sm">
-                                                    <div class="card rounded border mb-2">
-                                                        <div class="card-body pl-2 pr-1 py-2">
-                                                            <div class="media py-1">
-                                                                <i class="fas fa-prescription-bottle-alt align-self-center mr-1 ml-n5 "></i>
-                                                                <div class="media-body">
-                                                                    {{ $medpO->medicament->Nom }}
+                                        @if($ordonnance)
+                                            @foreach ( $ordonnance->MedicamentFromThisOrd as $key=>$medpO )
+                                                <tr class="row mt-2" id="row{{$key+1}}" class="mt-1"> 
+                                                    <td class="col-md-6 px-1 col-sm">
+                                                        <div class="card rounded border mb-2">
+                                                            <div class="card-body pl-2 pr-1 py-2">
+                                                                <div class="media py-1">
+                                                                    <i class="fas fa-prescription-bottle-alt align-self-center mr-1 ml-n5 "></i>
+                                                                    <div class="media-body">
+                                                                        {{ $medpO->medicament->Nom }}
+                                                                    </div>
+                                                                    <input type="hidden" name="medicament[]" value="{{ $medpO->medicament->id }}"/>
+                                                                    <button type="button" class="float-right deleteMedicine" 
+                                                                        style="border: none; background-color: transparent; cursor: pointer;"><i
+                                                                            class="fa fa-times fa-lg text-danger"></i>
+                                                                    </button>
                                                                 </div>
-                                                                <input type="hidden" name="medicament[]" value="{{ $medpO->medicament->id }}"/>
-                                                                <button type="button" class="float-right deleteMedicine" 
-                                                                    style="border: none; background-color: transparent; cursor: pointer;"><i
-                                                                        class="fa fa-times fa-lg text-danger"></i>
-                                                                </button>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td  class="col-md-3 px-1 col-sm">
-                                                    <div class="input-group">
-                                                        <input  name="unites[]" type="number" min="0" value="{{ $medpO->NbrParJour }}" class=" form-control  px-1">
-                                                        <div class="input-group-append">
-                                                            <div class="input-group-text">{{ $medpO->medicament->Prise }}
+                                                    </td>
+                                                    <td  class="col-md-3 px-1 col-sm">
+                                                        <div class="input-group">
+                                                            <input  name="unites[]" type="number" min="0" value="{{ $medpO->NbrParJour }}" class=" form-control  px-1">
+                                                            <div class="input-group-append">
+                                                                <div class="input-group-text">{{ $medpO->medicament->Prise }}
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td  class="col-md-3 px-1 col-sm">
-                                                    <input  name="Periods[]" autocomplete="off" value="{{ $medpO->Periode }}" type="text" class=" form-control px-1" maxlength="20">
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                                    </td>
+                                                    <td  class="col-md-3 px-1 col-sm">
+                                                        <input  name="Periods[]" autocomplete="off" value="{{ $medpO->Periode }}" type="text" class=" form-control px-1" maxlength="20">
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
 
                                         <tr id="buttonsRaw">
                                             <td colspan="3" class="text-center">
@@ -274,7 +276,7 @@
                             <label class=" font-weight-bold "> contenu additionnel à l'ordonndance : </label>
                             <textarea class="form-control" name="AddContent"
                                 placeholder="antécédants, allergie, remarques sur les medicaments..."
-                                rows="12"> {{ $ordonnance->Description }} </textarea>
+                                rows="12"> {{ $ordonnance ? $ordonnance->Description : null }} </textarea>
                         </div>
                         <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert" id="ContentAlert">
                             <span id="ContentError"></span>
@@ -358,6 +360,10 @@
                             id="fileAlert">
                             <span id="fileError"></span>
                     </div>
+                    <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
+                            id="toDeleteAlert">
+                            <span id="toDeleteError"></span>
+                    </div>
 
                 </div>
             </div>
@@ -372,11 +378,6 @@
                 </div>
             </div>
             
-                
-                
-
-
-
         </form>
         
     </div>
@@ -450,7 +451,7 @@
         
         {{ count($Mesures_Exams)? "j=".(count($Mesures_Exams)+1).";" : ""}}
         {{ count($Operations)? "nbrOps= ".( count($Operations)+1 ).";" : "" }}
-        {{ count($ordonnance->MedicamentFromThisOrd)? "i= ".( count($ordonnance->MedicamentFromThisOrd) +1 ).";" : "" }}
+        {{ $ordonnance && count($ordonnance->MedicamentFromThisOrd) ? "i= ".( count($ordonnance->MedicamentFromThisOrd) +1 ).";" : "" }}
         
 
         // Exmas script
@@ -752,7 +753,7 @@
 
             $.ajax({
                 type:"POST",
-                url: "/ADomicile",
+                url: " {{url('/ConsultationEdit',$consultation->id)}}",
                 data: fd,
                 contentType: false,
                 processData: false,
@@ -766,6 +767,10 @@
                         $('.con').each(function(i,ele){
                             setTimeout(()=>$(ele).addClass('d-none'),100);
                         });
+
+                        let message ="Consultation Bien Modifiée ! ";
+                        if(resp.dif==true)
+                             message =" Consultation Bien Modifiée ! le prix de consultation est changé veuillez vérifier le paiement de la consultation .";
                         $('#finishState').children().first().addClass('d-none');
                         $('#finishState').append(`
                             <div class=" col-md-11 mx-auto py-4 my-4">
@@ -774,15 +779,12 @@
                                         <span aria-hidden="true">&times;</span>
                                         <span class="sr-only">Close</span>
                                     </button>
-                                    Consultation Bien Enregistrée ! 
+                                    `+message+`
                                 </div>
                             </div>
                         `);
 
-                        if (resp.ordonnanceurl != 'none')
-                            $('#finishState').append(` <div class="row w-100 text-center mt-5 mb-3" > <a href="` + resp.ordonnanceurl + `" target="_blank" class="btn btn-info text-white text-center text-wite mx-auto"> <h3 class="h3"> <i class="fas fa-print"></i> Imprimer l'ordonnance </h3> </a> </div> `);
 
-                        $('#finishState').append(` <div class="row w-100 text-center my-3" > <a href="` + resp.letter + `" target="_blank" class="btn text-white btn-warning text-center mx-auto"> <h3 class="h3"> <i class="fas fa-envelope "></i> Créer une lettre au confrère </h3> </a> </div> `);
                     }else{
                         $('#finishState').append(`
                             <div class=" col-md-11 mx-auto py-4 my-4">
@@ -791,7 +793,7 @@
                                         <span aria-hidden="true">&times;</span>
                                         <span class="sr-only">Close</span>
                                     </button>
-                                    Consultation n'est pas Enregistrée ! une erreure servenue.
+                                    Consultation n'est pas Modifiée ! une erreure servenue.
                                 </div>
                             </div>
                         `);
@@ -859,6 +861,14 @@
                                     error.responseJSON.errors[key]
                                 );
                                 $("#fileAlert")
+                                    .removeClass("d-none")
+                                    .addClass("show");
+                            }
+                            if (key.search("toDelete") != -1) {
+                                $("#toDeleteError").html() ? null : $("#toDeleteError").html(
+                                    error.responseJSON.errors[key]
+                                );
+                                $("#toDeleteAlert")
                                     .removeClass("d-none")
                                     .addClass("show");
                             }

@@ -63,7 +63,7 @@
             <li class="nav-item">
             <a class="nav-link" href="{{ url('/') }}">
                 <i class="ti-home menu-icon"></i>
-                <span class="menu-title">Dashboard</span>
+                <span class="menu-title">Acceuil</span>
               </a>
             </li>
             

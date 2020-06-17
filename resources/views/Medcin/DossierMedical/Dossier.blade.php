@@ -150,7 +150,7 @@
                                     {{-- The Tabs Inside ! --}}
 
 
-                                    <ul class=" d-flex justify-content-center nav nav-pills nav-pills-success col-11 mx-auto mt-3" id="pills-tab" role="tablist">
+                                    <ul class=" d-flex justify-content-center nav nav-pills nav-pills-success col-12 mx-auto mt-3" id="pills-tab" role="tablist">
                                         <li class="nav-item">
                                             <a class="nav-link active" id="pillsDC{{$consultation->id}}" data-toggle="pill" href="#ContentDC{{$consultation->id}}" role="tab" aria-controls="ContentDC{{$consultation->id}}" aria-selected="true"> <i class="fas fa-info fa-lg"></i> Détails de la Consultation</a>
                                         </li>
@@ -214,6 +214,8 @@
                                                                 <i class="far fa-clock mr-2" style="font-size: 28px;"></i>Consultation à RendezVous</div>
                                                             @endif
                                                         @endif
+
+                                                        <a class="btn-inverse-warning" href="{{ url('ConsultationEdit',$consultation->id) }}" target="_blank"> <i class="fas fa-edit"></i> Modifier cette consultation </a>
 
                                                     </div>
                                                     

@@ -148,7 +148,7 @@ Route::group(['middleware' => ['auth:medcin']], function () {
     Route::get('/ListeConsultations', 'ConsultationController@ListeDesConsultations');
     Route::delete('/ListeConsultationCabinet/delete/{Deletedid}', 'ConsultationController@destroyCabinet');
     Route::get('/ConsultationEdit/{id}', 'ConsultationController@ConsultationEditView');
-    Route::put('/ConsultationEdit/{id}', 'ConsultationController@updateCabinet');
+    Route::POST('/ConsultationEdit/{id}', 'ConsultationController@UpdateConsultation');
 
 
     // Consultation à domicile Routes
