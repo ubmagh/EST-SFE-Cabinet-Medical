@@ -31,10 +31,13 @@ class CreateCertificatsTable extends Migration
         Schema::create('certificats', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('PatientId')->unsigned();
+            $table->bigInteger('medcinId')->unsigned();
             $table->string('Motif');
+            $table->timestamp('date')->useCurrent();
             $table->string('Duree',30)->nullable();
 
             $table->foreign('PatientId')->references('id')->on('patients')->onDeletes('cascade');
+            $table->foreign('medcinId')->references('id')->on('medcins')->onDeletes('cascade');
             
 
         });

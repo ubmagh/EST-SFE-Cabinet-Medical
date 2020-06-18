@@ -157,8 +157,10 @@ Route::group(['middleware' => ['auth:medcin']], function () {
     
 
     // Certificat 
-
     Route::resource('Certificat', 'CertificatController' );
+    Route::post('CreateCertificat', 'CertificatController@store' );
+    Route::get('CreateCertificat', 'CertificatController@createForm' );
+    Route::get('PrintCertf/{id}', 'CertificatController@printCert' ); //=> print
 
 
 
@@ -167,8 +169,6 @@ Route::group(['middleware' => ['auth:medcin']], function () {
     Route::get('LettresAuConfreres', 'LettreAuConfrereController@GetListe');// list des lettres
     Route::get('LettreAuConfrerePatient','LettreAuConfrereController@autocomplete_patient');
     Route::get('Lettre/{id}','LettreAuConfrereController@printLetter'); // imprimer une lettre
-
-
 
 
     // Fiche Patient

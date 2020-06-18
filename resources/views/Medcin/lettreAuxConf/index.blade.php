@@ -379,7 +379,6 @@ Lettre au confrère
         <script src=" {{ asset('vendors/summernote/dist/summernote-bs4.min.js') }} "></script>
         <script src=" {{ asset('js/editorDemo.js') }} "></script>
         <script src="{{ asset('/js/typeahead.bundle.min.js') }}"></script>
-        <script src=" {{ asset('js/FontAwesomeAll.min.js') }} "></script>
 
         <script>    
         var data = new Bloodhound({

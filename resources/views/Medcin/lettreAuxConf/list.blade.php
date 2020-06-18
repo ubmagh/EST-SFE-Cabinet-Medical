@@ -12,7 +12,7 @@ Lettres aux confrères
 @section('content')
 <div class="container-fluid page-body-wrapper">
     <div class="main-panel">
-        <div class="w-75 content-wrapper" style="max-width: none;">
+        <div class="col-md-9 col-11 content-wrapper" style="max-width: none;">
             <div class="row grid-margin">
                 <div class="col-12">
                     <div class="card">
@@ -70,7 +70,7 @@ Lettres aux confrères
                                                         -
                                                     @endif
                                                 </td>
-                                                <td class="text-truncate">
+                                                <td class="">
                                                     {{ $Lettre->Titre }}
                                                 </td>
                                                 <td class="text-center">
@@ -89,8 +89,11 @@ Lettres aux confrères
                                         @endforeach
                                     </tbody>
                                 </table>
+                            </div>
+
+                            <div class="row w-100 d-block">
                                 <div class="mt-4 mb-3 d-block mx-auto" style="width: fit-content;">
-                                    {{ $Lettres->links() }}
+                                        {{ $Lettres->links() }}
                                 </div>
                             </div>
 
@@ -138,7 +141,7 @@ Lettres aux confrères
 
             <div id="msgSucc-delete" role="alert" style="background: rgb(214,233,198);background: linear-gradient(0deg, rgba(214,233,198,1) 0%, 
     rgba(198,233,229,1) 100%);" class="alert alert-success d-none">
-                <i class="fa fa-check"></i> La lettre est supprimés
+                <i class="fa fa-check"></i> La lettre est supprimé
                 avec
                 succés !
             </div>
@@ -153,13 +156,14 @@ Lettres aux confrères
     </div>
 </div>
 
+
+
 @endsection
 
 
 
 
 @section('script')
-<script src=" {{ asset('js/FontAwesomeAll.min.js') }}"></script>
 
 <script>
 

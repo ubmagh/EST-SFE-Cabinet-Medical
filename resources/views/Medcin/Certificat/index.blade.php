@@ -6,61 +6,163 @@
 Certificat Médical
 @endsection
 
-@section('css')
-<link rel="stylesheet" href="{{ asset('vendors/summernote/dist/summernote-bs4.css') }}">
-@endsection
+
+
 @section('content')
-<div class="container-scroller">
-    <div class="container-fluid page-body-wrapper full-page-wrapper">
-      <div class="main-panel">
-        <div class="content-wrapper d-flex align-items-center auth px-0">
-          <div class="row w-100 mx-0">
-            <div class="col-lg-4 mx-auto">
-              <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-                <div class="row w-100 ml-1 mb-4 ">
-                    <div class="col-md-3 col-sm-12">
-                      <img src="{{ asset('images/icons/contract.png') }}" class="w-md-100 mx-sm-auto d-md-block d-sm-block ml-md-auto ml-lg-n3  ml-lg-0" style="max-height: 80px;" alt="Secretary login" />
+
+<div class="w-75 content-wrapper" style="max-width: none;">
+    <div class="card col-12">
+        <div class="card-body">
+
+
+          <div class="row  w-100 mt-4 mb-3 py-3 ">
+            <div class="col-md col-12 text-left">
+                <a class="btn btn-primary" href="{{ url('CreateCertificat') }}" role="button">
+                    <i class="fas fa-plus fa-lg"></i> 
+                    Créer un Certificat 
+                </a>
+            </div>
+            <div class="col-md col-12 text-right">
+                <form method="GET" action="{{ url()->current() }}" class="col-md-8 col-10  ml-auto">
+                    <div class="input-group">
+                      <input type="text" aria-describedby="button-addon2" class="form-control border-dark" name="q" placeholder="chercher  ..." value="{{ $q? $q:null }}" />
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-dark" type="submit" id="button-addon2"><i class="fas fa-search fa-lg"></i></button>
+                        </div>
                     </div>
-                  
-                    <div class="col-md-9 col-sm-12 d-flex align-content-center align-items-center ml-lg-0">
-                      <h1 class="h1 display-4 text-sm-center text-md-left mx-sm-auto mr-md-auto mt-sm-3 text-info"> Certificat Médical </h1>
-                    </div>
-                  </div>
-                
-                <form action="/Certificat" method="POST" class="pt-3">
-                    {{ csrf_field() }}
-
-                  <div class="form-group">
-                    <input type="text" class="form-control"  name="id_patient"  placeholder="Patient">
-                  </div>
-
-                  <div class="form-group">
-                    <input type="text" class="form-control form-control-lg" name="motif" id="motif" placeholder="Motif">
-                  </div>
-
-                  <div class="form-group">
-                    <input type="number" class="form-control form-control-lg" name="duree" id="duree" placeholder="Durée">
-                  </div>
-
-                  
-                  
-                  <div class="mt-3">
-                    <button type="submit"  class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">
-                        <i class="fas fa-print"></i> Enregistrer et imprimer le certificat</button>
-                  </div>
-
-                 
-                  
-                </form>
-              </div>
+                </form>   
             </div>
           </div>
+          
+          @if( $q )
+            <div class="row w-100 text-center"> 
+                <h4 class="h4 mx-auto"> Résultats de recherche de : ` {{ $q }} `  <a href="{{url('Certificat')}}"> <i class="fas fa-times text-danger"></i> </a> </h4>
+            </div>
+          @endif
+
+          <div class="table-responsive my-4">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            date
+                        </th>
+                        <th>
+                            Patient
+                        </th>
+                        <th>
+                            Motif
+                        </th>
+                        <th class="text-center">
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if( !count($certfs) )
+                      <tr>
+                        <td colspan="5" class="text-center"> Aucun Certificat Trouvé </td>
+                      </tr>
+                    @endif
+                    @foreach( $certfs as $certf )
+                        <tr>
+                            <td class="py-1">
+                                {{ $certf->num }}
+                            </td>
+                            <td>
+                                {{ substr($certf->date,0,11) }}
+                            </td>
+                            <td>
+                              <a href="{{ url('FichePatient/'.$certf->PatientId) }}">
+                                  {{ $certf->patient->Nom }}  {{ $certf->patient->Prenom }}
+                              </a>
+                            </td>
+                            <td class="text-truncate">
+                                {{ strlen($certf->Motif)>40? substr( $certf->Motif, 0,36).' ...' : $certf->Motif  }}
+                            </td>
+                            <td class="text-center">
+                                <a name="" id="" class="btn btn-warning text-white" href="{{ url('PrintCertf/'.$certf->id) }}" >
+                                  <i class="fas fa-eye fa-lg"></i> 
+                                </a>
+                                <button type="button" data-id_delete="{{ $certf->id }}" data-toggle="modal" data-target="#ModalDelete" class="btn btn-danger text-white"> 
+                                  <i class="fas fa-trash fa-lg"></i> 
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
-      </div>
-      <!-- content-wrapper ends -->
+
+        <div class="row w-100 d-block">
+          <div class="mt-4 mb-3 d-block mx-auto" style="width: fit-content;">
+                  {{ $certfs->links() }}
+          </div>
+        </div>
+
+
+        </div>
     </div>
-    <!-- page-body-wrapper ends -->
-  </div>
+</div>
+
+
+
+<!-- -------------------- DELETE Modal  ------------------------- -->
+
+<div class="modal fade left" id="ModalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog model-notify modal-md modal-right modal-info" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">supprimer un Certificat </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="deleteform">
+                    {{ csrf_field() }}
+                    {{ method_field('delete') }}
+
+
+
+                    <input type="hidden" id="id_delete" name="id_delete">
+                    <p class="text-center" style="font-size : 20px">Voulez-vous vraiment
+                        supprimer
+                        ce Certificat ?</p><br>
+
+
+
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" style="margin-left : 12%"><i
+                            class="far fa-times-circle"></i>
+                        Non/Annuler</button>
+                    <button type="submit" class="btn btn-danger" style="margin-left : 12%"><i
+                            class="fas fa-trash-alt"></i> Oui/Supprimer</button>
+            </div>
+            </form>
+
+            <div id="msgSucc-delete" role="alert" style="background: rgb(214,233,198);background: linear-gradient(0deg, rgba(214,233,198,1) 0%, 
+    rgba(198,233,229,1) 100%);" class="alert alert-success d-none">
+                <i class="fa fa-check"></i>  Certificat supprimé
+                avec
+                succés !
+            </div>
+
+            <div id="msgDanger-delete" style="background: rgb(235,204,209);background: linear-gradient(0deg, rgba(235,204,209,1) 0%, 
+      rgba(235,204,221,0.927608543417367) 100%);" role="alert" class="alert alert-danger d-none">
+                <i class="fa fa-times"></i> Certificat n'est pas
+                supprimé !
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
 @endsection
 
 
@@ -69,15 +171,38 @@ Certificat Médical
 @section('script')
 
 
-<script src="{{ asset('/js/typeahead.bundle.min.js') }}"></script>
+<script>
 
+$('#ModalDelete').on('show.bs.modal', function (event) {
+        let button = $(event.relatedTarget);
+        const id = button.data('id_delete');
+        $('#id_delete').val("" + id);
+    });
 
+    
+    document.getElementById('deleteform').onsubmit =
+        function (e) {
+            e.preventDefault();
+            var Deletedid = $('#id_delete').val();
+            $.ajax({
+                type: "DELETE",
+                url: "/Certificat/" + Deletedid,
+                data: $('#deleteform').serialize(),
+                success: function (response) {
+                    $("#msgSucc-delete").removeClass('d-none').addClass('d-block');
+                    $("#deleteform").addClass('d-none');
+                    location.reload();
+                },
 
-<script src=" {{ asset('vendors/tinymce/tinymce.min.js') }}"></script>
-<script src=".{{ asset('vendors/tinymce/themes/modern/theme.js') }}"></script>
-<script src=" {{ asset('vendors/summernote/dist/summernote-bs4.min.js') }}"></script>
-<script src="{{ asset('js/editorDemo.js') }}"></script>
+                error: function (error) {
+                    console.log(error)
+                    $("#msgDanger-delete").removeClass('d-none').addClass('d-block');
+                    $("#deleteform").addClass('d-none');
+                    location.reload();
+                }
 
+            });
+        };
 
-<script src=" {{ asset('js/FontAwesomeAll.min.js') }}"></script>
+</script>
 @endsection
