@@ -16,7 +16,7 @@ class CreatePaimentsTable extends Migration
         Schema::create('paiments', function (Blueprint $table) {
             $table->id();
             $table->decimal('Montant');
-            $table->date('date');
+            $table->date('date')->useCurrent();
             $table->bigInteger('FactureId')->unsigned()->nullable();
             $table->string('Type');
             $table->foreign('FactureId')->references('id')->on('factures')->onDelete('cascade');

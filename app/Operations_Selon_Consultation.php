@@ -22,4 +22,11 @@ class Operations_Selon_Consultation extends Model
         return $this->belongsTo('App\consultations','ConsultationID');
     }
 
+
+    public function consultation_selon_operation(){
+        return $this->BelongsTo('App\Consultation' , 'ConsultationID');
+    }
+
+
+
 }

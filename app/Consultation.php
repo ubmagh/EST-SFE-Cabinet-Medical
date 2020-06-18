@@ -46,4 +46,17 @@ class Consultation extends Model
         return $this->hasMany('App\Fichier','ConsultationId');
     }
 
+
+          
+    public function consultation()
+    {
+      return $this->hasMany('App\Facture' , 'ConsultationId');
+    }
+    
+    public function consultation_selon_operation()
+    {
+      return $this->hasMany('App\Operations_Selon_Consultation' , 'ConsultationID');
+    }
+
+
 }

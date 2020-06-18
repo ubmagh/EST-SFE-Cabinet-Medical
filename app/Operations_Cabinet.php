@@ -18,4 +18,10 @@ class Operations_Cabinet extends Model
       return $this->hasMany('App\Operations_Selon_Consultation' , 'OperationId');
     }
 
+    public function operation()
+    {
+      return $this->hasMany('App\Operations_Selon_Consultation' , 'OperationId');
+    }
+
+
 }

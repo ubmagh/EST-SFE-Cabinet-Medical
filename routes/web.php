@@ -22,9 +22,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/test', function () {
-    return view('dachboard.index');
-});
+
 
 
 
@@ -34,11 +32,29 @@ Route::get('/test', function () {
 Route::get('/', function () {
     if( Auth::guard('secretaire')->check() ){
         $name= Auth::guard('secretaire')->user()->Nom.' '.Auth::guard('secretaire')->user()->Prenom;
-        return view('secretaire.dashboard.index')->with('name',$name);
+        $nb_rdv=  app(\App\Http\Controllers\Dachboard\SecretaireController::class)->getNb_rdv();
+        $nb_attente=  app(\App\Http\Controllers\Dachboard\SecretaireController::class)->getNb_attente();
+        $nb_urgence=  app(\App\Http\Controllers\Dachboard\SecretaireController::class)->getNb_urgence();
+        $nb_consultation=  app(\App\Http\Controllers\Dachboard\SecretaireController::class)->getNb_consultation();
+        return view('secretaire.dashboard.index' ,[  'name'        => $name ,
+                                                      'nb_rdv'     => $nb_rdv,
+                                                      'nb_attente' => $nb_attente,
+                                                      'nb_urgence' => $nb_urgence,
+                                                      'nb_consultation' => $nb_consultation,
+                                                 ]);
     }
     if( Auth::guard('medcin')->check() ){
         $name= Auth::guard('medcin')->user()->Nom.' '.Auth::guard('medcin')->user()->Prenom;
-        return view('medcin.dashboard.index')->with('name',$name);
+        $nb_rdv=  app(\App\Http\Controllers\Dachboard\MedcinController::class)->getNb_rdv();
+        $nb_attente=  app(\App\Http\Controllers\Dachboard\MedcinController::class)->getNb_attente();
+        $nb_urgence=  app(\App\Http\Controllers\Dachboard\MedcinController::class)->getNb_urgence();
+        $nb_consultation=  app(\App\Http\Controllers\Dachboard\MedcinController::class)->getNb_consultation();
+        return view('medcin.dashboard.index',[  'name'        => $name ,
+                                                'nb_rdv'     => $nb_rdv,
+                                                'nb_attente' => $nb_attente,
+                                                'nb_urgence' => $nb_urgence,
+                                                'nb_consultation' => $nb_consultation,
+                                             ]);
     }
     if( Auth::guard('admin')->check() ){
         return view('admin.dashboard.index')->with('name',"Administrateur");
@@ -117,8 +133,19 @@ Route::group(['middleware' => ['auth:secretaire']], function () {
     // Verifier l'etat du patient pour actualiser le panneau de secretaire
     Route::get('CheckPatientStatut', 'SalleAttenteController@check_patient_sec');
 
-      // Confreres routes
-      Route::resource('Confreres', 'ConfrereController');
+    // Confreres routes
+    Route::resource('Confreres', 'ConfrereController');
+
+
+    // paiement route
+        //-1 paiement consultation d'un patient X
+    Route::get('/Paiement/{id}','PaimentController@liste_paiement');
+    Route::get('/Details_paiement/{id}','PaimentController@detail_paiment');
+    Route::post('/paiement/{id}','PaimentController@paiement');
+        //-2 paiement, depense cabinet.. 
+    Route::get('/JournalPaiement', 'JournalpaiementController@journal_paiement');
+    Route::get('/CategoriePaiement', 'JournalpaiementController@categorie_paiement');
+    
 });
 
 #################################   Secretary Routes End   ################################

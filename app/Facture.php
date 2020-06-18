@@ -10,6 +10,13 @@ class Facture extends Model
     public $timestamps = false;
     public $table="factures";
     protected $fillable = [
-        'Motif', 'ConsultationId', 'Date', 'Somme', 'Paye', 'Remise',
+        'ConsultationId','Motif', 'Date', 'Somme', 'Paye', 'Remise',
     ];
+
+
+    public function consultation(){
+        return $this->BelongsTo('App\Consultation' , 'ConsultationId');
+     }
+    
+     
 }

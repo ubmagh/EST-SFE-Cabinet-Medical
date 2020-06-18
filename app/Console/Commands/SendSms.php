@@ -48,8 +48,8 @@ class SendSms extends Command
         $rdv=Rendezvous::whereNotIn('id', function($q){
           $q->select('RdvId')->from('rappel_sms');
           })
-        ->whereRaw('TIMESTAMPDIFF(HOUR,CONCAT(Date," ",Heure), CURRENT_TIMESTAMP ) <= 24')
-        ->get(); 
+          ->whereRaw('TIMESTAMPDIFF(HOUR,CONCAT(Date," ",Heure), CURRENT_TIMESTAMP ) <= 24')
+          ->get(); 
                //dd($rdv);
             if( !empty($rdv) ) {
               foreach( $rdv as $rdvs){
