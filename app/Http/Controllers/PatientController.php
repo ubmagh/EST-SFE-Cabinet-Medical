@@ -130,5 +130,16 @@ class PatientController extends Controller
 
     }
 
+    public function GetFiche(Request $request, $id){
+
+        $user= Auth::guard('secretaire')->user();
+        $name= $user->Nom.' '.$user->Prenom;
+        $patient = Patient::findOrFail($id);
+
+        $age= Carbon::parse( substr($patient->DateNaissance,0,17) )->age;
+        return view('Secretaire.Parts.FichePatient',['name'=>$name, 'patient'=>$patient, 'age'=>$age]);
+
+    }
+
 
 }

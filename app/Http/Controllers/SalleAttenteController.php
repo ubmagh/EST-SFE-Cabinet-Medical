@@ -44,20 +44,29 @@ class SalleAttenteController extends Controller
                                     ->get()
                                     ;*/
 
+        // Equal to 
+                                
         $liste_attente= DB::select("
         SELECT salle_attentes.*, rendezvouses.id as RendezVousID, rendezvouses.DateTimeDebut, rendezvouses.DateTimeFin, rendezvouses.Description, rendezvouses.SecretaireId, rendezvouses.Statut FROM `salle_attentes` LEFT JOIN rendezvouses ON salle_attentes.rdvID=rendezvouses.id WHERE ConsultationID IS NULL AND CURDATE()=DATE(DateArrive) AND Quitte=0 ORDER BY startTime DESC, Urgent DESC, ( TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP,DateTimeDebut) <= 35) DESC, DateArrive ASC
-        ");                      
+        ");  
+        
+        $QuiOntPasses =  SalleAttente::whereNotNull('ConsultationID')// Consulté
+                                     ->whereDate('DateArrive', '=' , Carbon::today()->toDateString() ) /// d'aujourd'hui 
+                                     ->where('Quitte','=',0) // (and) et n'est pas quitté
+                                     ->OrderBy('startTime','DESC') /// avoir en premier le dernier patient qui est consulté
+                                     ->get()
+                                     ;
 
         $patients = [];
         $h=1;
         foreach( $liste_attente as $row ){
             $patient = Patient::find($row->PatientId);
-            $patients["".$row->id] = " <h6 class='timeline-title'>$h- ".$patient->Nom.' '.$patient->Prenom.'</h6>';
+            $patients["".$row->id] = "<h6 class='timeline-title'> <a href=".url('PatientF',$patient->id)." target='_blank'> $h- ".$patient->Nom.' '.$patient->Prenom.' </a></h6>' ;
             $h++;
         }
 
         //return $liste_attente;
-        return view('Secretaire.liste_attente.index', ['name'=> $name ,'rdv_liste_attente' => $rdvs, 'patients'=>$patients,'liste_attente' => $liste_attente, 'i' => 0]);
+        return view('Secretaire.liste_attente.index', [ 'name'=> $name , 'QuiOntPasses'=>$QuiOntPasses, 'rdv_liste_attente' => $rdvs, 'patients'=>$patients,'liste_attente' => $liste_attente, 'i' => 0]);
     }
 
 

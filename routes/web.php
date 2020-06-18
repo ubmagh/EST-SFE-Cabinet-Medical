@@ -145,6 +145,15 @@ Route::group(['middleware' => ['auth:secretaire']], function () {
         //-2 paiement, depense cabinet.. 
     Route::get('/JournalPaiement', 'JournalpaiementController@journal_paiement');
     Route::get('/CategoriePaiement', 'JournalpaiementController@categorie_paiement');
+
+    // Chercher un patient pour ses paiements
+    Route::get('/Paiements','PaimentController@SearchForPaimentsView');
+
+    
+    // Fiche Patient
+    Route::get('/PatientF/{id}','PatientController@GetFiche');
+        
+    
     
 });
 

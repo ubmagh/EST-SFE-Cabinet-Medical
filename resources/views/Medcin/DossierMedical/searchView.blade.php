@@ -58,8 +58,8 @@
                                             <div class="media text-center">
                                                 <i class="ti-user icon-md align-self-center mr-3 "></i>
                                                 <div class="media-body">
-                                                    <h6 class="mb-1" id="PatientName">{{$patient->Nom}} {{$patient->Prenom}}</h6>
-                                                    <p class="mb-0 text-muted" id="PatientID">
+                                                    <h6 class="mb-1">{{$patient->Nom}} {{$patient->Prenom}}</h6>
+                                                    <p class="mb-0 text-muted">
                                                         Identifiant : {{$patient->id_civile}}
                                                     </p>
                                                 </div>

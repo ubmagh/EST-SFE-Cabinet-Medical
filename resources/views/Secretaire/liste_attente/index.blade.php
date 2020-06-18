@@ -130,12 +130,12 @@ Secretaire : Liste d'Attente
                     </div>
 
                     <div class="card-body d-none ContentSec">
-                        <h4 class=" display-4  text-center "> Liste d'attente</h4>
+                        <h4 class=" display-4 mt-4 mb-3 text-center "> Liste d'attente</h4>
                         @if(!count($liste_attente))
                         
                         <div class="w-100 my-4 py-4 px-3">
                             <div class="alert alert-info py-4 px-3" role="alert">
-                                Aucun Patient à la liste d'attente
+                                <i class="fas fa-info ml-n1 mr-1 fa-lg"></i> Aucun Patient à la liste d'attente
                             </div>
                         </div>
                         
@@ -223,7 +223,7 @@ Secretaire : Liste d'Attente
                     </div>
                 </div>
             </div>
-            <div class="col-5 grid-margin stretch-card">
+            <div class="col-5  stretch-card">
                 <div class="card">
 
                     <div class="card-body w-100 grid-margin  stretch-card LoaderSec" style="height: 480px;" >
@@ -237,13 +237,13 @@ Secretaire : Liste d'Attente
                     </div>
 
                     <div class="card-body d-none ContentSec">
-                        <h4 class=" display-4  text-center "> Les Rendez-Vous d'aujourd'hui </h4>
+                        <h4 class=" display-4 mt-4 mb-3 text-center "> Les Rendez-Vous d'aujourd'hui </h4>
 
                         @if(!count($rdv_liste_attente))
 
                         <div class="w-100 my-4 py-4 px-3">
                             <div class="alert alert-info py-4 px-3" role="alert">
-                                Aucun Rendez vous Aujourd'hui
+                                <i class="fas fa-info ml-n1 mr-1 fa-lg"></i> Aucun Rendez vous Aujourd'hui
                             </div>
                         </div>
 
@@ -290,6 +290,75 @@ Secretaire : Liste d'Attente
                 </div>
             </div>
         </div>
+
+
+
+        <div class="row w-100 mt-4">
+            <div class="col-md-9 mx-auto stretch-card">
+                <div class="card">
+
+                    <div class="card-body w-100 grid-margin  stretch-card LoaderSec" style="height: 400px;" >
+                        <div class="loader-demo-box border-0">
+                            <div class="dot-opacity-loader">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body d-none ContentSec row w-100">
+
+                        <div class="col-12 text-center">
+                            <h4 class=" display-4 mt-4 mb-3 text-center "> Patients passés : </h4>
+                        </div>
+
+                        <div class="col-md-10 mx-auto mt-3 mb-4 text-center">
+                            
+                            @if( !count($QuiOntPasses) )
+                                {{-- if Empty --}}
+
+                                <div class="alert alert-info col-md-8 mx-auto" role="alert">
+                                    <i class="fas fa-info ml-n1 mr-1 fa-lg"></i> Aucun Patient n'a pas passé pour le moment.
+                                </div>
+
+                            @else
+                                
+                                @foreach ( $QuiOntPasses as $patientPasse )
+                                    
+                                    <div class="col-md-8 col-12 mx-auto my-3">
+                                        <div class="card rounded border mb-2">
+                                            <div class="card-body p-3">
+                                                <div class="media text-center">
+                                                    <i class="ti-user icon-md align-self-center mr-3 "></i>
+                                                    <div class="media-body">
+                                                        <div class="float-right position-relative d-inline" stye="top: -21px;">
+                                                            <a class="btn btn-success text-white text-center py-2 px-3" href="{{ url('Paiement', $patientPasse->patient->id) }}">
+                                                                <i class="fas fa-file-invoice-dollar fa-2x"></i>
+                                                            </a>
+                                                        </div>
+                                                        <h6 class="mb-1 text-left"><a href="{{url('PatientF',$patientPasse->patient->id)}}" target="_blank"> {{$patientPasse->patient->Nom}} {{$patientPasse->patient->Prenom}} </a></h6>
+                                                        <p class="mb-0 text-muted text-left">
+                                                            Identifiant : {{ $patientPasse->patient->id_civile }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                @endforeach
+                                
+
+                            @endif
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 @endsection
