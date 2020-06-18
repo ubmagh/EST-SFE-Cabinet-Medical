@@ -738,5 +738,4 @@ Medecin: Consultation à Cabinet
     });
 
 </script>
-<script src=" {{ asset('js/FontAwesomeAll.min.js') }}"></script>
 @endsection

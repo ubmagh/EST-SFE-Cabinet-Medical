@@ -798,7 +798,3 @@
     </div>
 </div>
 @endsection
-
-@section('script')
-    <script src="{{ asset('js/dashboard.js') }}"></script>
-@endsection

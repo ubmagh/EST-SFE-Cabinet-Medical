@@ -762,7 +762,6 @@ Liste des confrères
 
 
 
-<script src=" {{ asset('js/FontAwesomeAll.min.js') }}"></script>
 <script src=" {{ asset('js/data-table.js') }}"></script>
 
 
