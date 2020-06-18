@@ -37,7 +37,7 @@ Medecin: Consultation à Cabinet
 <div class="row w-100" style="height: -webkit-fill-available;">
 
     <div class="col-12 d-block text-center mt-5">
-        <h4 class="h4 mt-3"> Consultation à la Cabinet: </h3>
+        <h4 class="h4 mt-3"> Consultation à  Cabinet: </h3>
     </div>
 
     @if( $EmptySa )

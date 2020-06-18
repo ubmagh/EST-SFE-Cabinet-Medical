@@ -284,10 +284,11 @@ class ConsultationController extends Controller
                $fichier->save();
            }
         } 
-
+    
+        $certUrl= url("CreateCertificat?patient=".$patient->id);
        if( isset($ordonnance) )
-            return response()->json(['status'=>'Good','ordonnanceurl'=>url('/Ordonnance/'.$ordonnance->id), 'letter'=>url('LettreAuConfrere?patient='.$patient->id)]);
-        return response()->json(['status'=>'Good','ordonnanceurl'=>'none' ]);
+            return response()->json(['status'=>'Good','ordonnanceurl'=>url('/Ordonnance/'.$ordonnance->id), 'letter'=>url('LettreAuConfrere?patient='.$patient->id),'certUrl'=>$certUrl]);
+        return response()->json(['status'=>'Good','ordonnanceurl'=>'none','certUrl'=>$certUrl ]);
     }
 
 
@@ -837,10 +838,10 @@ class ConsultationController extends Controller
                 $fichier->save();
             }
         }
-
+        $certUrl= url("CreateCertificat?patient=".$patient->id);
         if( isset($ordonnance) )
-            return response()->json(['status'=>'Good','ordonnanceurl'=>url('/Ordonnance/'.$ordonnance->id), 'letter'=>url('LettreAuConfrere?patient='.$patient->id)]);
-        return response()->json(['status'=>'Good','ordonnanceurl'=>'none' ]);
+            return response()->json(['status'=>'Good','certUrl'=>$certUrl,'ordonnanceurl'=>url('/Ordonnance/'.$ordonnance->id), 'letter'=>url('LettreAuConfrere?patient='.$patient->id)]);
+        return response()->json(['status'=>'Good','certUrl'=>$certUrl,'ordonnanceurl'=>'none' ]);
     }
 
 

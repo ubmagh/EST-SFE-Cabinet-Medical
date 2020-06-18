@@ -120,7 +120,12 @@
                     </a>
                 </div>
 
-
+                <div class="col-md col-12 text-center">
+                    <a class="btn btn-success text-white text-center" href="{{ url('CreateCertificat?patient='.$patient->id) }}" target="_blank" >
+                        <i class="fas fa-certificate"></i>
+                        Créer un Certificat
+                    </a>
+                </div>
 
             </div>
 

@@ -42,13 +42,29 @@ class LettreAuConfrereController extends Controller
         $user = Auth::guard('medcin')->user();
         $name = $user->Nom.' '.$user->Prenom;
         DB::statement(DB::raw('SET @i = 0'));
+
+        $q = filter_var( $request->input('q'), FILTER_SANITIZE_STRING);
+
+        if( $q )
+            $Lettres  =  Lettre_au_confrere::select(DB::raw("  @i := @i + 1 AS num, lettre_au_confreres.id as lettreID, lettre_au_confreres.*, confreres.*, concat(patients.Nom,' ',patients.Prenom) as Pnom "))
+                            ->leftJoin('confreres','ConfrereID','confreres.id')
+                            ->leftJoin('patients','PatientId','patients.id')
+                            ->where( 'MedcinId', $user->id)
+                            ->where('patients.Nom','LIKE',"%".$q."%")
+                            ->where('confreres.Nom','LIKE',"%".$q."%")
+                            ->orWhere('patients.Prenom','LIKE',"%".$q."%")
+                            ->orWhere('id_civile','LIKE',"%".$q."%")
+                            ->orWhere('lettre_au_confreres.date','LIKE',"%".$q."%")
+                            ->orWhere('Titre','LIKE',"%".$q."%")
+                            ->OrderBy('date','DESC')->paginate(13);
+        else
         $Lettres = Lettre_au_confrere::select(DB::raw("  @i := @i + 1 AS num, lettre_au_confreres.id as lettreID, lettre_au_confreres.*, confreres.*, concat(patients.Nom,' ',patients.Prenom) as Pnom "))
                                         ->leftJoin('confreres','ConfrereID','confreres.id')
                                         ->leftJoin('patients','PatientId','patients.id')
                                         ->where( 'MedcinId', $user->id)
                                         ->OrderBy('date','DESC')->paginate(13);
         // return $Lettres;
-        return view( 'Medcin.lettreAuxConf.list', ['name'=> $name,'Lettres'=>$Lettres]);
+        return view( 'Medcin.lettreAuxConf.list', ['name'=> $name,'Lettres'=>$Lettres,'q'=>$q]);
     }
 
     public function autocomplete_patient(Request $request)

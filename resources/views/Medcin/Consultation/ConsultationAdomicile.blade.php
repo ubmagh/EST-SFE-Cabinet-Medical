@@ -645,8 +645,8 @@ Consultation à domicile
 
                         if (resp.ordonnanceurl != 'none')
                             $('#finishState').append(` <div class="row w-100 text-center mt-5 mb-3" > <a href="` + resp.ordonnanceurl + `" target="_blank" class="btn btn-info text-white text-center text-wite mx-auto"> <h3 class="h3"> <i class="fas fa-print"></i> Imprimer l'ordonnance </h3> </a> </div> `);
-
                         $('#finishState').append(` <div class="row w-100 text-center my-3" > <a href="` + resp.letter + `" target="_blank" class="btn text-white btn-warning text-center mx-auto"> <h3 class="h3"> <i class="fas fa-envelope "></i> Créer une lettre au confrère </h3> </a> </div> `);
+                        $('#finishState').append(` <div class="row w-100 text-center mt-5 mb-3" > <a href="` + resp.certUrl + `" target="_blank" class="btn btn-success text-white text-center text-wite mx-auto"> <h3 class="h3"> <i class="fas fa-certificate"></i> Créer un Certificat</h3> </a> </div> `);
                     }else{
                         $('#finishState').append(`
                             <div class=" col-md-11 mx-auto py-4 my-4">

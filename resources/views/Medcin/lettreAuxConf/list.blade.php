@@ -18,10 +18,27 @@ Lettres aux confrères
                     <div class="card">
                         <div class="card-body">
 
-                            <div class="row d-block w-100 mt-4 mb-3 py-3 text-center">
-                                <a class="btn btn-primary" href="{{ url('LettreAuConfrere') }}"
-                                    role="button"> <i class="fas fa-plus fa-lg"></i> Nouvelle Lettre </a>
+                            <div class="row  w-100 mt-4 mb-3 py-3 text-center">
+                                <div class="col-md col-12 text-left">
+                                    <a class="btn btn-primary" href="{{ url('LettreAuConfrere') }}" role="button"> <i class="fas fa-plus fa-lg"></i> Nouvelle Lettre </a>
+                                </div>
+                                <div class="col-md col-12 text-left">
+                                    <form method="GET" action="{{ url()->current() }}" class="col-md-8 col-10  ml-auto">
+                                        <div class="input-group">
+                                        <input type="text" aria-describedby="button-addon2" class="form-control border-dark" name="q" placeholder="chercher  ..." value="{{ $q? $q:null }}" />
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-dark" type="submit" id="button-addon2"><i class="fas fa-search fa-lg"></i></button>
+                                            </div>
+                                        </div>
+                                    </form>   
+                                </div>
                             </div>
+
+                            @if( $q )
+                                <div class="row w-100 text-center"> 
+                                    <h4 class="h4 mx-auto"> Résultats de recherche de : ` {{ $q }} `  <a href="{{url('LettresAuConfreres')}}"> <i class="fas fa-times text-danger"></i> </a> </h4>
+                                </div>
+                            @endif
 
                             <div class="table-responsive">
                                 <table class="table table-striped">
@@ -48,45 +65,53 @@ Lettres aux confrères
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach( $Lettres as $Lettre )
+                                        @if(!count($Lettres))
                                             <tr>
-                                                <td class="py-1">
-                                                    {{ $Lettre->num }}
-                                                </td>
-                                                <td>
-                                                    {{ substr($Lettre->date,0,16) }}
-                                                </td>
-                                                <td>
-                                                    <a
-                                                        href="{{ url('Confrere/'.$Lettre->ConfrereID) }}">
-                                                        {{ $Lettre->Nom }} </a>
-                                                </td>
-                                                <td>
-                                                    @if( $Lettre->Pnom )
-                                                        <a
-                                                            href="{{ url('FichePatient/'.$Lettre->PatientId) }}">
-                                                            {{ $Lettre->Pnom }} </a>
-                                                    @else
-                                                        -
-                                                    @endif
-                                                </td>
-                                                <td class="">
-                                                    {{ $Lettre->Titre }}
-                                                </td>
-                                                <td class="text-center">
-                                                    <a name="" id="" class="btn btn-warning text-white"
-                                                        href="{{ url('Lettre/'.$Lettre->lettreID) }}"
-                                                        target="_blank"> <i class="fas fa-print fa-lg"></i> </a>
-                                                    <a name="" id="" class="btn btn-info text-white"
-                                                        href="{{ url('LettreAuConfrere').'?modify='.$Lettre->lettreID }}">
-                                                        <i class="fas fa-edit fa-lg"></i> </a>
-                                                    <button type="button" data-id_delete="{{ $Lettre->lettreID }}"
-                                                        data-toggle="modal" data-target="#ModalDelete"
-                                                        class="btn btn-danger text-white"> <i
-                                                            class="fas fa-trash fa-lg"></i> </button>
+                                                <td colspan="6" class="text-center">
+                                                    Aucun enregistrement n'a été trouvé
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        @else
+                                            @foreach( $Lettres as $Lettre )
+                                                <tr>
+                                                    <td class="py-1">
+                                                        {{ $Lettre->num }}
+                                                    </td>
+                                                    <td>
+                                                        {{ substr($Lettre->date,0,16) }}
+                                                    </td>
+                                                    <td>
+                                                        <a
+                                                            href="{{ url('Confrere/'.$Lettre->ConfrereID) }}">
+                                                            {{ $Lettre->Nom }} </a>
+                                                    </td>
+                                                    <td>
+                                                        @if( $Lettre->Pnom )
+                                                            <a
+                                                                href="{{ url('FichePatient/'.$Lettre->PatientId) }}">
+                                                                {{ $Lettre->Pnom }} </a>
+                                                        @else
+                                                            -
+                                                        @endif
+                                                    </td>
+                                                    <td class="">
+                                                        {{ $Lettre->Titre }}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a name="" id="" class="btn btn-warning text-white"
+                                                            href="{{ url('Lettre/'.$Lettre->lettreID) }}"
+                                                            target="_blank"> <i class="fas fa-print fa-lg"></i> </a>
+                                                        <a name="" id="" class="btn btn-info text-white"
+                                                            href="{{ url('LettreAuConfrere').'?modify='.$Lettre->lettreID }}">
+                                                            <i class="fas fa-edit fa-lg"></i> </a>
+                                                        <button type="button" data-id_delete="{{ $Lettre->lettreID }}"
+                                                            data-toggle="modal" data-target="#ModalDelete"
+                                                            class="btn btn-danger text-white"> <i
+                                                                class="fas fa-trash fa-lg"></i> </button>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
