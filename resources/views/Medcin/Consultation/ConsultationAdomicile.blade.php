@@ -14,7 +14,19 @@ Consultation à domicile
         <form action="{{ url('ADomicile') }}" enctype="multipart/form-data" id="DomForm" methode="POST">
 
             <div class="card">
-                <div class="card-body">
+
+                <div class="card-body w-100 grid-margin  stretch-card LoaderSec" style="height: 480px;" >
+                    <div class="loader-demo-box border-0">
+                        <div class="dot-opacity-loader">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card-body d-none ContentSec">
                     <div class="row w-100">
                         <h2 class="h3 mt-4 mb-0 font-weight-light mx-auto"> Consultation à Domicile: </h2>
                     </div>
@@ -747,9 +759,16 @@ Consultation à domicile
             
         });
 
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.LoaderSec').forEach(node=>{
+                node.classList.add('d-none');
+            });
+            document.querySelectorAll('.ContentSec').forEach(node=>{
+                node.classList.remove('d-none');
+            });
+        });
+
     </script>
     
-
-
 
 @endsection

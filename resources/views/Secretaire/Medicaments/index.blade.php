@@ -6,7 +6,18 @@
 @section('content')
 <div class="content-wrapper">
 <div class="card h-100">
-    <div class="card-body">
+
+    <div class="card-body w-100 grid-margin  stretch-card LoaderSec" style="height: 480px;" >
+        <div class="loader-demo-box border-0">
+            <div class="dot-opacity-loader">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body d-none ContentSec">
         <h4 class=" display-4  text-center "> Medicaments : </h4>
         <div class="d-block w-100 mb-n5 text-center mt-3">
             <a name="" id="" class="btn btn-success mx-auto text-center text-white mb-n5 mt-3" role="button"
@@ -474,6 +485,15 @@ $('#DeleteModal').on('show.bs.modal', function (event) {
                 $("#deleteErrorMSG").html(error.responseJSON.message);
                 $("#deleteModal_ErrorSection").removeClass('d-none').show();
             }
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.LoaderSec').forEach(node=>{
+            node.classList.add('d-none');
+        });
+        document.querySelectorAll('.ContentSec').forEach(node=>{
+            node.classList.remove('d-none');
         });
     });
 

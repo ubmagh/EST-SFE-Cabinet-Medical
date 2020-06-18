@@ -9,7 +9,19 @@
 
 
     <div class="card card-fluid">
-        <div class="card-body py-4">
+
+    
+        <div class="card-body w-100 grid-margin  stretch-card LoaderSec" style="height: 480px;" >
+            <div class="loader-demo-box border-0">
+                <div class="dot-opacity-loader">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body py-4  d-none ContentSec">
 
            <div class="mt-5 mb-4 row w-100">
                 <h2 class="h2 mx-auto font-weight-light"> Dossier Medical d'un patient : </h2>
@@ -85,4 +97,19 @@
     </div>
 </div>
 
+@endsection
+
+
+
+@section('script')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.LoaderSec').forEach(node=>{
+            node.classList.add('d-none');
+        });
+        document.querySelectorAll('.ContentSec').forEach(node=>{
+            node.classList.remove('d-none');
+        });
+    });
+</script>
 @endsection

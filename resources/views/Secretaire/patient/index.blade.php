@@ -13,7 +13,20 @@ Liste des patients
 
 <div class="content-wrapper" style="max-width: 85% !important;">
     <div class="card h-100">
-        <div class="card-body">
+
+
+        <div class="card-body w-100 grid-margin  stretch-card LoaderSec" style="height: 480px;" >
+            <div class="loader-demo-box border-0">
+                <div class="dot-opacity-loader">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card-body d-none ContentSec">
             <div class="d-block w-100 mb-n5 text-center mt-3">
                 <a name="" id="" class="btn btn-primary mx-auto text-center text-white mb-n5 mt-3" role="button"
                     data-toggle="modal" data-target="#AddModal" type="button"> <i class="fa fa-plus-circle fa-lg"
@@ -681,6 +694,15 @@ Liste des patients
         "orderable": false,
         "targets": [7]
     }];
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.LoaderSec').forEach(node=>{
+            node.classList.add('d-none');
+        });
+        document.querySelectorAll('.ContentSec').forEach(node=>{
+            node.classList.remove('d-none');
+        });
+    });
 
 </script>
 
