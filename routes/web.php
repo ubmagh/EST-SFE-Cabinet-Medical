@@ -146,8 +146,7 @@ Route::group(['middleware' => ['auth:secretaire']], function () {
     Route::get('/JournalPaiement', 'JournalpaiementController@journal_paiement');
     Route::get('/CategoriePaiement', 'JournalpaiementController@categorie_paiement');
 
-    // Chercher un patient pour ses paiements
-    Route::get('/Paiements','PaimentController@SearchForPaimentsView');
+
 
     
     // Fiche Patient

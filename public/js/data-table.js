@@ -2,6 +2,9 @@
     "use strict";
     $(function() {
         $("#order-listing").DataTable({
+            paging: false,
+            searching: false,
+            info: false,
             aLengthMenu: [
                 [5, 10, 15, -1],
                 [10, 15, 25, "All"],

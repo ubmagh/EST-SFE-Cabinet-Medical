@@ -87,18 +87,6 @@ les variables de ce template
                </a>
             </li>
             <li class="nav-item">
-              <a href="{{ url('/Paiements') }}" class="nav-link">
-                <i class="fas fa-file-invoice-dollar menu-icon"></i>
-                <span class="menu-title">Paiements</span>
-               </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ url('Confreres') }}" class="nav-link">
-                <i class="fas fa-user-friends menu-icon"></i>
-                  <span class="menu-title">Confrères</span>
-              </a>
-            </li>
-            <li class="nav-item">
               <a href="{{ url('/patient') }}" class="nav-link">
                 <i class="fas fa-users menu-icon"></i>
                 <span class="menu-title">Patients</span></a>
@@ -107,6 +95,12 @@ les variables de ce template
               <a href="{{ url('/Medicaments') }}" class="nav-link">
                 <i class="fas fa-pills menu-icon"></i>
                 <span class="menu-title">Medicaments</span></a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ url('Confreres') }}" class="nav-link">
+                <i class="fas fa-user-friends menu-icon"></i>
+                  <span class="menu-title">Confrères</span>
+              </a>
             </li>
           </ul>
         </div>

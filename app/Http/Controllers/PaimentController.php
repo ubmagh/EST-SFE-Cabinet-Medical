@@ -86,21 +86,6 @@ class PaimentController extends Controller
 
 
 
-    public function SearchForPaimentsView(Request $request){
-
-        $user =         Auth::guard('secretaire')->user();
-        $name = $user->Nom . ' ' . $user->Prenom ;
-
-        $q = filter_var( $request->input('q'), FILTER_SANITIZE_STRING);
-        if($q){
-            $patients = Patient::where('Nom','LIKE','%'.$q.'%')->orWhere('Prenom','LIKE','%'.$q.'%')->orWhere('id_civile','LIKE','%'.$q.'%')->OrderBy('Nom')->paginate(8);
-            return view('Secretaire.Paiement.PaiementsSearchView',[ 'name'=>$name,'patients'=>$patients,'q'=>$q ]);
-        }
-
-        $patients = Patient::OrderBy('Nom')->paginate(8);
-        return view('Secretaire.Paiement.PaiementsSearchView',[ 'name'=>$name, 'patients'=>$patients, 'q'=>$q]);
-
-    }
 
       
 

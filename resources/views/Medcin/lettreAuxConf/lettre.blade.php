@@ -127,8 +127,9 @@
                     @if($patient->typeMutuel)
                         <p style="margin-top: -3px;"> Mutuel : {{ $patient->typeMutuel }}  - ref : {{ $patient->ref_mutuel }} </p>
                     @endif
+                    @if($age)
                     <p style="margin-top: -3px;">Age : {{ $age }} ans </p>
-
+                    @endif
                 </div>
             </div>
         @endif

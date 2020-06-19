@@ -40,7 +40,7 @@
                 <div class="col-md col-12">
                     <div class="form-group">
                       <label for="age">age: </label>
-                      <input type="text" id="age" class="form-control" readonly value="{{ $age }} ans" />
+                      <input type="text" id="age" class="form-control" readonly value="{{ $age? $age." ans":"-" }}" />
                     </div>
                 </div>
                 <div class="col-md col-12">
