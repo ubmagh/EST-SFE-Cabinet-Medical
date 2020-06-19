@@ -17,9 +17,10 @@ class PatientController extends Controller
         $name= Auth::guard('secretaire')->user()->Nom.' '.Auth::guard('secretaire')->user()->Prenom;
 
         DB::statement(DB::raw('SET @i = 0'));
+        $current = $request->input('page') ? $request->input('page') : 1 ;
         
         $q = filter_var( $request->input('q'), FILTER_SANITIZE_STRING);
-        if( $q ){
+        if( $q )
             $patients = Patient::select(DB::raw("  @i := @i + 1 AS num, patients.* "))
                                 ->where('Nom','LIKE','%'.$q.'%')
                                 ->orWhere('Prenom','LIKE','%'.$q.'%')
@@ -28,11 +29,8 @@ class PatientController extends Controller
                                 ->orWhere('Email','LIKE','%'.$q.'%')
                                 ->orWhere('ref_mutuel','LIKE','%'.$q.'%')
                                 ->OrderBy('Nom')->paginate(10);
-                            
-            return view('Secretaire.patient.index',['name'=>$name,'patients'=>$patients, 'q'=>$q, 'counter'=>$current]);
-        }else
-        $patients = Patient::select(DB::raw("  @i := @i + 1 AS num, patients.* "))->OrderBy('Nom')->paginate(10);
-        $current = $request->input('page') ? $request->input('page') : 1 ;
+        else
+            $patients = Patient::select(DB::raw("  @i := @i + 1 AS num, patients.* "))->OrderBy('Nom')->paginate(10);
         return view('Secretaire.patient.index',['name'=>$name,'patients'=>$patients, 'q'=>$q, 'counter'=>$current]);
     }
 

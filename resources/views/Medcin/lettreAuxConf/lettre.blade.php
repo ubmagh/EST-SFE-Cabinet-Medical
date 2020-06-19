@@ -109,7 +109,7 @@
             <h3 style="font-weight: normal;font-size: large;"> <span style="font-weight: bolder;"> Objet :</span> {{$lettre->Titre}} </h3>
         </div>
 
-        <div style="width: 84%; margin-left: auto; margin-right: auto; margin-top: 19px;line-break: auto; max-width: 100%; word-wrap: break-word; " >
+        <div style="width: 84%; margin-left: auto; margin-right: auto; margin-top: 19px;line-break: auto; word-wrap: break-word; " >
 
 
             <p style="  ">
@@ -118,34 +118,38 @@
 
         </div>
 
-        @if( $patient )
-            <div style="position: relative; display: inline-block; margin-top: 5%; margin-bottom: 0px; width: 45%; ">
-                <h5 style="font-size: medium; margin-bottom: 0px;"> infos du Patient : </h5>
-                <div style="margin-top: 0px; margin-left : 24px;">
-                    <p style="margin-top: 8px;"> Nom:  {{ $patient->Nom }} {{ $patient->Prenom }} </p>
-                    <p style="margin-top: -3px;"> Identifiant Civile: {{ $patient->id_civile }} </p>
-                    @if($patient->typeMutuel)
-                        <p style="margin-top: -3px;"> Mutuel : {{ $patient->typeMutuel }}  - ref : {{ $patient->ref_mutuel }} </p>
-                    @endif
-                    @if($age)
-                    <p style="margin-top: -3px;">Age : {{ $age }} ans </p>
-                    @endif
+
+        <div style="width: 85%; margin-left: auto; margin-right: auto; margin-top: 10px;line-break: auto; word-wrap: break-word; " >
+
+            @if( $patient )
+                <div style="position: relative; display: inline-block; margin-top: 5%; margin-bottom: 0px; width: 45%; ">
+                    <h5 style="font-size: medium; margin-bottom: 0px;"> infos du Patient : </h5>
+                    <div style="margin-top: 0px; margin-left : 24px;">
+                        <p style="margin-top: 8px;"> Nom:  {{ $patient->Nom }} {{ $patient->Prenom }} </p>
+                        <p style="margin-top: -3px;"> Identifiant Civile: {{ $patient->id_civile }} </p>
+                        @if($patient->typeMutuel)
+                            <p style="margin-top: -3px;"> Mutuel : {{ $patient->typeMutuel }}  - ref : {{ $patient->ref_mutuel }} </p>
+                        @endif
+                        @if($age)
+                        <p style="margin-top: -3px;">Age : {{ $age }} ans </p>
+                        @endif
+                    </div>
                 </div>
+            @endif
+
+
+
+            <div style=" font-size: 1.3em; width: 53%; margin-left: 20%; display: inline-block; position: relative;">
+            <span style="font-size: 1.1em; color: #2D1832;">
+                Le {{ date_format(  DateTime::createFromFormat("Y-m-d H:i:s", $lettre->date),"d / m / Y") }}
+            </span>
+            @if($medecin->Signature)
+                <img src="{{ storage_path('Signatures/'.$medecin->Signature) }}" class="Signature" alt="Signature" />
+            @endif
+            <h6 style="text-align: center; font-size: 0.8em;color: black; margin-top: 10px; width: 100%;">
+                {{ $medecin->Nom.' '.$medecin->Prenom }}
+            </h6>
             </div>
-        @endif
-
-
-
-        <div style=" font-size: 1.3em; width: 53%; margin-left:7%; display: inline-block; position: relative;">
-          <span style="font-size: 1.1em; color: #2D1832;">
-            Le {{ date_format(  DateTime::createFromFormat("Y-m-d H:i:s", $lettre->date),"d / m / Y") }}
-          </span>
-          @if($medecin->Signature)
-            <img src="{{ storage_path('Signatures/'.$medecin->Signature) }}" class="Signature" alt="Signature" />
-          @endif
-          <h6 style="text-align: center; font-size: 0.8em;color: black; margin-top: 10px; width: 100%;">
-            {{ $medecin->Nom.' '.$medecin->Prenom }}
-          </h6>
         </div>
 
     </main>

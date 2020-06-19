@@ -26,7 +26,10 @@ Certificat Médical
 
         
         <div class="card-body d-none ContentSec">
-          <div class="row  w-100 mt-4 mb-3 py-3 ">
+            <div class="row mx-auto w-100 mt-4 mb-0 py-3 text-center">
+                <h3 class="h3 mx-auto font-weight-light"> Les Certificats : </h3>
+            </div>
+          <div class="row mx-auto w-100 mt-4 mb-3 py-3 ">
             <div class="col-md col-12 text-left">
                 <a class="btn btn-primary" href="{{ url('CreateCertificat') }}" role="button">
                     <i class="fas fa-plus fa-lg"></i> 
@@ -34,7 +37,7 @@ Certificat Médical
                 </a>
             </div>
             <div class="col-md col-12 text-right">
-                <form method="GET" action="{{ url()->current() }}" class="col-md-8 col-10  ml-auto">
+                <form method="GET" action="{{ url()->current() }}" class="col-12  ml-auto">
                     <div class="input-group">
                       <input type="text" aria-describedby="button-addon2" class="form-control border-dark" name="q" placeholder="chercher  ..." value="{{ $q? $q:null }}" />
                         <div class="input-group-append">
@@ -81,7 +84,7 @@ Certificat Médical
                     @foreach( $certfs as $certf )
                         <tr>
                             <td class="py-1">
-                                {{ $certf->num }}
+                                {{ ($counter-1)*10 + $certf->num }}
                             </td>
                             <td>
                                 {{ substr($certf->date,0,11) }}
@@ -108,8 +111,8 @@ Certificat Médical
             </table>
         </div>
 
-        <div class="row w-100 d-block">
-          <div class="mt-4 mb-3 d-block mx-auto" style="width: fit-content;">
+        <div class="col-12 mx-auto px-5 mb-2">
+            <div class="w-auto mx-auto text-center d-flex justify-content-center mt-4">
                   {{ $certfs->links() }}
           </div>
         </div>

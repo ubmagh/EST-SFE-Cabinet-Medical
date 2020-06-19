@@ -85,7 +85,7 @@ Gestion des patients
                             <tbody>
                                 @foreach($patients as $patient)
                                     <tr>
-                                        <td class="text-center">{{ ($counter-1)*10+ $patient['num'] }}</td>
+                                        <td class="text-center">{{ ($counter-1)*10 + $patient['num'] }}</td>
                                         <td class="text-center">{{ $patient['id_civile'] }}</td>
                                         <td class="text-center">{{ $patient['Nom'] }}</td>
                                         <td class="text-center">{{ $patient['Prenom'] }}</td>

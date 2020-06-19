@@ -19,10 +19,30 @@ Liste des consultation
 
                     <div class="row grid-margin">
                         <div class="col-12">
-                            <h3 class="h3 text-center mx-auto mt-4 mb-3 font-weight-light"> Liste des consultations :
+                            <h3 class="h3 text-center mx-auto mt-4 mb-0 font-weight-light"> Liste des consultations :
                             </h3>
                         </div>
                     </div>
+
+                    <div class="row mt-2 mx-auto mb-5 w-100">
+                        <form method="GET" action="{{ url()->current() }}" class="col-md-8 col-12 py-3 mx-auto">
+                            <div class="input-group">
+                                <input type="text" aria-describedby="button-addon2" class="form-control border-dark" name="q"
+                                    placeholder="chercher dans les Consultations ..." value="{{ $q? $q:null }}" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-dark" type="submit" id="button-addon2"><i
+                                            class="fas fa-search fa-lg"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    @if( $q )
+                        <div class="row w-100 text-center mb-3 mt-n3"> 
+                            <h4 class="h4 mx-auto"> Résultats de recherche de : ` {{ $q }} `  <a href="{{url('ListeConsultations')}}"> <i class="fas fa-times text-danger"></i> </a> </h4>
+                        </div>
+                    @endif
+
                     <div class="row">
                         <div class="col-12">
                             <div class="table-responsive">
@@ -40,7 +60,7 @@ Liste des consultation
                                     <tbody>
                                         @foreach($consultation as $consultations)
                                             <tr>
-                                                <td class="text-center">{{ $consultations->num }}</td>
+                                                <td class="text-center">{{ ($counter-1)*10+ $consultations->num }}</td>
                                                 <td class="text-center"> <a
                                                         href="{{ url('FichePatient',$consultations->patient->id) }}"
                                                         target="_blank"> {{ $consultations->patient->Nom }}
@@ -67,6 +87,14 @@ Liste des consultation
                                     </tbody>
                                 </table>
 
+                            </div>
+
+                                <div class="col-12 mx-auto px-5 mb-2">
+                                    <div class="w-auto mx-auto text-center d-flex justify-content-center mt-3">
+                                        {{ $consultation->links() }}
+                                    </div>
+                                </div>
+                            
                                 <!-- -------------------- DELETE Modal  ------------------------- -->
 
                                 <div class="modal fade left" id="ModalDelete" tabindex="-1" role="dialog"
@@ -123,11 +151,7 @@ rgba(235,204,221,0.927608543417367) 100%);" role="alert" class="alert alert-dang
                                         </div>
                                     </div>
                                 </div>
-
-
-
-
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -183,6 +207,7 @@ rgba(235,204,221,0.927608543417367) 100%);" role="alert" class="alert alert-dang
 
 
     const dataTable_Place_Holder = "Consultation";
+    const OnMyPaginationNSearch = false;
     const dataTable_Search_label = "Chercher : ";
     const dataTable_nbr_lines_language = "Afficher _MENU_ lignes";
     const dataTable_Order_string = "asc"; /// "desc" for descendent order

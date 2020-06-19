@@ -29,16 +29,21 @@ Lettres aux confrères
                         </div>
 
 
-                        <div class="card-body d-none ContentSec">
+                       
 
-                            <div class="row  w-100 mt-4 mb-3 py-3 text-center">
+
+                        <div class="card-body d-none ContentSec">
+                            <div class="row w-100 mx-auto mt-5 mb-3">
+                                <h3 class="h3 font-weight-light text-center mx-auto mt-2 mb-0"> Les Lettres au Confrères : </h3>
+                            </div>
+                            <div class="row  w-100 mt-4 mb-3 py-3 mx-auto text-center">
                                 <div class="col-md col-12 text-left">
                                     <a class="btn btn-primary" href="{{ url('LettreAuConfrere') }}" role="button"> <i class="fas fa-plus fa-lg"></i> Nouvelle Lettre </a>
                                 </div>
                                 <div class="col-md col-12 text-left">
-                                    <form method="GET" action="{{ url()->current() }}" class="col-md-8 col-10  ml-auto">
+                                    <form method="GET" action="{{ url()->current() }}" class="col-md-11 col-12  ml-auto">
                                         <div class="input-group">
-                                        <input type="text" aria-describedby="button-addon2" class="form-control border-dark" name="q" placeholder="chercher  ..." value="{{ $q? $q:null }}" />
+                                        <input type="text" aria-describedby="button-addon2" class="form-control border-dark" name="q" placeholder="chercher dans les lettres aux confrères ..." value="{{ $q? $q:null }}" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-dark" type="submit" id="button-addon2"><i class="fas fa-search fa-lg"></i></button>
                                             </div>
@@ -88,7 +93,7 @@ Lettres aux confrères
                                             @foreach( $Lettres as $Lettre )
                                                 <tr>
                                                     <td class="py-1">
-                                                        {{ $Lettre->num }}
+                                                        {{ ($counter-1)*13 + $Lettre->num }}
                                                     </td>
                                                     <td>
                                                         {{ substr($Lettre->date,0,16) }}
@@ -129,8 +134,8 @@ Lettres aux confrères
                                 </table>
                             </div>
 
-                            <div class="row w-100 d-block">
-                                <div class="mt-4 mb-3 d-block mx-auto" style="width: fit-content;">
+                            <div class="col-12 mx-auto px-5 mb-2">
+                                <div class="w-auto mx-auto text-center d-flex justify-content-center mt-3">
                                         {{ $Lettres->links() }}
                                 </div>
                             </div>

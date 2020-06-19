@@ -22,6 +22,7 @@ class CertificatController extends Controller
         $user = Auth::guard('medcin')->user();
         $name= $user->Nom.' '.$user->Prenom;
         DB::statement(DB::raw('SET @i = 0'));
+        $current = $request->input('page') ? $request->input('page') : 1 ;
 
         $q = filter_var( $request->input('q'), FILTER_SANITIZE_STRING);
 
@@ -35,13 +36,13 @@ class CertificatController extends Controller
                                     ->orWhere('certificats.date','LIKE',"%".$q."%")
                                     ->orWhere('motif','LIKE',"%".$q."%")
                                     ->orWhere('Duree','LIKE',"%".$q."%")
-                                    ->OrderBy('date','DESC')->paginate(9);
+                                    ->OrderBy('date','DESC')->paginate(10);
         else
             $certfs  =  Certificat::select(DB::raw("  @i := @i + 1 AS num, certificats.* "))
                                     ->where( 'medcinId', $user->id)
-                                    ->OrderBy('date','DESC')->paginate(9);
+                                    ->OrderBy('date','DESC')->paginate(10);
 
-        return view( 'Medcin.Certificat.index', [ 'name'=>$name, 'certfs'=>$certfs,'q'=>$q ]);
+        return view( 'Medcin.Certificat.index', [ 'name'=>$name, 'certfs'=>$certfs,'q'=>$q,'counter'=>$current ]);
     }
 
 

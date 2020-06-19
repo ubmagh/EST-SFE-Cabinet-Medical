@@ -312,13 +312,33 @@ class ConsultationController extends Controller
         $medecin = $user->id;
 
         DB::statement(DB::raw('SET @i = 0'));
+        $current = $request->input('page') ? $request->input('page') : 1 ;
 
-        $consultation = Consultation::select(DB::raw("  @i := @i + 1 AS num, consultations.*"))
-                                    ->where('MedcinId', $medecin)
-                                    ->OrderBy('Date','DESC')
-                                    ->get();
 
-        return view ('Medcin.Consultation.listeDesConsultations', ['name'=>$name, 'consultation'=>$consultation]);
+
+        $q = filter_var( $request->input('q'), FILTER_SANITIZE_STRING);
+        if( $q )
+            $consultation = Consultation::select(DB::raw("  @i := @i + 1 AS num, consultations.* "))
+                                ->where('MedcinId', $medecin)
+                                ->where('Description','LIKE','%'.$q.'%')
+                                ->orWhere('Type','LIKE','%'.$q.'%')
+                                ->orWhere('Date','LIKE','%'.$q.'%')
+                                ->orwherein('PatientId',function($qeury)use($q){
+                                    $qeury->select('id')->from('patients')->where('Nom' ,'LIKE', "%".$q."%");
+                                })
+                                ->orwherein('PatientId',function($qeury)use($q){
+                                    $qeury->select('id')->from('patients')->where('Prenom' ,'LIKE', "%".$q."%");
+                                })
+                                ->orwherein('PatientId',function($qeury)use($q){
+                                    $qeury->select('id')->from('patients')->where('id_civile' ,'LIKE', "%".$q."%");
+                                })
+                                ->OrderBy( 'Date', 'DESC')->paginate(12);
+        else
+            $consultation = Consultation::select(DB::raw("  @i := @i + 1 AS num, consultations.*"))
+                                        ->where('MedcinId', $medecin)
+                                        ->OrderBy('Date','DESC')->paginate(12);
+        return view('Medcin.Consultation.listeDesConsultations',['name'=>$name,'consultation'=>$consultation, 'q'=>$q, 'counter'=>$current]);
+        
     }
 
     public function destroyCabinet($Deletedid){

@@ -51,7 +51,7 @@
 
                 @if(count($patients))                
                     @foreach ( $patients as $patient)
-                            <div class="col-12 my-3">
+                            <div class="col-12 my-1">
                                 <a href="{{ url('DossierMedical',$patient->id) }}">
                                     <div class="card rounded border mb-2">
                                         <div class="card-body p-3">

@@ -42,6 +42,7 @@ class LettreAuConfrereController extends Controller
         $user = Auth::guard('medcin')->user();
         $name = $user->Nom.' '.$user->Prenom;
         DB::statement(DB::raw('SET @i = 0'));
+        $current = $request->input('page') ? $request->input('page') : 1 ;
 
         $q = filter_var( $request->input('q'), FILTER_SANITIZE_STRING);
 
@@ -64,7 +65,7 @@ class LettreAuConfrereController extends Controller
                                         ->where( 'MedcinId', $user->id)
                                         ->OrderBy('date','DESC')->paginate(13);
         // return $Lettres;
-        return view( 'Medcin.lettreAuxConf.list', ['name'=> $name,'Lettres'=>$Lettres,'q'=>$q]);
+        return view( 'Medcin.lettreAuxConf.list', ['name'=> $name,'Lettres'=>$Lettres,'q'=>$q,'counter'=>$current]);
     }
 
     public function autocomplete_patient(Request $request)
