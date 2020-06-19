@@ -726,9 +726,12 @@ Gestion des patients
                                     </div>
 
 
-
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">
-                                        <i class="far fa-times-circle"></i> Fermer</button>
+                                    <div class="row w-100 mx-auto">
+                                        <div class="col-md col-12 text-center">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                                <i class="far fa-times-circle"></i> Fermer</button>
+                                        </div>
+                                    </div>
 
                                 </div>
                             </form>
@@ -1076,6 +1079,7 @@ Gestion des patients
 
 
     const dataTable_Place_Holder = "Patient";
+    const OnMyPaginationNSearch = false;
     const dataTable_Search_label = "Chercher : ";
     const dataTable_nbr_lines_language = "Afficher _MENU_ lignes";
     const dataTable_Order_string = "asc"; /// "desc" for descendent order

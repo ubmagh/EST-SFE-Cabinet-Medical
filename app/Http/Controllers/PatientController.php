@@ -19,7 +19,7 @@ class PatientController extends Controller
         DB::statement(DB::raw('SET @i = 0'));
         
         $q = filter_var( $request->input('q'), FILTER_SANITIZE_STRING);
-        if($q){
+        if( $q ){
             $patients = Patient::select(DB::raw("  @i := @i + 1 AS num, patients.* "))
                                 ->where('Nom','LIKE','%'.$q.'%')
                                 ->orWhere('Prenom','LIKE','%'.$q.'%')

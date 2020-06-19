@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Medicament;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class MedicamentController extends Controller
@@ -14,9 +15,24 @@ class MedicamentController extends Controller
     public function Index(Request $request){
 
         $name= Auth::guard('secretaire')->user()->Nom.' '.Auth::guard('secretaire')->user()->Prenom;
-        $medicaments = Medicament::all()->toArray();
         
-        return view('Secretaire.Medicaments.index',['name'=>$name,'medicaments'=>$medicaments,'counter'=>0]);
+        DB::statement(DB::raw('SET @i = 0'));
+        
+        $q = filter_var( $request->input('q'), FILTER_SANITIZE_STRING);
+        $current = $request->input('page') ? $request->input('page') : 1 ;
+
+        if( $q ){
+            $medicaments = Medicament::select(DB::raw("  @i := @i + 1 AS num, medicaments.* "))
+                                ->where('Nom','LIKE','%'.$q.'%')
+                                ->orWhere('Prise','LIKE','%'.$q.'%')
+                                ->orWhere('Quand','LIKE','%'.$q.'%')
+                                ->OrderBy('Nom')->paginate(10);
+                            
+            return view('Secretaire.Medicaments.index',['name'=>$name, 'medicaments'=>$medicaments, 'q'=>$q, 'counter'=>$current]);
+        }else
+        $medicaments = Medicament::select(DB::raw("  @i := @i + 1 AS num, medicaments.* "))->OrderBy('Nom')->paginate(10);
+
+        return view('Secretaire.Medicaments.index',['name'=>$name, 'medicaments'=>$medicaments, 'q'=>$q,'counter'=>$current]);
     }
 
     public function create(Request $request){
@@ -34,8 +50,8 @@ class MedicamentController extends Controller
         );
 
         $this->validate($request,[
-            'Nom' =>  'required|regex:/^[a-zA-Z0-9 ]+(([\',. -][a-zA-Z0-9 ])?[a-zA-Z0-9]*)*$/i|max:160|min:2',
-            'Prise' =>  'max:30|regex:/^[a-zA-Z0-9 ]+(([\',. -][a-zA-Z0-9 ])?[a-zA-Z0-9]*)*$/i|nullable',
+            'Nom' =>  'required|regex:/^[a-zA-Zéèçà0-9 ]+(([\',. -][a-zA-Zéèçà0-9 ])?[a-zA-Zéèçà0-9]*)*$/i|max:160|min:2',
+            'Prise' =>  'max:30|regex:/^[a-zA-Zéèçà0-9 ]+(([\',. -][a-zA-Zéèçà0-9 ])?[a-zA-Zéèçà0-9]*)*$/i|nullable',
             'Quand' =>  ['required',Rule::in(['Avant','Apres','indifini'])]
         ],$messages
         );

@@ -128,13 +128,13 @@ Route::group(['middleware' => ['auth:secretaire']], function () {
     Route::post('SecretaireParametres', 'SecretaireController@Account_Settings_change');
 
     // Confreres routes
-    Route::get('Confreres', 'ConfrereController@Secretaire_gestion_view');
-    
+    Route::resource('Confreres', 'ConfrereController');
+
+
     // Verifier l'etat du patient pour actualiser le panneau de secretaire
     Route::get('CheckPatientStatut', 'SalleAttenteController@check_patient_sec');
 
-    // Confreres routes
-    Route::resource('Confreres', 'ConfrereController');
+    
 
 
     // paiement route

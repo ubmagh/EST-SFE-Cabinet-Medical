@@ -25,20 +25,44 @@ Liste des confrères
                     </div>
 
         <div class="card-body d-none ContentSec">
-            <div class="d-block w-100 mb-n5 text-center mt-3">
-                <a name="" id="" class="btn btn-primary mx-auto text-center text-white mb-n5 mt-3" role="button"
-                    data-toggle="modal" data-target="#AddModal" type="button"> <i class="fa fa-plus-circle fa-lg"
-                        aria-hidden="true"></i> Ajouter un confrère </a>
-            </div>
+
+
+
+            
+
             <div class="row mt-n3">
                 <div class="col-12">
-                    <div class="table-responsive">
+                    <h4 class=" display-4  text-center mt-3 mb-4"> Confrères : </h4>
 
+                    <div class="row w-100 mb-4 mt-5 mx-auto">
 
+                        <div class="col-md col-12 text-left">
+                             <a name="" id="" class="btn btn-primary mx-auto text-center text-white " role="button"
+                            data-toggle="modal" data-target="#AddModal" type="button"> <i class="fa fa-plus-circle fa-lg"
+                                aria-hidden="true"></i> Ajouter un confrère </a>
+                        </div>
+                        <div class="col-md col-12 text-left">
+                            <form method="GET" action="{{ url()->current() }}" class="col-12  ml-auto">
+                                <div class="input-group">
+                                    <input type="text" aria-describedby="button-addon2" class="form-control border-dark" name="q"
+                                        placeholder="chercher un Confrère ..." value="{{ $q? $q:null }}" />
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-dark" type="submit" id="button-addon2"><i
+                                                class="fas fa-search fa-lg"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    @if( $q )
+                        <div class="row w-100 text-center"> 
+                            <h4 class="h4 mx-auto"> Résultats de recherche de : ` {{ $q }} `  <a href="{{url('Confreres')}}"> <i class="fas fa-times text-danger"></i> </a> </h4>
+                        </div>
+                    @endif
+                    <div class="table-responsive">  
                         <table id="order-listing" class="table">
-
                             <thead>
-
                                 <tr>
                                     <th class="text-center">#</th>
                                     <th class="text-center">Nom</th>
@@ -51,7 +75,7 @@ Liste des confrères
                                 @foreach($confrere as $confreres)
                                     <tr>
 
-                                        <td class="text-center">{{ $counter++ }}</td>
+                                        <td class="text-center">{{ ($counter-1)*10+ $confreres['num'] }}</td>
                                         <td class="text-center">{{ $confreres->Nom }}</td>
                                         <td class="text-center">{{ $confreres->Tel }}</td>
                                         <td class="text-center">{{ $confreres->Specialite }}</td>
@@ -97,8 +121,14 @@ Liste des confrères
 
 
                         </table>
+                    </div>
+                    <div class="col-12 mx-auto px-5 mb-2">
+                        <div class="w-auto mx-auto text-center d-flex justify-content-center mt-3">
+                                {{ $confrere->links() }}
+                        </div>
+                    </div>
 
-                        <!-- -------------------- INSERT Modal   ------------------------- -->
+                    <!-- -------------------- INSERT Modal   ------------------------- -->
 
 
                         <div class="modal fade left" id="AddModal" tabindex="-1" role="dialog"
@@ -224,12 +254,20 @@ Liste des confrères
                                                 </div> 
                                             </div>
                                            
+                                            
+                                            <div class="w-100 row mx-auto">
+                                                <div class="col-md col-12 text-left">
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i
+                                                        class="far fa-times-circle"></i> Annuler</button>
+                                                </div>
+                                                <div class="col-md col-12 text-right">
+                                                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>
+                                                    Enregistrer</button>
+                                                </div>
+                                            </div>
 
-
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i
-                                                    class="far fa-times-circle"></i> Annuler</button>
-                                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>
-                                                Enregistrer</button>
+                                            
+                                            
                                         </div>
                                     </form>
 
@@ -380,11 +418,17 @@ Liste des confrères
                                             </div>
 
 
-
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i
+                                            <div class="w-100 row mx-auto">
+                                                <div class="col-md col-12 text-left">
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i
                                                     class="far fa-times-circle"></i> Annuler</button>
-                                            <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i>
-                                                Modifier</button>
+                                                </div>
+                                                <div class="col-md col-12 text-right">
+                                                    <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i>
+                                                    Modifier</button>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </form>
 
@@ -498,19 +542,19 @@ Liste des confrères
 
                                             
 
-
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal">
-                                                <i class="far fa-times-circle"></i> Fermer</button>
+                                            <div class="w-100 row mx-auto">
+                                                <div class="col-md col-12 text-center">
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                                    <i class="far fa-times-circle"></i> Fermer</button>
+                                                </div>
+                                            </div>
+                                            
 
                                         </div>
 
                                 </div>
                             </div>
                         </div>
-
-
-
-                    </div>
                 </div>
             </div>
         </div>
@@ -740,6 +784,7 @@ Liste des confrères
 
 
     const dataTable_Place_Holder = "Confrère";
+    const OnMyPaginationNSearch = false;
     const dataTable_Search_label = "Chercher : ";
     const dataTable_nbr_lines_language = "Afficher _MENU_ lignes";
     const dataTable_Order_string = "asc"; /// "desc" for descendent order

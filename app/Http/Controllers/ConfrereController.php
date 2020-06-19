@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\confrere;
 
 use Illuminate\Validation\Rule;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,8 +15,27 @@ class ConfrereController extends Controller
 
     public function index(Request $request){
         $user = Auth::guard('secretaire')->user();
-        $confrere = confrere::OrderBy('date_ajout','ASC')->get();
-        return view('Secretaire.Confreres.index',['name'=>$user->Nom.' '.$user->Prenom, 'confrere'=>$confrere,'counter'=>1]);
+        $current = $request->input('page') ? $request->input('page') : 1 ;
+        $name=$user->Nom.' '.$user->Prenom;
+        DB::statement(DB::raw('SET @i = 0'));
+
+        $q = filter_var( $request->input('q'), FILTER_SANITIZE_STRING);
+        if( $q ){
+            $confrere = confrere::select(DB::raw("  @i := @i + 1 AS num, confreres.* "))
+                                ->where('Nom','LIKE','%'.$q.'%')
+                                ->orWhere('Tel','LIKE','%'.$q.'%')
+                                ->orWhere('Fax','LIKE','%'.$q.'%')
+                                ->orWhere('Specialite','LIKE','%'.$q.'%')
+                                ->orWhere('Email','LIKE','%'.$q.'%')
+                                ->orWhere('Ville','LIKE','%'.$q.'%')
+                                ->orWhere('adresse','LIKE','%'.$q.'%')
+                                ->OrderBy('Nom')->paginate(10);
+                            
+            return view('Secretaire.Confreres.index',['name'=>$name,'confrere'=>$confrere, 'q'=>$q, 'counter'=>$current]);
+        }else
+        $confrere = confrere::select(DB::raw("  @i := @i + 1 AS num, confreres.* "))->OrderBy('Nom')->paginate(10);
+        return view('Secretaire.Confreres.index',['name'=>$name,'confrere'=>$confrere, 'q'=>$q, 'counter'=>$current]);
+
     }
 
     public function store(Request $request){

@@ -2,9 +2,9 @@
     "use strict";
     $(function() {
         $("#order-listing").DataTable({
-            paging: false,
-            searching: false,
-            info: false,
+            paging: typeof OnMyPaginationNSearch !== 'undefined' ? OnMyPaginationNSearch : true,
+            searching: typeof OnMyPaginationNSearch !== 'undefined' ? OnMyPaginationNSearch : true,
+            info: typeof OnMyPaginationNSearch !== 'undefined' ? OnMyPaginationNSearch : true,
             aLengthMenu: [
                 [5, 10, 15, -1],
                 [10, 15, 25, "All"],

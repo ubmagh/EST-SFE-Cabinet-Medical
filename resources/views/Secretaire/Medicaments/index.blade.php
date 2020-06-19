@@ -18,20 +18,45 @@
     </div>
 
     <div class="card-body d-none ContentSec">
-        <h4 class=" display-4  text-center "> Medicaments : </h4>
+        <h4 class=" display-4  text-center mt-3 mb-4"> Medicaments : </h4>
         <div class="d-block w-100 mb-n5 text-center mt-3">
-            <a name="" id="" class="btn btn-success mx-auto text-center text-white mb-n5 mt-3" role="button"
-                data-toggle="modal" data-target="#ajoutModal" type="button"> <i class="fa fa-plus-circle fa-lg"
-                    aria-hidden="true"></i> Ajouter </a>
+
+            <div class="row w-100 mb-4 mt-5 mx-auto">
+
+                <div class="col-md col-12 text-left">
+                    <a name="" id="" class="btn btn-success mx-auto text-center text-white " role="button"
+                        data-toggle="modal" data-target="#ajoutModal" type="button"> <i class="fa fa-plus-circle fa-lg"
+                            aria-hidden="true"></i> Ajouter </a>
+                </div>
+                <div class="col-md col-12 text-left">
+                    <form method="GET" action="{{ url()->current() }}" class="col-12  ml-auto">
+                        <div class="input-group">
+                            <input type="text" aria-describedby="button-addon2" class="form-control border-dark" name="q"
+                                placeholder="chercher dans les Medicaments ..." value="{{ $q? $q:null }}" />
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-dark" type="submit" id="button-addon2"><i
+                                        class="fas fa-search fa-lg"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            
         </div>
         <div class="row mt-n3">
             <div class="col-12">
+                @if( $q )
+                    <div class="row w-100 text-center"> 
+                        <h4 class="h4 mx-auto"> Résultats de recherche de : ` {{ $q }} `  <a href="{{url('Medicaments')}}"> <i class="fas fa-times text-danger"></i> </a> </h4>
+                    </div>
+                @endif
                 <div class="table-responsive">
                     <table id="order-listing" class="table">
                         <thead>
 
                             <tr>
-                                <th class="text-center">Num#</th>
+                                <th class="text-center">#</th>
                                 <th class="text-center">Nom</th>
                                 <th class="text-center">Prise</th>
                                 <th class="text-center">Quand</th>
@@ -43,7 +68,7 @@
                             @foreach($medicaments as $medicament)
 
                                 <tr>
-                                    <td class="text-center">{{ ++$counter }}</td>
+                                    <td class="text-center">{{ ($counter-1)*10+ $medicament['num'] }}</td>
                                     <td>{{ $medicament['Nom'] }}</td>
                                     <td class="text-center">{{ $medicament['Prise'] }}</td>
                                     <td class="text-center">
@@ -79,6 +104,11 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="col-12 mx-auto px-5 mb-2">
+                   <div class="w-auto mx-auto text-center d-flex justify-content-center mt-3">
+                        {{ $medicaments->links() }}
+                   </div>
+                </div>
             </div>
         </div>
     </div>
@@ -95,6 +125,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Ajouter un nouveau medicament</h5>
+                
                 <button type="button" id="closeCreateModal" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -142,12 +173,12 @@
                         <span id="CreateQuandError"></span>
                     </div>
 
-                    <div class="row w-100">
-                        <div class="col">
+                    <div class="row mx-auto w-100 mt-3">
+                        <div class="col-md col-12 text-left">
                             <button type="button" class="btn btn-danger text-white" data-dismiss="modal"
                                 id="DismissCreateModal"> <i class="fas fa-times ml-n1 mr-1"></i>Annuler</button>
                         </div>
-                        <div class="col">
+                        <div class="col-md col-12 text-right">
                             <button type="submit" class="btn btn-info text-white d-block ml-auto mr-0"> <i
                                     class="fa fa-plus-square ml-n1 mr-1" aria-hidden="true"></i> Ajouter </button>
                         </div>
@@ -231,12 +262,12 @@
                         <span id="EditQuandError"></span>
                     </div>
 
-                    <div class="row w-100">
-                        <div class="col">
+                    <div class="row mx-auto mt-3 w-100">
+                        <div class="col-md col-12 text-left">
                             <button type="button" class="btn btn-danger text-white" data-dismiss="modal"
                                 id="DismissEditModal"> <i class="fas fa-times ml-n1 mr-1"></i>Annuler</button>
                         </div>
-                        <div class="col">
+                        <div class="col-md col-12 text-right">
                             <button type="submit" class="btn btn-info text-white d-block ml-auto mr-0"> <i
                                     class="fas fa-save ml-n1 mr-1   "></i> Enregistrer </button>
                         </div>
@@ -320,12 +351,13 @@
 <script>
     // define data table options
     const dataTable_Place_Holder = "medicament";
+    const OnMyPaginationNSearch = false;
     const dataTable_Search_label = "Chercher: ";
     const dataTable_nbr_lines_language = "Afficher _MENU_ lignes";
     const dataTable_Order_string = "asc"; /// "desc" for descendent order
     const dataTable_can_sort_columns__ = [{
         "orderable": false,
-        "targets": [5]
+        "targets": [4]
     }];
 
     /// closing modals and clearing all of thiere stored data
@@ -347,7 +379,7 @@
                 if (resp.status === "OK") {
                     $('#createForm').hide();
                     $("#CreateModal_SuccessSection").removeClass('d-none').show();
-                    setTimeout(() => window.location.reload(), 1400);
+                    setTimeout(() => window.location.reload(), 1000);
                 } else {
                     $("#createForm").hide();
                     $("#createErrorMSG").html(resp);
@@ -355,21 +387,18 @@
                 }
             },
             error: function (error) {
-                const response = error.responseJSON;
-                const errors = response.errors;
-                console.log(errors);
+                const errors = error.responseJSON.errors;
                 if (error.responseJSON.errors) {
-                    if (errors.Nom[0]) {
-                        $('#CreateNomError').html(error.responseJSON.errors.Nom);
+                    if (errors.Nom) {
+                        $('#CreateNomError').html(errors.Nom);
                         $('#Create_NomModal').removeClass('d-none').addClass('show');
                     }
-                   
-                    if (errors.Prise[0]) {
-                        $('#CreatePriseError').html(error.responseJSON.errors.Prise);
+                    if (errors.Prise) {
+                        $('#CreatePriseError').html(errors.Prise);
                         $('#Create_PriseModal').removeClass('d-none').addClass('show');
                     }
-                    if (errors.Quand[0]) {
-                        $('#CreateQuandError').html(error.responseJSON.errors.Quand);
+                    if (errors.Quand) {
+                        $('#CreateQuandError').html(errors.Quand);
                         $('#Create_QuandModal').removeClass('d-none').addClass('show');
                     }
                 } else {
