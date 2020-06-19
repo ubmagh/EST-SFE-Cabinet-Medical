@@ -40,5 +40,11 @@ class Patient extends Model
     {
       return $this->hasMany('App\Certificat' , 'PatientId');
     }
+
+    public function Check_Complet(){
+      if( $this->Tel && $this->Email && $this->adresse && $this->Ville && $this->DateNaissance && $this->Occupation && $this->Nationnalite )
+      return true;
+      return false;
+    }
     
 }

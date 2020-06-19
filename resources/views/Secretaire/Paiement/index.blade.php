@@ -164,7 +164,7 @@ Secretaire : Paiement
                 <div class="card-body  d-none ContentSec">
                     <div class="container-fluid">
                         <h3 class="text-right my-5">
-                            {{ $facture->first()->consultation->patient->Nom.' '.$facture->first()->consultation->patient->Prenom }}
+                            {{ $patient->Nom.' '.$patient->Prenom }}
                         </h3>
                         <hr>
                     </div>
@@ -172,11 +172,11 @@ Secretaire : Paiement
                         <div class="col-lg-3 pl-0">
                             {{-- <h4 class="text-right mb-5">Total : $13,986</h4> --}}
                             <p class="mt-5 mb-2"><b>
-                                    <h5>Informations : <a target="_blank" href="{{url('PatientF',$facture->first()->consultation->patient->id)}}"><i class=" fas fa-external-link-alt "></i></a></h5>
+                                    <h5>Informations : <a target="_blank" href="{{url('PatientF',$patient->id)}}"><i class=" fas fa-external-link-alt "></i></a></h5>
                                 </b></p>
-                            <p>CIN : {{ $facture->first()->consultation->patient->id_civile }}<br>Type Mutuelle
-                                : {{ $facture->first()->consultation->patient->typeMutuel }}<br>Occupation :
-                                {{ $facture->first()->consultation->patient->Occupation }}</p>
+                            <p>CIN : {{ $patient->id_civile }}<br>Type Mutuelle
+                                : {{ $patient->typeMutuel }}<br>Occupation :
+                                {{ $patient->Occupation }}</p>
                         </div>
                         <div class="col-lg-3 pr-0">
                             <p class="mt-5 mb-2 text-right"><b>Nombre de consultation :</b></p>
@@ -202,6 +202,11 @@ Secretaire : Paiement
                                 </tr>
                             </thead>
                             <tbody>
+                                @if( !count($facture) )
+                                    <tr >
+                                        <td class="text-center" colspan="8"> Aucune Consultation n'a été trouvée pour ce patient . </td>
+                                    </tr>
+                                @endif
                                 @foreach($facture as $row)
 
 
@@ -238,11 +243,11 @@ Secretaire : Paiement
                                                     data-rest="{{ $row->Somme - $row->Paye }}" type="button"
                                                     class="btn btn-dark btn-icon details" data-toggle="modal"
                                                     data-target="#payer_modal">
-                                                    <i class="ti-file btn-icon-append"></i>
+                                                    <i class="fas fa-dollar-sign    "></i>
                                                 </button>
                                             @else
-                                                <button type="button" class="btn btn-dark btn-icon" disabled>
-                                                    <i class="ti-file btn-icon-append"></i>
+                                                <button type="button" class="btn btn-inverse-dark btn-icon" disabled>
+                                                    <i class="fas fa-dollar-sign    "></i>
                                                 </button>
                                             @endif
                                         </td>
@@ -264,7 +269,7 @@ Secretaire : Paiement
 
                     </div>
                 </div>
-                <div class="container-fluid mt-5 w-100 d-none ContentSec">
+                <div class="container-fluid mt-5 w-100 mb-4 d-none ContentSec">
                     <h4 class="text-right mb-5">Total Non payé :
                             @php
                                 $i=0;

@@ -141,7 +141,9 @@ Gestion des patients
                                                 target="_blank" class="btn btn-outline-success py-2 " title="Paiements">
                                                 <i class="fas fa-file-invoice-dollar fa-lg"></i>
                                             </a>
-
+                                            @if( ! $patient->Check_Complet() )
+                                                <button type="button" class="btn btn-outline-warning py-2 dataLeak" data-nom="{{$patient['Nom']}} {{$patient['Prenom']}}" data-iden="{{$patient['id_civile']}}" > <i class="fas fa-exclamation fa-lg"></i> </button>
+                                            @endif
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -672,11 +674,8 @@ Gestion des patients
                                 </button>
                             </div>
 
-                            <form id="editform">
+                            <form >
                                 <div class="modal-body">
-
-                                    <input type="hidden" id="id" name="id_patient">
-
 
 
                                     <div class="form-group">
@@ -1087,6 +1086,16 @@ Gestion des patients
         "orderable": false,
         "targets": [6]
     }];
+
+    $('.dataLeak').click(function(e){
+        let t= e.target;
+    Swal.fire({
+                position: 'center',
+                icon:  'warning',
+                text: 'Le patient : '+t.dataset.nom+' avec l\'identifiant: '+t.dataset.iden+' a des informations incomplets !',
+                showConfirmation: true,
+            });
+    });
 
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.LoaderSec').forEach(node => {

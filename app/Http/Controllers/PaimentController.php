@@ -32,9 +32,10 @@ class PaimentController extends Controller
                                                                 $q->select('id')->from('consultations')->where('PatientId' , $patient->id);
                                                     })->get();  
                                                  
-        return view('Secretaire.Paiement.index',[  'name'=>$name,
-                                                   'Nombre_consultation'=>$Nombre_consultation,                                                                                
-                                                   'facture'=>$facture  
+        return view('Secretaire.Paiement.index',[  'name'   => $name,
+                                                    'patient'   =>  $patient,
+                                                   'Nombre_consultation'    =>  $Nombre_consultation,                                                                                
+                                                   'facture'    =>  $facture  
                                                 ]);
     }
 
