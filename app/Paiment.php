@@ -10,6 +10,6 @@ class Paiment extends Model
     public $timestamps = false;
     public $table="paiments";
     protected $fillable = [
-         'Montant', 'date', 'FactureId', 'Type',
+         'Montant', 'date', 'FactureId',
     ];
 }

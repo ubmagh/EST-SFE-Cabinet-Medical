@@ -69,21 +69,26 @@ class PaimentController extends Controller
 
 
      public function paiement($id, Request $request){
-          $facture= Facture::findorfail($id);
-          $prix = $request->input('paiement');
-          if( $facture->Somme !== $facture->Paye && $facture->Somme > $facture->Paye && $facture->Somme  >= ($prix + $facture->Paye) ){
-                $facture->Paye+=$prix;
-                $paiement = Paiment::create([
-                            'Montant'   => $prix,
-                            'FactureId' =>  $facture->id,
-                            'Type' =>  "espèces" 
-                        ]);
-                        if(  $facture->save() && $paiement  )                      
-                            return response()->json(['paiement'=>"fait"]);
-           }
+        $facture= Facture::findorfail($id);
+
+        $prix = doubleval( $request->input('paiement') );
+        
+        if(  $facture->Somme > $facture->Paye && $facture->Somme  >= ($prix + $facture->Paye) ){
+            $facture->Paye+=$prix;
+            $paiement = Paiment::create([
+                        "date"  =>  date("Y-m-d"),
+                        'Montant'   => $prix,
+                        'FactureId' =>  $facture->id,
+                    ]);
+            if(  $facture->save() && $paiement  )                      
+                        return response()->json(['paiement'=>"fait"]);
+
+            return response()->json(['paiement' => 'erreur']);
+        }
+
         return response()->json(['paiement' => 'erreur']);
 
-     }
+    }
 
 
 
