@@ -44,12 +44,14 @@ Secretaire : Paiement
                                         <table class="table" id="data_paiement">
                                             <thead>
                                                 <tr>
+                                                    <th>Motif</th>
                                                     <th>Montant</th>
                                                     <th>Date </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
+                                                    <td></td>
                                                     <td></td>
                                                     <td></td>
                                                 </tr>
@@ -121,7 +123,7 @@ Secretaire : Paiement
                         <div class="input-group-prepend">
                             <span class="input-group-text bg-primary text-white">$</span>
                         </div>
-                        <input type="text" name="paiement" id="paiement" placeholder=" 00.00 " class="form-control" />
+                        <input type="text" name="paiement" id="paiement" autocomplete="off" placeholder=" 00.00 " class="form-control" />
                         <div class="input-group-append">
                             <span class="input-group-text">DH</span>
                         </div>
@@ -305,7 +307,7 @@ Secretaire : Paiement
 
                 if( !response.paiement.length)
                     tableBody.append(`<tr>
-                                         <td class="text-center "> Aucun paiement n'a été fait </td>
+                                         <td class="text-center " colspan="3"> Aucun paiement n'a été fait </td>
                                     </tr>
                         `);
                 else
@@ -313,6 +315,7 @@ Secretaire : Paiement
                     var string = new Date(response.paiement[i].date);
                     newLine = `
                               <tr>
+                                    <td class="text-left"> ` + response.paiement[i].Motif +` </td>
                                   <td class="text-success"> ` + response.paiement[i].Montant + " DH" + ` <i class="ti-arrow-up"></i></td>
                                   <td > ` + string.getDate() + '/' + (string.getMonth() + 1) + '/' + string
                         .getFullYear() + ` </td>
@@ -327,7 +330,7 @@ Secretaire : Paiement
 
                 if(!response.operation.length)
                     tableBody_operation.append(`<tr>
-                                         <td class="text-center "> Aucune opération n'a été faite </td>
+                                         <td class="text-center " colspan="2"> Aucune opération n'a été faite </td>
                                     </tr>
                         `);
                 else

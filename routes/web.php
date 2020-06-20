@@ -144,7 +144,7 @@ Route::group(['middleware' => ['auth:secretaire']], function () {
     Route::post('/paiement/{id}','PaimentController@paiement');
         //-2 paiement, depense cabinet.. 
     Route::get('/JournalPaiement', 'JournalpaiementController@journal_paiement');
-    Route::get('/CategoriePaiement', 'JournalpaiementController@categorie_paiement');
+    Route::get('/JournalPaiement/createDepense', 'JournalpaiementController@CreateDepense');
 
 
 

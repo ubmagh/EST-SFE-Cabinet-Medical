@@ -16,7 +16,12 @@ class Facture extends Model
 
     public function consultation(){
         return $this->BelongsTo('App\Consultation' , 'ConsultationId');
-     }
+    }
+
+    public function Paiements()
+    {
+    return $this->hasMany('App\Paiment' , 'FactureId');
+    }
     
      
 }

@@ -74,11 +74,23 @@ class PaimentController extends Controller
         $prix = doubleval( $request->input('paiement') );
         
         if(  $facture->Somme > $facture->Paye && $facture->Somme  >= ($prix + $facture->Paye) ){
+
+
+            if( ($facture->Paye==0) && (( $facture->Somme - $prix==0 ) ) )
+                $Motif = " Paiement totale ";
+            else if( $facture->Somme - ($prix + $facture->Paye) )
+                $Motif = " Paiement Partiel ";
+            else 
+                $Motif = " Paiement Completif ";
+            
             $facture->Paye+=$prix;
+
+
             $paiement = Paiment::create([
                         "date"  =>  date("Y-m-d"),
                         'Montant'   => $prix,
                         'FactureId' =>  $facture->id,
+                        'Motif' => $Motif
                     ]);
             if(  $facture->save() && $paiement  )                      
                         return response()->json(['paiement'=>"fait"]);

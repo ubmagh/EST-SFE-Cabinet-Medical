@@ -92,6 +92,11 @@ les variables de ce template
                 <span class="menu-title">Patients</span></a>
             </li>
             <li class="nav-item">
+              <a href="{{ url('/JournalPaiement') }}" class="nav-link">
+                <i class="fas fa-exchange-alt menu-icon"></i>
+                <span class="menu-title">Journal des Paiements</span></a>
+            </li>
+            <li class="nav-item">
               <a href="{{ url('/Medicaments') }}" class="nav-link">
                 <i class="fas fa-pills menu-icon"></i>
                 <span class="menu-title">Medicaments</span></a>

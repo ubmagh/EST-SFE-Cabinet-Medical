@@ -17,6 +17,7 @@ class CreatePaimentsTable extends Migration
             $table->id();
             $table->decimal('Montant');
             $table->date('date')->useCurrent();
+            $table->string('Motif',100)->nullable();
             $table->bigInteger('FactureId')->unsigned()->nullable();
             $table->foreign('FactureId')->references('id')->on('factures')->onDelete('cascade');
         });
