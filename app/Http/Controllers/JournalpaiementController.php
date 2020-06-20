@@ -44,7 +44,7 @@ class JournalpaiementController extends Controller
                                 })
                                 ->orWhere('date','LIKE','%'.$q.'%')
                                 ->orWhere('Motif','LIKE','%'.$q.'%')
-                                ->OrderBy('date', 'desc')->orderby('FactureId')->paginate(12);
+                                ->OrderBy('date', 'desc')->orderby('FactureId')->orderby('Motif')->paginate(12);
             else if($typeConsulte=="recettes")
                     $paiements = Paiment::wherein('FactureId',function($qeury)use($q){
                         $qeury->select('id')->from('factures')->wherein( 'ConsultationId',function($qeury1)use($q){
@@ -60,7 +60,7 @@ class JournalpaiementController extends Controller
                         });
                     })
                     ->orWhere('Motif','LIKE','%'.$q.'%')
-                    ->OrderBy('date', 'desc')->orderby('FactureId')->paginate(12);
+                    ->OrderBy('date', 'desc')->orderby('FactureId')->orderby('Motif')->paginate(12);
             else
                 $paiements = Paiment::wherein('FactureId',function($qeury)use($q){
                     $qeury->select('id')->from('factures')->wherein( 'ConsultationId',function($qeury1)use($q){
@@ -76,16 +76,16 @@ class JournalpaiementController extends Controller
                     });
                 })
                 ->orWhere('Motif','LIKE','%'.$q.'%')
-                ->OrderBy('date', 'desc')->orderby('FactureId')->paginate(12);
+                ->OrderBy('date', 'desc')->orderby('FactureId')->orderby('Motif')->paginate(12);
 
         }else{
 
             if($typeConsulte=="none")
-                $paiements= Paiment::orderBy('date', 'desc')->orderby('FactureId')->paginate(12);
+                $paiements= Paiment::orderBy('date', 'desc')->orderby('FactureId')->orderby('Motif')->paginate(12);
             else if($typeConsulte=="recettes")
-                $paiements= Paiment::wherenotnull('FactureId')->orderBy('date', 'desc')->orderby('FactureId')->paginate(12);
+                $paiements= Paiment::wherenotnull('FactureId')->orderBy('date', 'desc')->orderby('FactureId')->orderby('Motif')->paginate(12);
             else
-                $paiements= Paiment::wherenull('FactureId')->orderBy('date', 'desc')->orderby('FactureId')->paginate(12);
+                $paiements= Paiment::wherenull('FactureId')->orderBy('date', 'desc')->orderby('FactureId')->orderby('Motif')->paginate(12);
         }
 
         return view('Secretaire.Journal_Paiement.index',[ 'name'     => $name,

@@ -91,7 +91,7 @@ Liste des consultation
 
                                 <div class="col-12 mx-auto px-5 mb-2">
                                     <div class="w-auto mx-auto text-center d-flex justify-content-center mt-3">
-                                        {{ $consultation->links() }}
+                                        {{ $consultation->appends(request()->input())->links() }}
                                     </div>
                                 </div>
                             

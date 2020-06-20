@@ -90,7 +90,7 @@
            </div>
 
            <div class="row w-50 mx-auto mt-5 mb-3 text-center">
-                {{ $patients->links() }}
+                {{ $patients->appends(request()->input())->links() }}
            </div>
 
         </div>

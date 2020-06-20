@@ -136,7 +136,7 @@ Lettres aux confrères
 
                             <div class="col-12 mx-auto px-5 mb-2">
                                 <div class="w-auto mx-auto text-center d-flex justify-content-center mt-3">
-                                        {{ $Lettres->links() }}
+                                        {{ $Lettres->appends(request()->input())->links() }}
                                 </div>
                             </div>
 
