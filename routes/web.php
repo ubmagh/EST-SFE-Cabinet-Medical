@@ -145,6 +145,7 @@ Route::group(['middleware' => ['auth:secretaire']], function () {
         //-2 paiement, depense cabinet.. 
     Route::get('/JournalPaiement', 'JournalpaiementController@journal_paiement');
     Route::get('/JournalPaiement/createDepense', 'JournalpaiementController@CreateDepense');
+    Route::get('/JournalPaiement/deleteDepense/{id}', 'JournalpaiementController@DeleteDepense');
 
 
 

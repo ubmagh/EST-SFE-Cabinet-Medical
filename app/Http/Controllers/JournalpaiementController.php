@@ -130,9 +130,14 @@ class JournalpaiementController extends Controller
     }
 
 
+    public function DeleteDepense( Request $request, $id){
 
+        $pa = Paiment::findOrFail($id);
 
-
+        if($pa->delete())
+        return response()->json(['status'=>"Done"]);
+        return response()->json(['status'=>"Err"]);
+    }
 
 
 

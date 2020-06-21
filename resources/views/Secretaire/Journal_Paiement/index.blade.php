@@ -17,78 +17,97 @@ Secretaire : Journal des Paiements
 
 
     <div class="card w-100 mx-auto my-2">
-        <h4 class=" display-4  text-center mt-5 mb-2"> Journal des Paiements : </h4>
-        <div class="d-block w-100 mb-n5 text-center mt-3">
-
-            <div class="row col-md-8 col-12 mb-4 mt-0 mx-auto">
-                <form method="GET" action="{{ url()->current() }}" class="col-12  ml-auto">
-                    <div class="input-group">
-                        <input type="text" aria-describedby="button-addon2" class="form-control border-dark" name="q"
-                            placeholder="chercher dans les Paiements ..." value="{{ $q? $q:null }}" />
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-dark" type="submit" id="button-addon2"><i
-                                    class="fas fa-search fa-lg"></i></button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-
-
-            <div class="row w-100 mb-4 mt-3 mx-auto">
-                <div class="col-md col-12 text-center">
-                    <a name="" id="" class="btn btn-success mx-auto text-center text-white " role="button"
-                        data-toggle="modal" data-target="#ajoutModal" type="button"> <i class="fa fa-plus-circle fa-lg"
-                            aria-hidden="true"></i> Ajouter une dépense </a>
+    
+        <div class="card-body w-100 grid-margin  stretch-card LoaderSec" style="height: 400px;" >
+            <div class="loader-demo-box border-0">
+                <div class="dot-opacity-loader">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
-                <div class="col-md col-12 text-center">
-                    <div class="dropdown" id="cat">
-                        <button type="button" class="btn btn-primary dropdown-toggle" id="dropdownMenuIconButton3"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-sort"></i> 
-                            @switch( $typeConsulte )
-                                @case('none')
-                                    Catégorie des Paiements :
-                                @break
-                                @case('depenses')
-                                    Affichant les dépenses
-                                @break
-                                @case('recettes')
-                                    Affichant les recettes
-                                @break
-                            @endswitch
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuIconButton3">
-                            <a class="dropdown-item " href="{{ url('JournalPaiement') }}"> Voir tous
-                            </a>
-                            <a class="dropdown-item "
-                                href="{{ url()->current().'?recettes=X' }}"> Les Recettes </a>
-                            <a class="dropdown-item "
-                                href="{{ url()->current().'?depenses=O' }}"> Les Dépenses </a>
+            </div>
+        </div>
+
+        <div class="card-body w-100 py-2 px-2 mx-auto d-none ContentSec">
+            <h4 class=" display-4  text-center mt-5 mb-2"> Journal des Paiements : </h4>
+            <div class="d-block w-100 mb-n5 text-center mt-3">
+
+                <div class="row col-md-8 col-12 mb-4 mt-0 mx-auto">
+                    <form method="GET" action="{{ url()->current() }}" class="col-12  ml-auto">
+                        <div class="input-group">
+                            <input type="text" aria-describedby="button-addon2" class="form-control border-dark" name="q"
+                                placeholder="chercher dans les Paiements ..." value="{{ $q? $q:null }}" />
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-dark" type="submit" id="button-addon2"><i
+                                        class="fas fa-search fa-lg"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+
+                <div class="row w-100 mb-4 mt-3 mx-auto">
+                    <div class="col-md col-12 text-center">
+                        <a name="" id="" class="btn btn-success mx-auto text-center text-white " role="button"
+                            data-toggle="modal" data-target="#ajoutModal" type="button"> <i class="fa fa-plus-circle fa-lg"
+                                aria-hidden="true"></i> Ajouter une dépense </a>
+                    </div>
+                    <div class="col-md col-12 text-center">
+                        <div class="dropdown" id="cat">
+                            <button type="button" class="btn btn-primary dropdown-toggle" id="dropdownMenuIconButton3"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-sort"></i>
+                                @switch( $typeConsulte )
+                                    @case('none')
+                                        Catégorie des Paiements :
+                                        @break
+                                    @case('depenses')
+                                        Affichant les dépenses
+                                        @break
+                                    @case('recettes')
+                                        Affichant les recettes
+                                        @break
+                                @endswitch
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuIconButton3">
+                                <a class="dropdown-item " href="{{ url('JournalPaiement') }}"> Voir tous
+                                </a>
+                                <a class="dropdown-item "
+                                    href="{{ url()->current().'?recettes=X' }}"> Les Recettes </a>
+                                <a class="dropdown-item "
+                                    href="{{ url()->current().'?depenses=O' }}"> Les Dépenses </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 
     @if( $q )
-                    <div class="row w-100 text-center mx-auto card my-3">
-                        <div class="card-body py-4">
-                        <h4 class="h4 mx-auto"> Résultats de recherche de : ` {{ $q }} `  <a href="{{url('JournalPaiement')}}"> <i class="fas fa-times text-danger"></i> </a> </h4>
-                        </div>
-                    </div>
+        <div class="row w-100 text-center mx-auto card my-3 d-none ContentSec">
+            <div class="card-body py-4">
+                <h4 class="h4 mx-auto"> Résultats de recherche de : ` {{ $q }} ` <a
+                        href="{{ url('JournalPaiement') }}"> <i class="fas fa-times text-danger"></i>
+                    </a> </h4>
+            </div>
+        </div>
     @endif
 
 
 
-    <div id="data">
+    <div id="data" class="d-none ContentSec" >
         <div class="row w-100 mx-auto">
+
+            
 
             @if( !count($paiements) )
                 <div class="alert alert-warning w-100 text-center mx-auto py-3 my-4 " role="alert">
-                    <h4 class="h4 text-center mx-auto font-weight-light"><i class="fas fa-info    "></i> Aucun paiement n'a été trouvé !</h4>
-                    
+                    <h4 class="h4 text-center mx-auto font-weight-light"><i class="fas fa-info    "></i> Aucun paiement
+                        n'a été trouvé !</h4>
+
                 </div>
             @endif
 
@@ -98,19 +117,13 @@ Secretaire : Journal des Paiements
                         <div class="card-body">
                             <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
 
-                                <div class="row w-100 mx-auto">
-                                    @if( $row->Is_recette() )
+                                @if( $row->Is_recette() )
+                                    <div class="row w-100 mx-auto">
                                         <h3 class="h3 text-success mx-auto my-2"> <i class="ti-arrow-up"></i>
-                                            {{ $row->Montant }} DH </h3>
-                                    @else
-                                        <h3 class="h3 text-danger mx-auto my-2"> <i class="ti-arrow-down"></i>
-                                            {{ $row->Montant }} DH </h3>
-                                    @endif
-                                </div>
-
-                                <div class="row w-100 mx-auto text-left">
-
-                                    @if( $row->Is_recette() )
+                                            {{ $row->Montant }} DH
+                                        </h3>
+                                    </div>
+                                    <div class="row w-100 mx-auto text-left">
                                         <div class="col-12">
                                             <h5 class="h5 d-block  text-success mx-auto text-center mb-3 ">
                                                 {{ $row->Motif }} <h5>
@@ -132,18 +145,30 @@ Secretaire : Journal des Paiements
                                                     {{ $row->Facture->consultation->patient->Nom }}{{ $row->Facture->consultation->patient->Prenom }}
                                                     <i class="fas fa-external-link-alt"></i> </a> </h6>
                                         </div>
-                                    @else
-                                        {{-- Dépense --}}
-                                        <div class="col-12">
-                                            <h5 class="h5 d-block col-12 text-danger mx-auto text-center mb-3 mt-2 ">
-                                                <span class="text-dark">Motif : </span> {{ $row->Motif }} <h5>
+                                    </div>
+                                @else
+                                    <div class="Contextmenu happyCoding w-100 text-break d-inline-block" data-sid="{{$row->id}}" style="word-wrap: break-word;">
+                                        <div class="row w-100 mx-auto">
+                                            <h3 class="h3 text-danger mx-auto my-2"> <i class="ti-arrow-down"></i>
+                                                {{ $row->Montant }} DH
+                                            </h3>
                                         </div>
-                                        <div class="col-12">
-                                            <h6 class="h6 d-block col-12 text-warning mx-auto text-center my-1 "> Date :
-                                                {{ $row->date }} <h6>
+                                        <div class="row w-100 mx-auto text-left">
+                                            {{-- Dépense --}}
+                                            <div class="col-12" style="word-wrap: break-word;">
+                                                <h5 class="h5 d-block col-12 text-danger mx-auto text-center mb-3 mt-2 "
+                                                    style="word-wrap: break-word;">
+                                                    <span class="text-dark" style="word-wrap: break-word;">Motif : </span> {{ $row->Motif }} <h5>
+                                            </div>
+                                            <div class="col-12">
+                                                <h6 class="h6 d-block col-12 text-warning mx-auto text-center my-1 ">
+                                                    Date :
+                                                    {{ $row->date }} <h6>
+                                            </div>
                                         </div>
-                                    @endif
-                                </div>
+                                    </div>
+                                @endif
+
                             </div>
                         </div>
                     </div>
@@ -163,8 +188,9 @@ Secretaire : Journal des Paiements
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel"> Insérer une dépense </h5>
-                        
-                        <button type="button" id="closeCreateModal" class="close" data-dismiss="modal" aria-label="Close">
+
+                        <button type="button" id="closeCreateModal" class="close" data-dismiss="modal"
+                            aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -176,7 +202,7 @@ Secretaire : Journal des Paiements
 
                             <div class="form-group mb-2">
                                 <label for="Motif"> Motif : </label>
-                                <textarea name="Motif" id="Motif"  minlength="1" maxlength="100" required rows="3"
+                                <textarea name="Motif" id="Motif" minlength="1" maxlength="100" required rows="3"
                                     class="form-control" placeholder="Motif du dépense"></textarea>
                             </div>
                             <div class="alert alert-danger alert-dismissible fade mt-n5 d-none " role="alert"
@@ -186,7 +212,8 @@ Secretaire : Journal des Paiements
 
                             <label for="Montant mt-3">Montant:</label>
                             <div class="input-group mb-2">
-                                <input type="text" name="Montant" id="Montant" autocomplete="off" placeholder=" 00.00 " class="form-control" />
+                                <input type="text" name="Montant" id="Montant" autocomplete="off" placeholder=" 00.00 "
+                                    class="form-control" />
                                 <div class="input-group-append">
                                     <span class="input-group-text">DH</span>
                                 </div>
@@ -197,7 +224,7 @@ Secretaire : Journal des Paiements
                             </div>
 
 
-                            
+
 
                             <div class="row mx-auto w-100 mt-4">
                                 <div class="col-md col-12 text-left">
@@ -206,7 +233,8 @@ Secretaire : Journal des Paiements
                                 </div>
                                 <div class="col-md col-12 text-right">
                                     <button type="submit" class="btn btn-info text-white d-block ml-auto mr-0"> <i
-                                            class="fa fa-plus-square ml-n1 mr-1" aria-hidden="true"></i> Ajouter </button>
+                                            class="fa fa-plus-square ml-n1 mr-1" aria-hidden="true"></i> Ajouter
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -239,6 +267,84 @@ Secretaire : Journal des Paiements
 
 <script>
 
+
+        $.contextMenu({
+            selector: '.Contextmenu',
+            callback: function (key, options) {},
+            zIndex: 10,
+            callback: function(key, options) {
+                var m = "clicked: " + key;
+                alert(m);
+                },
+            build: function($triggerElement, e){
+            return {
+            callback: function(key, options) {
+                    const sid = $triggerElement[0].dataset.sid;
+
+                    Swal.fire({
+                        title: 'Etes-Vous sure de supprimer cette dépense?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'supprimer',
+                        cancelButtonText: "Annuler",
+                        }).then((result) => {
+                        if (result.value) {
+                            $.ajaxSetup({
+                            hearders: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),}
+                                    });
+                            $.ajax({
+                                url: "{{ url('/JournalPaiement/deleteDepense') }}"+'/'+sid,
+                                type: 'GET',
+                                success: function (resp) {
+                                    if (resp.status === "Done") {
+                                        setTimeout(() => window.location.reload(), 1500);
+                                        Swal.fire(
+                                            'Supprimé!',
+                                            ' Dépense Bien supprimée ! ',
+                                            'success'
+                                            );
+                                    } else {
+                                        Swal.fire({
+                                            position: 'center',
+                                            icon: 'warning',
+                                            title: ' Erreur servenue ' ,
+                                            text: ' ' + resp.message,
+                                            showConfirmation: false,
+                                            timer: 2500
+                                        });
+                                    }
+                                },
+                                error: function (error) {
+                                        Swal.fire({
+                                            position: 'center',
+                                            icon: 'error',
+                                            title: ' Erreur servenue ' ,
+                                            text: ' ' + error.responseJSON.message,
+                                            showConfirmation: false,
+                                            timer: 2500
+                                        });
+                                    }
+                                });
+                            
+                        }
+                        });
+                    
+                    }
+                }
+            },
+            items: {
+                "supp": {
+                    name: "Supprimer",
+                    icon: "delete"
+                },
+                
+            }
+        });
+</script>
+
+<script>
     $('#createForm').submit(function (e) {
         e.preventDefault();
         $.ajax({
@@ -277,24 +383,38 @@ Secretaire : Journal des Paiements
     });
 
     function setInputFilter(textbox, inputFilter) {
-    ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
-        textbox.addEventListener(event, function() {
-        if (inputFilter(this.value)) {
-            this.oldValue = this.value;
-            this.oldSelectionStart = this.selectionStart;
-            this.oldSelectionEnd = this.selectionEnd;
-        } else if (this.hasOwnProperty("oldValue")) {
-            this.value = this.oldValue;
-            this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
-        } else {
-            this.value = "";
-        }
+        ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (
+        event) {
+            textbox.addEventListener(event, function () {
+                if (inputFilter(this.value)) {
+                    this.oldValue = this.value;
+                    this.oldSelectionStart = this.selectionStart;
+                    this.oldSelectionEnd = this.selectionEnd;
+                } else if (this.hasOwnProperty("oldValue")) {
+                    this.value = this.oldValue;
+                    this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                } else {
+                    this.value = "";
+                }
+            });
         });
-    });
     }
 
-    setInputFilter(document.getElementById("Montant"), function(value) {
-    return /^\d*[.]?\d*$/.test(value); });
+    setInputFilter(document.getElementById("Montant"), function (value) {
+        return /^\d*[.]?\d*$/.test(value);
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.LoaderSec').forEach(node=>{
+            node.classList.add('d-none');
+        });
+        document.querySelectorAll('.ContentSec').forEach(node=>{
+            node.classList.remove('d-none');
+        });
+    });
+
+
 
 </script>
 @endsection
