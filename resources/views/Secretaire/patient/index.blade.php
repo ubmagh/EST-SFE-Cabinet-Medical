@@ -209,13 +209,22 @@ Gestion des patients
                                     <div class="form-group">
                                         <label for="Sexe">Sexe</label>
                                         <select name="Sexe" class="form-control">
-                                            <option value="homme">homme</option>
+                                            <option value="homme" selected>homme</option>
                                             <option value="femme">femme</option>
                                         </select>
                                         <div class="alert alert-danger w-100 d-none" id="Q_Create_div_sexe" role="alert">
                                             <span id="Q_Create_Mess_sexe"> </span>
                                         </div>
                                     </div>
+
+                                    <div class="form-group">
+                                        <label for="Telq">Numéro de Téléphone: </label>
+                                        <input name="Tel" type="text" class="form-control" maxlength="14" min="9" autocomplete="off" placeholder="0612345678">
+                                        <div class="alert alert-danger w-100 d-none" id="Q_Create_div_Tel" role="alert">
+                                            <span id="Q_Create_Mess_Tel"> </span>
+                                        </div>
+                                    </div>
+                                    
 
 
                                     <div class="row w-100 mx-auto">
@@ -322,7 +331,7 @@ Gestion des patients
                                     <div class="form-group">
                                         <label for="Sexe">Sexe</label>
                                         <select name="Sexe" class="form-control">
-                                            <option value="homme">homme</option>
+                                            <option value="homme" selected>homme</option>
                                             <option value="femme">femme</option>
                                         </select>
                                         <div class="alert alert-danger w-100 d-none" id="Create_div_Sexe" role="alert">
@@ -917,6 +926,10 @@ Gestion des patients
                         if (errors.Sexe) {
                             $('#Q_Create_Mess_sexe').html(error.responseJSON.errors.Sexe);
                             $('#Q_Create_div_sexe').removeClass('d-none').addClass('show');
+                        }
+                        if (errors.Tel) {
+                            $('#Q_Create_Mess_Tel').html(error.responseJSON.errors.Tel);
+                            $('#Q_Create_div_Tel').removeClass('d-none').addClass('show');
                         }
                     } else {
                         $("#QmsgDanger").removeClass('d-none').addClass('d-block');

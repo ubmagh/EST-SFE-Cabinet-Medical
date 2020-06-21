@@ -861,7 +861,7 @@ class ConsultationController extends Controller
         $certUrl= url("CreateCertificat?patient=".$patient->id);
         if( isset($ordonnance) )
             return response()->json(['status'=>'Good','certUrl'=>$certUrl,'ordonnanceurl'=>url('/Ordonnance/'.$ordonnance->id), 'letter'=>url('LettreAuConfrere?patient='.$patient->id)]);
-        return response()->json(['status'=>'Good','certUrl'=>$certUrl,'ordonnanceurl'=>'none' ]);
+        return response()->json(['status'=>'Good','certUrl'=>$certUrl,'ordonnanceurl'=>'none','letter'=>url('LettreAuConfrere?patient='.$patient->id) ]);
     }
 
 

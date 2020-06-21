@@ -58,7 +58,7 @@
           <ul class="nav page-navigation">
             <li class="nav-item">
             <a class="nav-link" href="{{ url('/') }}">
-                <i class="ti-home menu-icon"></i>
+                <i class="fas fa-home menu-icon"></i>
                 <span class="menu-title">Acceuil</span>
               </a>
             </li>
@@ -77,8 +77,7 @@
             </li>
             <li class="nav-item">
               <a  class="nav-link" href="{{ url('/ListeConsultations') }}">
-                <i class=" ti-list
-                menu-icon"></i>
+                <i class="fas fa-list   menu-icon "></i>
                 <span class="menu-title">Liste des consultations</span>
               </a>
             </li>

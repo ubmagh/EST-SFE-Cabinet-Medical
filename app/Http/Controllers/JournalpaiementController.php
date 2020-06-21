@@ -22,14 +22,17 @@ class JournalpaiementController extends Controller
         $current = $request->input('page') ? $request->input('page') : 1 ;
 
         $typeConsulte = $request->input('recettes') ? "recettes" : "none" ;
-        
+
         if($typeConsulte=="none")
             $typeConsulte = $request->input('depenses') ? "depenses" : "none" ;
 
         
         $q = filter_var( $request->input('q'), FILTER_SANITIZE_STRING);
         if( $q ){
-            if($typeConsulte=="none")
+            
+            // cas de recherche
+
+            if($typeConsulte=="none") /// afficher tout
             $paiements = Paiment::wherein('FactureId',function($qeury)use($q){
                                     $qeury->select('id')->from('factures')->wherein( 'ConsultationId',function($qeury1)use($q){
                                         $qeury1->select('id')->from('consultations')->wherein( 'PatientId',function($qeury2)use($q){
@@ -45,12 +48,12 @@ class JournalpaiementController extends Controller
                                 ->orWhere('date','LIKE','%'.$q.'%')
                                 ->orWhere('Motif','LIKE','%'.$q.'%')
                                 ->OrderBy('date', 'desc')->orderby('FactureId')->orderby('Motif')->paginate(12);
-            else if($typeConsulte=="recettes")
+
+            else if($typeConsulte=="recettes") // recettes => facture id not null
                     $paiements = Paiment::wherein('FactureId',function($qeury)use($q){
                         $qeury->select('id')->from('factures')->wherein( 'ConsultationId',function($qeury1)use($q){
                             $qeury1->select('id')->from('consultations')->wherein( 'PatientId',function($qeury2)use($q){
-                                $qeury2->select('id')->from('patients')->wherenotnull('FactureId')
-                                                                        ->orwhere( 'Nom' , 'LIKE', '%'.$q.'%')
+                                $qeury2->select('id')->from('patients')->where( 'Nom' , 'LIKE', '%'.$q.'%')
                                                                         ->orWhere( 'Prenom', 'LIKE', '%'.$q.'%')
                                                                         ->orWhere( 'id_civile', 'LIKE', '%'.$q.'%')
                                                                         ->orWhere( 'Tel', 'LIKE', '%'.$q.'%')
@@ -60,22 +63,12 @@ class JournalpaiementController extends Controller
                         });
                     })
                     ->orWhere('Motif','LIKE','%'.$q.'%')
+                    ->wherenotnull('FactureId')
                     ->OrderBy('date', 'desc')->orderby('FactureId')->orderby('Motif')->paginate(12);
-            else
-                $paiements = Paiment::wherein('FactureId',function($qeury)use($q){
-                    $qeury->select('id')->from('factures')->wherein( 'ConsultationId',function($qeury1)use($q){
-                        $qeury1->select('id')->from('consultations')->wherein( 'PatientId',function($qeury2)use($q){
-                            $qeury2->select('id')->from('patients')->wherenull('FactureId')
-                                                                    ->orwhere( 'Nom' , 'LIKE', '%'.$q.'%')
-                                                                    ->orWhere( 'Prenom', 'LIKE', '%'.$q.'%')
-                                                                    ->orWhere( 'id_civile', 'LIKE', '%'.$q.'%')
-                                                                    ->orWhere( 'Tel', 'LIKE', '%'.$q.'%')
-                                                                    ->orWhere( 'Email', 'LIKE','%'.$q.'%')
-                                                                    ->orWhere( 'ref_mutuel', 'LIKE', '%'.$q.'%');
-                        });
-                    });
-                })
-                ->orWhere('Motif','LIKE','%'.$q.'%')
+            
+            else //dépenses
+                $paiements = Paiment::wherenull('FactureId')
+                ->Where('Motif','LIKE','%'.$q.'%')
                 ->OrderBy('date', 'desc')->orderby('FactureId')->orderby('Motif')->paginate(12);
 
         }else{

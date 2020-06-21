@@ -71,12 +71,12 @@ Secretaire : Journal des Paiements
                                 @endswitch
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuIconButton3">
-                                <a class="dropdown-item " href="{{ url('JournalPaiement') }}"> Voir tous
+                                <a class="dropdown-item " href="{{ url('JournalPaiement') }}{{ $q?"&q=$q":"" }}"> Voir tous
                                 </a>
                                 <a class="dropdown-item "
-                                    href="{{ url()->current().'?recettes=X' }}"> Les Recettes </a>
+                                    href="{{ url()->current().'?recettes=X' }}{{ $q?"&q=$q":"" }}"> Les Recettes </a>
                                 <a class="dropdown-item "
-                                    href="{{ url()->current().'?depenses=O' }}"> Les Dépenses </a>
+                                    href="{{ url()->current().'?depenses=O' }}{{ $q?"&q=$q":"" }}"> Les Dépenses </a>
                             </div>
                         </div>
                     </div>

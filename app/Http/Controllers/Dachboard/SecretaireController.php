@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Dachboard;
 
-use App\Consultation;
-use App\Http\Controllers\Controller;
-use App\Rendezvous;
-use App\salleAttente;
+use DateTime;
+use App\Patient;
 use Carbon\Carbon;
+use App\Rendezvous;
+use App\Consultation;
+use App\salleAttente;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class SecretaireController extends Controller
 {   
@@ -22,9 +24,12 @@ class SecretaireController extends Controller
         public function getNb_attente(){
              $date_now = Carbon::now();
              return  $nb = salleAttente::wheredate('DateArrive',  $date_now->toDateString('Y-m-d'))  
-                                 ->where('Quitte' , 0)                               
+                                 ->where('Quitte' , 0)      
+                                 ->whereNull('ConsultationID')
+                                 ->whereNull('startTime')                         
                                  ->get()
                                  ->count();
+                            
         }
         
         public function getNb_urgence(){
@@ -42,6 +47,41 @@ class SecretaireController extends Controller
                                 ->get()
                                 ->count();
         }
+
+
+        public function getListe_rdv(){
+            $date_now = Carbon::now();
+            return $nb = Rendezvous::wheredate('DateTimeDebut', $date_now->toDateString('Y-m-d'))
+                                   ->where('Statut', "En cours")
+                                    ->get();
+        }
+
+    
+
+       
+
+    
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
         
 
 

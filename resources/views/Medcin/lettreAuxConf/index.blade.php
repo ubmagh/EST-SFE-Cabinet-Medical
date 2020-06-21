@@ -147,7 +147,9 @@ Lettre au confrère
                                         </div>
                                         <div class="col-lg-10">
                                             <select name="confrere" class="form-control text-dark" id="exampleFormControlSelect1">
-                                            
+                                            @if( !count($confrere) )
+                                                        <option  disabled > Aucun confrère n'est enregistré </option>
+                                            @endif
                                             @if( isset($modifyletter) )
                                                 @foreach($confrere as $confreres)
                                                     @if($modifyletter->ConfrereID==$confreres->id)

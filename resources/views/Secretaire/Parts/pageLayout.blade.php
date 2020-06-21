@@ -70,19 +70,19 @@ les variables de ce template
           <ul class="nav page-navigation">
             <li class="nav-item">
             <a class="nav-link" href="{{ url('/') }}">
-                <i class="ti-home menu-icon"></i>
+                <i class="fas fa-home menu-icon"></i>
                 <span class="menu-title">Acceuil</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url('SalleAttente') }}">
-                <i class="ti-list-ol menu-icon"></i>
+                <i class="fas fa-list   menu-icon "></i>
                 <span class="menu-title">Liste d'Attente</span>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ url('/Rendez-Vous') }}" class="nav-link">
-                <i class="ti-time menu-icon"></i>
+                <i class="fas fa-clock menu-icon "></i>
                 <span class="menu-title">Rendez-Vous</span>
                </a>
             </li>

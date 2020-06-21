@@ -47,7 +47,7 @@ class PatientController extends Controller
 
                 "DateNaissance" => "nullable|string|date|date_format:Y-m-d|before:today",
                 "Email" => "nullable|string|email|max:90",
-                "Tel" => "nullable|string|max:14|min:9|regex:/^[0-9+\- ]*$/i",
+                "Tel" => "required|string|max:14|min:9|regex:/^[0-9+\- ]*$/i",
                 "adresse" => "nullable|string|max:50",
                 "Ville" => "nullable|string|max:40",
                 "Occupation" => "nullable|string|max:20",
@@ -77,6 +77,7 @@ class PatientController extends Controller
                 "Email.string"  =>  " Saisie invalide ",
                 "Email.email"  =>  " Email invalide ",
                 "Email.max"  =>  " 90 caractères au Max ",
+                "Tel.required"  =>  " Le numéro de Tel est nécessaire ",
                 "Tel.string"  =>  " Saisie invalide ",
                 "Tel.max"  =>  " Numéro de Télé invalide ",
                 "Tel.min"  =>  " Numéro de Télé invalide ",
@@ -103,7 +104,7 @@ class PatientController extends Controller
         $patient->Prenom = ucfirst(  strtolower($request->input('Prenom')) );
         $patient->Sexe = $request->input('Sexe');
 
-        $patient->Tel = $request->input('Tel')? $request->input('Tel'):null ;
+        $patient->Tel = $request->input('Tel') ;
         $patient->Email = $request->input('Email')? $request->input('Email'):null ;
         $patient->adresse= $request->input('adresse')? $request->input('adresse'):null ;
         $patient->Ville = $request->input('Ville')? ucfirst(  strtolower($request->input('Ville')) ):null ;

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Dachboard;
 
+use App\Facture;
+use App\Patient;
 use Carbon\Carbon;
 use App\Rendezvous;
 use App\Consultation;
 use App\salleAttente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class MedcinController extends Controller
@@ -39,6 +42,200 @@ class MedcinController extends Controller
                                 ->get()
                                 ->count();
         }
+
+
+
+
+            
+             // for charts patients(by day,year,month)
+         
+
+
+
+        public function getAll_year(){
+            return $year = Patient::selectraw('year(created_at) as year')->distinct()->orderby('year')->pluck('year');
+        }
+        public function getAll_month($year){
+             return $month = Patient::selectraw('month(created_at) as month')->whereyear('created_at',$year)->distinct()->orderby('month')->pluck('month');            
+        }
+  
+
+
+      public function getYearPatientData(){  
+        $query=$this->getAll_year();     
+        $patient_year_count_array=array();
+        for ($i=0; $i < $query->count() ; $i++) { 
+          $nb =  Patient::whereyear('created_at',$query[$i])->get()->count();
+          array_push($patient_year_count_array, $nb);
+        }
+        $monthly_post_data_array = array(
+            'months' => $query,
+             'post_count_data' => $patient_year_count_array
+            );
+    
+            return response()->json($monthly_post_data_array); 
+    }
+
+        public function getMonthPatientData(Request $request){  
+            if( count( $request->all() ) == 1 ){      
+                $query= $this->getAll_month($request->tmp);  
+                $patient_month_count_array=array();     
+                $month = array("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre");
+                    for ($i=0; $i < ($query->count()) ; $i++) { 
+                            for ($j=0; $j < 12 ; $j++) { 
+                                if($query[$i] === $j) 
+                                    $month_array[$query[$i]]= $month[$j-1];           
+                            }
+                    }            
+                foreach ($month_array as $index => $value) {
+                    $nb = Patient::whereyear('created_at', $request->tmp)
+                                    ->wheremonth('created_at', $index) 
+                                    ->get()->count();
+                                    array_push($patient_month_count_array, $nb);
+                } 
+                    return response()->json([
+                        'months' => $month_array,
+                        'patient_count_data' => $patient_month_count_array
+                    ]);
+                 
+            }
+            else if(count( $request->all() ) == 2 ){
+                $dt = Carbon::createFromDate($request->tmp, $request->tmp_1);
+                $patient_day_count_array=array();
+                    for($k=0 ; $k< $dt->daysInMonth ; $k++){
+                        $nb = Patient::whereyear('created_at', $request->tmp)
+                                    ->wheremonth('created_at', $request->tmp_1)
+                                    ->whereday('created_at', $k+1) 
+                                    ->get()->count();
+                                    $patient_day_count_array[$k+1]= $nb; 
+                    }
+                    return response()->json([
+                        'day' => $patient_day_count_array
+                    ]);
+            }
+
+        }
+
+
+
+         
+         // charts for comptabilité(by recettes,dépenses)
+         
+
+        public function getAllYear_compta(){
+            return $year_facture_=Facture::selectraw('year(Date) as year')->distinct()->orderby('year')->pluck('year'); 
+        }
+        public function getAllmonth_compta($year){
+            return $year_facture_=Facture::selectraw('Month(Date) as month')->whereyear('Date', $year)->distinct()->orderby('month')->pluck('month'); 
+        }
+
+            
+        public function getYearCompta(){ 
+            $year_facture=$this->getAllYear_compta();
+               $data=[];
+                   if(!empty($year_facture)){
+                        for($i = 0 ; $i< $year_facture->count() ; $i++){
+                            $a= (Facture::selectraw('sum(Paye) as Paye')
+                                -> whereyear('Date', $year_facture[$i])
+                                ->wherenotnull('ConsultationId')
+                                ->pluck('Paye'));
+                            $b=(Facture::selectraw('sum(Paye) as Paye')
+                            -> whereyear('Date', $year_facture[$i])
+                            ->wherenull('ConsultationId')
+                            ->pluck('Paye'));  
+                            $da = [
+                                "Année"=>$year_facture[$i],
+                                "Recette" => $a[0],
+                                "Dépense" => $b[0]
+                                ];                                  
+                            array_push($data, $da);
+                        } 
+                    return $data;       
+                    }
+                return $data;    
+                     
+        }
+    
+       
+
+        public function getMonthCompta(Request $request){ 
+            $data=[];  
+            if( count( $request->all() ) == 1 ){                    
+                $query= $this->getAllmonth_compta($request->tmp);  
+                $patient_month_count_array=array();     
+                $month = array("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre");
+                if(!empty($query)){
+                    for ($i=0; $i < ($query->count()) ; $i++) { 
+                            for ($j=0; $j < 12 ; $j++) { 
+                                if($query[$i] === $j){
+                                     $a= (Facture::selectraw('sum(Paye) as Paye')
+                                    -> whereyear('Date', $request->tmp)
+                                    ->wheremonth('Date', $query[$i] )
+                                    ->wherenotnull('ConsultationId')
+                                    ->pluck('Paye'));
+                                    $b=(Facture::selectraw('sum(Paye) as Paye')
+                                    -> whereyear('Date', $request->tmp)
+                                    ->wheremonth('Date', $query[$i] )
+                                    ->wherenull('ConsultationId')
+                                    ->pluck('Paye'));  
+                                    $da = [
+                                        "Mois"=> $month[$j-1],
+                                        "Recette" => $a[0],
+                                        "Dépense" => $b[0]
+                                        ];                                  
+                                    array_push($data, $da);   
+                                }                                             
+                            }
+                    }
+                    return response()->json( ['data' => $data,
+                                       'month_number'  => $query                                            
+                    ]); 
+
+                } 
+                        
+                  
+            }
+
+            else  if( count( $request->all() ) == 2 ){        
+                $dt = Carbon::createFromDate($request->tmp, $request->tmp_1);
+                for($k=0 ; $k< $dt->daysInMonth ; $k++){
+                    $a =(Facture::selectraw('sum(Paye) as Paye')
+                                ->whereyear('Date', $request->tmp)
+                                ->wheremonth('Date', $request->tmp_1)
+                                ->whereday('Date', $k+1) 
+                                ->wherenotnull('ConsultationId')
+                                ->pluck('Paye'));
+                    $b =(Facture::selectraw('sum(Paye) as Paye')
+                                ->whereyear('Date', $request->tmp)
+                                ->wheremonth('Date', $request->tmp_1)
+                                ->whereday('Date', $k+1) 
+                                ->wherenull('ConsultationId')
+                                ->pluck('Paye'));            
+                                $day = [
+                                    "Jours"=> $k+1,
+                                    "Recette" => $a[0],
+                                    "Dépense" => $b[0]
+                                    ];                                  
+                                array_push($data, $day);   
+                                       
+                }           
+                  return response()->json( ['data' => $data,                                         
+                    ]); 
+                
+
+                
+                        
+                  
+            }
+
+
+
+
+
+
+        }
+
+
 
 
 

@@ -37,7 +37,7 @@
             <ul class="navbar-nav navbar-nav-right">
               <li class="nav-item nav-profile dropdown">
                 <a class="nav-link mt-2" href="#" data-toggle="dropdown" id="profileDropdown">
-                  <p style="font-family: Source Sans Pro; font-size: large;">  <u> {{ $name }} </u> </p>
+                  <p style="font-family: Source Sans Pro; font-size: large;">  <u> <i class="fas fa-user-cog fa-lg ml-n1 mr-1"></i> {{ $name }} </u> </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                 <a class="dropdown-item" href="{{ url('/AdminParametres') }}">
@@ -62,7 +62,7 @@
           <ul class="nav page-navigation">
             <li class="nav-item">
             <a class="nav-link" href="{{ url('/') }}">
-                <i class="ti-home menu-icon"></i>
+                <i class="fas fa-home menu-icon"></i>
                 <span class="menu-title">Acceuil</span>
               </a>
             </li>
@@ -89,7 +89,7 @@
             </li>
             <li class="nav-item">
               <a href="{{ url('/CabinetInfos') }}" class="nav-link">
-                <i class="ti-info-alt menu-icon"></i>
+                <i class="fas fa-info-circle menu-icon"></i>
                 <span class="menu-title">Infos du Cabinet</span></a>
             </li>
           </ul>

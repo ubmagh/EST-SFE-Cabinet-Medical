@@ -19,30 +19,42 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     if( Auth::guard('secretaire')->check() ){
+
         $name= Auth::guard('secretaire')->user()->Nom.' '.Auth::guard('secretaire')->user()->Prenom;
         $nb_rdv=  app(\App\Http\Controllers\Dachboard\SecretaireController::class)->getNb_rdv();
         $nb_attente=  app(\App\Http\Controllers\Dachboard\SecretaireController::class)->getNb_attente();
         $nb_urgence=  app(\App\Http\Controllers\Dachboard\SecretaireController::class)->getNb_urgence();
         $nb_consultation=  app(\App\Http\Controllers\Dachboard\SecretaireController::class)->getNb_consultation();
+        $rdv= app(\App\Http\Controllers\Dachboard\SecretaireController::class)->getListe_rdv();
+
         return view('secretaire.dashboard.index' ,[  'name'        => $name ,
                                                       'nb_rdv'     => $nb_rdv,
                                                       'nb_attente' => $nb_attente,
                                                       'nb_urgence' => $nb_urgence,
                                                       'nb_consultation' => $nb_consultation,
+                                                      'rdv' => $rdv
                                                  ]);
+                                                 
     }
     if( Auth::guard('medcin')->check() ){
+        
         $name= Auth::guard('medcin')->user()->Nom.' '.Auth::guard('medcin')->user()->Prenom;
         $nb_rdv=  app(\App\Http\Controllers\Dachboard\MedcinController::class)->getNb_rdv();
         $nb_attente=  app(\App\Http\Controllers\Dachboard\MedcinController::class)->getNb_attente();
         $nb_urgence=  app(\App\Http\Controllers\Dachboard\MedcinController::class)->getNb_urgence();
         $nb_consultation=  app(\App\Http\Controllers\Dachboard\MedcinController::class)->getNb_consultation();
+        $year_patient= app(\App\Http\Controllers\Dachboard\MedcinController::class)->getAll_year();
+        $year_compta=  app(\App\Http\Controllers\Dachboard\MedcinController::class)->getAllYear_compta(); 
+
         return view('medcin.dashboard.index',[  'name'        => $name ,
                                                 'nb_rdv'     => $nb_rdv,
                                                 'nb_attente' => $nb_attente,
                                                 'nb_urgence' => $nb_urgence,
                                                 'nb_consultation' => $nb_consultation,
+                                                'year_patient' => $year_patient,
+                                                'year_compta' => $year_compta
                                              ]);
+
     }
     if( Auth::guard('admin')->check() ){
         return app(\App\Http\Controllers\CabinetController::class)->dash( request() );
@@ -220,7 +232,13 @@ Route::group(['middleware' => ['auth:medcin']], function () {
 
     // Check Consultation pipe / buffer :P
     Route::get('/CheckForConsultation','SalleAttenteController@checkSalle');
-
+    //charts
+        //1 patient
+        route::get('/YearPatient','Dachboard\MedcinController@getYearPatientData');
+        route::get('/MonthDayPatient','Dachboard\MedcinController@getMonthPatientData');
+        //2 compta
+        route::get('/YearCompa','Dachboard\MedcinController@getYearCompta');
+        route::get('/DetailYearCompta','Dachboard\MedcinController@getMonthCompta');
 });
 
 
