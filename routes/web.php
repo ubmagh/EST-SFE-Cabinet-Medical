@@ -17,18 +17,6 @@ use Illuminate\Support\Facades\Route;
 
 
 
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-
-
-
-
-
-
-
 Route::get('/', function () {
     if( Auth::guard('secretaire')->check() ){
         $name= Auth::guard('secretaire')->user()->Nom.' '.Auth::guard('secretaire')->user()->Prenom;
