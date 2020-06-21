@@ -24,7 +24,7 @@
 
 
 @section('content')
-
+<div class="content-wrapper">
 <!-- partial -->
 <div class="container-fluid page-body-wrapper">
 <div class="main-panel">
@@ -163,6 +163,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 
 @endsection

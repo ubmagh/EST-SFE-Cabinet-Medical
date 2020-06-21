@@ -4,7 +4,11 @@
 
 @section('content')
 
+<div class="content-wrapper">
+         
 
+          
+        
 @if( session('status')=="done" )
 
 <div class="row w-100 my-3 ml-1">
@@ -132,5 +136,6 @@
         </form>
     </div>
 </div>
+        </div>
 
 @endsection

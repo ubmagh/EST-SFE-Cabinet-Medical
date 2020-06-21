@@ -1,6 +1,18 @@
 <?php
 
 return [
+    /*
+    |--------------------------------------------------------------------------
+    | diskName
+    |--------------------------------------------------------------------------
+    |
+    | The name of the disk where the app is located 
+    | Differs in both windows (ex: 'C:') in linux (ex: '/')
+    | Used to get free space for stats in admin dashboard
+    |
+    */
+
+    'diskName'  =>  env('DEFAULT_DISK_NAME', 'C:'),
 
     /*
     |--------------------------------------------------------------------------

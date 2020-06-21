@@ -57,7 +57,7 @@ Route::get('/', function () {
                                              ]);
     }
     if( Auth::guard('admin')->check() ){
-        return view('admin.dashboard.index')->with('name',"Administrateur");
+        return app(\App\Http\Controllers\CabinetController::class)->dash( request() );
     }
     return view('Home');
 })->name('Homepage');

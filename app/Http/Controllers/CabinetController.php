@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Cabinet;
+use App\Medcin;
+use App\Secretaire;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
+use DB;
 
 class CabinetController extends Controller
 {
@@ -174,6 +177,18 @@ class CabinetController extends Controller
         if($res)
             return redirect()->back()->with('status','done');
         return redirect()->back()->with('status','err');
+    }
+
+
+
+
+    public function dash( Request $request){
+
+        $stockage = app(\App\Http\Controllers\FichierController::class)->GetSizes_ForStats();
+        $medcins = Medcin::select(DB::raw('count(*) as num'))->first()->num;
+        $secs = Secretaire::select(DB::raw('count(*) as num'))->first()->num;
+        $Sms = app(\App\Http\Controllers\RappelSmsController::class)->GetStats();
+        return view('admin.dashboard.index',[ 'name'=>'Administrateur', 'stockage'=>$stockage, 'medcins'=>$medcins, 'secs'=>$secs, 'Sms'=>$Sms]) ;
     }
 
 

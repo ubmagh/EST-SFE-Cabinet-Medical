@@ -12,7 +12,12 @@
 
 
 @section('content')
-
+<div class="content-wrapper">
+          
+      
+          
+        
+        
 <!-- partial -->
 <div class="row">
     <div class="col-12">
@@ -431,7 +436,7 @@
 
 <!-- -------------------- ENDZ Delete Modal   ------------------------- -->
 
-
+</div> 
     @endsection
 
     @section('script')

@@ -100,14 +100,11 @@
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
-        <div class="content-wrapper">
           
           
         @yield('content')
         
           
-        
-        </div>
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
        <footer class="footer">

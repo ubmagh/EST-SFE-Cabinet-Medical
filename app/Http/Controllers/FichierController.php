@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
-
+use DB;
 
 class FichierController extends Controller
 {
@@ -81,6 +81,19 @@ class FichierController extends Controller
         $response->header("Content-Type", $type);
 
         return $response;
+    }
+
+    public function GetSizes_ForStats(){
+
+        $obj = (object) [];
+        $obj->pdf = Fichier::select(DB::raw("SUM(Size) as sum"))->where('Type','pdf')->get()->sum;
+        $obj->zip = Fichier::select(DB::raw("SUM(Size) as sum"))->where('Type','zip')->get()->sum;
+        $obj->image = Fichier::select(DB::raw("SUM(Size) as sum"))->where('Type','image')->get()->sum;
+        $obj->video = Fichier::select(DB::raw("SUM(Size) as sum"))->where('Type','video')->get()->sum;
+
+        $obj->FreeSpace = disk_free_space( config('app.diskName') ); /// Windows Only 
+
+        return $obj;
     }
 
 }
