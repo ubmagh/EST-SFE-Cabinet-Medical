@@ -233,11 +233,6 @@
                         <span id="EditNomError"></span>
                     </div>
 
-
-
-                   
-
-
                     <div class="form-group mb-2">
                         <label for="PriseEdit">Prise:</label>
                         <input name="Prise" id="PriseEdit" maxlength="30" minlength="0" type="text" class="form-control"
@@ -452,19 +447,18 @@
                 }
             },
             error: function (error) {
-                const response = error.responseJSON;
-                const errors = response.errors;
+                const errors = error.responseJSON.errors;
                 if (error.responseJSON.errors) {
-                    if (errors.Nom[0]) {
-                        $('#EditNomError').html(error.responseJSON.errors.Nom);
+                    if (errors.Nom) {
+                        $('#EditNomError').html(errors.Nom);
                         $('#Edit_NomModal').removeClass('d-none').addClass('show');
                     }
-                    if (errors.Prise[0]) {
-                        $('#EditPriseError').html(error.responseJSON.errors.Prise);
+                    if (errors.Prise) {
+                        $('#EditPriseError').html(errors.Prise);
                         $('#Edit_PriseModal').removeClass('d-none').addClass('show');
                     }
-                    if (errors.Quand[0]) {
-                        $('#EditQuandError').html(error.responseJSON.errors.Quand);
+                    if (errors.Quand) {
+                        $('#EditQuandError').html(errors.Quand);
                         $('#Edit_QuandModal').removeClass('d-none').addClass('show');
                     }
                 } else {

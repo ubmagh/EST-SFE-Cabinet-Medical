@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dachboard;
 
 use App\Facture;
+use App\Paiment;
 use App\Patient;
 use Carbon\Carbon;
 use App\Rendezvous;
@@ -123,10 +124,10 @@ class MedcinController extends Controller
          
 
         public function getAllYear_compta(){
-            return $year_facture_=Facture::selectraw('year(Date) as year')->distinct()->orderby('year')->pluck('year'); 
+            return $year_facture_=Paiment::selectraw('year(date) as year')->distinct()->orderby('year')->pluck('year'); 
         }
         public function getAllmonth_compta($year){
-            return $year_facture_=Facture::selectraw('Month(Date) as month')->whereyear('Date', $year)->distinct()->orderby('month')->pluck('month'); 
+            return $year_facture_=Paiment::selectraw('Month(date) as month')->whereyear('Date', $year)->distinct()->orderby('month')->pluck('month'); 
         }
 
             
@@ -135,13 +136,13 @@ class MedcinController extends Controller
                $data=[];
                    if(!empty($year_facture)){
                         for($i = 0 ; $i< $year_facture->count() ; $i++){
-                            $a= (Facture::selectraw('sum(Paye) as Paye')
-                                -> whereyear('Date', $year_facture[$i])
-                                ->wherenotnull('ConsultationId')
+                            $a= (Paiment::selectraw('sum(Montant) as Paye')
+                                ->whereyear('date', $year_facture[$i])
+                                ->wherenotnull('FactureId')
                                 ->pluck('Paye'));
-                            $b=(Facture::selectraw('sum(Paye) as Paye')
-                            -> whereyear('Date', $year_facture[$i])
-                            ->wherenull('ConsultationId')
+                            $b=(Paiment::selectraw('sum(Montant) as Paye')
+                            -> whereyear('date', $year_facture[$i])
+                            ->wherenull('FactureId')
                             ->pluck('Paye'));  
                             $da = [
                                 "Année"=>$year_facture[$i],
@@ -168,15 +169,15 @@ class MedcinController extends Controller
                     for ($i=0; $i < ($query->count()) ; $i++) { 
                             for ($j=0; $j < 12 ; $j++) { 
                                 if($query[$i] === $j){
-                                     $a= (Facture::selectraw('sum(Paye) as Paye')
-                                    -> whereyear('Date', $request->tmp)
-                                    ->wheremonth('Date', $query[$i] )
-                                    ->wherenotnull('ConsultationId')
+                                     $a= (Paiment::selectraw('sum(Montant) as Paye')
+                                    -> whereyear('date', $request->tmp)
+                                    ->wheremonth('date', $query[$i] )
+                                    ->wherenotnull('FactureId')
                                     ->pluck('Paye'));
-                                    $b=(Facture::selectraw('sum(Paye) as Paye')
-                                    -> whereyear('Date', $request->tmp)
-                                    ->wheremonth('Date', $query[$i] )
-                                    ->wherenull('ConsultationId')
+                                    $b=(Paiment::selectraw('sum(Montant) as Paye')
+                                    -> whereyear('date', $request->tmp)
+                                    ->wheremonth('date', $query[$i] )
+                                    ->wherenull('FactureId')
                                     ->pluck('Paye'));  
                                     $da = [
                                         "Mois"=> $month[$j-1],
@@ -199,17 +200,17 @@ class MedcinController extends Controller
             else  if( count( $request->all() ) == 2 ){        
                 $dt = Carbon::createFromDate($request->tmp, $request->tmp_1);
                 for($k=0 ; $k< $dt->daysInMonth ; $k++){
-                    $a =(Facture::selectraw('sum(Paye) as Paye')
-                                ->whereyear('Date', $request->tmp)
-                                ->wheremonth('Date', $request->tmp_1)
-                                ->whereday('Date', $k+1) 
-                                ->wherenotnull('ConsultationId')
+                    $a =(Paiment::selectraw('sum(Montant) as Paye')
+                                ->whereyear('date', $request->tmp)
+                                ->wheremonth('date', $request->tmp_1)
+                                ->whereday('date', $k+1) 
+                                ->wherenotnull('FactureId')
                                 ->pluck('Paye'));
-                    $b =(Facture::selectraw('sum(Paye) as Paye')
-                                ->whereyear('Date', $request->tmp)
-                                ->wheremonth('Date', $request->tmp_1)
-                                ->whereday('Date', $k+1) 
-                                ->wherenull('ConsultationId')
+                    $b =(Paiment::selectraw('sum(Montant) as Paye')
+                                ->whereyear('date', $request->tmp)
+                                ->wheremonth('date', $request->tmp_1)
+                                ->whereday('date', $k+1) 
+                                ->wherenull('FactureId')
                                 ->pluck('Paye'));            
                                 $day = [
                                     "Jours"=> $k+1,

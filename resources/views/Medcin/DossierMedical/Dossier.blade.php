@@ -214,8 +214,10 @@
                                                                 <i class="far fa-clock mr-2" style="font-size: 28px;"></i>Consultation à RendezVous</div>
                                                             @endif
                                                         @endif
-
+                                                        
+                                                        <div class="d-block w-100 mx-auto mt-3">
                                                         <a class="btn-inverse-warning" href="{{ url('ConsultationEdit',$consultation->id) }}" target="_blank"> <i class="fas fa-edit"></i> Modifier cette consultation </a>
+                                                        </div>
 
                                                     </div>
                                                     

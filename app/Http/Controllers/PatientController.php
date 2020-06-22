@@ -236,12 +236,12 @@ class PatientController extends Controller
         $q = filter_var( $request->input('q'), FILTER_SANITIZE_STRING);
         if($q){
 
-            $patients = Patient::where('Nom','LIKE','%'.$q.'%')->orWhere('Prenom','LIKE','%'.$q.'%')->orWhere('id_civile','LIKE','%'.$q.'%')->OrderBy('Nom')->paginate(14);
+            $patients = Patient::where('Nom','LIKE','%'.$q.'%')->orWhere('Prenom','LIKE','%'.$q.'%')->orWhere('id_civile','LIKE','%'.$q.'%')->OrderBy('Nom')->paginate(10);
         return view('Medcin.DossierMedical.searchView',[ 'name'=>$name,'patients'=>$patients,'q'=>$q ]);
             
         }
 
-        $patients = Patient::OrderBy('Nom')->paginate(14);        
+        $patients = Patient::OrderBy('Nom')->paginate(10);        
         return view('Medcin.DossierMedical.searchView',[ 'name'=>$name,'patients'=>$patients ]);
 
     }

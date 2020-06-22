@@ -120,7 +120,7 @@
             Le {{ date_format(  DateTime::createFromFormat("Y-m-d H:i:s", $consultation->Date),"d / m / Y") }}
           </span>
           @if($medecin->Signature)
-            <img src="{{ storage_path('Signatures/'.$medecin->Signature) }}" class="Signature" alt="Signature" />
+            <img src="{{ storage_path('Signatures/'.$medecin->Signature) }}" style="max-height: 120px;max-width: 200px; margin-left: -120px; margin-top: 45px;" class="Signature" alt="Signature" />
           @endif
           <h6 style="text-align: center; font-size: 0.8em;color: black; margin-top: 10px; width: 100%;">
             {{ $medecin->Nom.' '.$medecin->Prenom }}

@@ -76,9 +76,9 @@
                                 </div>
                                 <p class="mb-0 mt-0 text-info"> jusqu'à maintenant</p>
 
-                                @if ($Sms->lastDate)
+                                @if ($Sms->lastDate->DateEnvoi)
                                     <div class="d-block w-100 mx-auto mt-4 mb-3">
-                                        <h3 class=" text-center mx-auto h5 text-secondary"> <i class="fas fa-clock"></i> Dernier envoie: <span id="last">{{$Sms->lastDate}}</span> </h3>
+                                        <h3 class=" text-center mx-auto h5 text-secondary"> <i class="fas fa-clock"></i> Dernier envoie: <span id="last"></span> </h3>
                                     </div> 
                                 @endif 
                             </div>
@@ -230,9 +230,9 @@
                         doy : 4  // Used to determine first week of the year.
                     }
                 });
-                $('#last').text(
-                    moment( $(this).text(), "YYYY-MM-DD HH:mm:ss").fromNow()
-                );
+                let text = "{{ $Sms->lastDate->DateEnvoi }}";
+                setTimeout( ()=> $('#last').text(moment(text, "YYYY-MM-DD HH:mm:ss").fromNow()), 1000);
+            
             @endif
         });
 

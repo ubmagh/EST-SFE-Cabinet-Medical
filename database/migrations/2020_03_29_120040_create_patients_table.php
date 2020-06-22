@@ -31,21 +31,6 @@ class CreatePatientsTable extends Migration
             $table->string('ref_mutuel')->nullable();
             $table->timestamp('created_at')->useCurrent();
         });
-        Patient::create([
-            'id_civile' =>  'JC1111111',
-            'Nom'   =>  'Sendid',
-            'Prenom'    =>  'Omar',
-            'Tel'   =>  null,
-            'Email' =>  null,
-            'Sexe'  =>  'homme',
-            'adresse'   =>  'tigmi ',
-            'Ville' =>  'Agadir',
-            'DateNaissance' =>  '2000-01-01',
-            'Occupation'    =>  'Etudiant',
-            'Nationnalite'  =>  'Maroc',
-            'typeMutuel'    =>  'CNSS',
-            'ref_mutuel'    =>  'aBC15454545'
-        ]);
     }
 
     /**

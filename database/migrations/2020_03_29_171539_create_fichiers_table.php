@@ -19,7 +19,7 @@ class CreateFichiersTable extends Migration
             $table->string('Type',30);
             $table->string('CurrentName');/// contains name and extension of stored file
             $table->string('OriginalName');// Name to return to user in Download 
-            $table->integer('Size');
+            $table->bigInteger('Size');
             $table->bigInteger('ConsultationId')->unsigned();
 
             $table->foreign('ConsultationId')->references('id')->on('consultations')->onDelete('cascade');

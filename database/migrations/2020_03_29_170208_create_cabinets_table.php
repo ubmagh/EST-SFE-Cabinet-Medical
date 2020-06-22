@@ -37,7 +37,7 @@ class CreateCabinetsTable extends Migration
             'Nom'   =>  'Cabinet Alfarah',
             'Adresse'   =>  ' 12, Rue ziz, Agadir ',
             'logo'  =>  'Cabinet-Default-logo.png',
-            'Specialites'   =>  '  chirurgie orale ',
+            'Specialites'   =>  '  Chirurgie orale ',
             'Description'   =>  ' Cabinet Medical specialisée à la  chirurgie orale .',
             'Tel'   =>  '0600000000',
             'Email'   =>  'Contact@AlfarahCabinet.info',

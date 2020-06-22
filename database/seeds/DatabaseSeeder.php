@@ -16,5 +16,12 @@ class DatabaseSeeder extends Seeder
        Eloquent::unguard();
        $this->call(secretaireSeeder::class);
        $this->call(medcinSeeder::class);
+       $this->call(patientSeeder::class);
+       $this->call(confrereSeeder::class);
+       $this->call(MedicamentsSeeder::class);
+       $this->call(operationsSeeder::class);
     }
+
+    // $ composer dump-autoload |=> after any change
+
 }

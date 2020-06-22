@@ -12,7 +12,7 @@
 
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper" style="max-width: 95%;"> 
 <!-- partial -->
 <div class="row">
     <div class="col-12">

@@ -93,9 +93,14 @@ Secretaire : Liste d'Attente
                        
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger dissmiss" data-dismiss="modal"><i
-                            class="fa fa-times"></i> Annuler</button>
-                    <button type="submit" class="btn btn-primary"> <i class="fa fa-check"></i> Ajouter</button>
+                    <div class="w-100 mx-auto row">
+                        <div class="col text-left">
+                            <button type="button" class="btn btn-danger dissmiss" data-dismiss="modal"><i class="fa fa-times"></i> Annuler</button>
+                        </div>
+                        <div class="col text-right">
+                            <button type="submit" class="btn btn-primary"> <i class="fa fa-check"></i> Ajouter</button>
+                        </div>
+                    </div>
                 </div>
                 </form>
             </div>

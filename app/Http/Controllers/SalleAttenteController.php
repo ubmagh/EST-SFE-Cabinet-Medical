@@ -264,7 +264,7 @@ class SalleAttenteController extends Controller
         $tmp = SalleAttente::whereNull('ConsultationID')
                             ->whereDate( 'dateArrive', '=' , Carbon::today()->toDateString() )
                             ->get();
-        if(count($tmp)>0)
+        if(! empty($tmp) )
             return false;
         return true;
     }
@@ -274,7 +274,7 @@ class SalleAttenteController extends Controller
     public function checkSalle(Request $request){
 
         if( $request->input('mpt') ){
-            if( !$this->Check_empty_liste())
+            if( !$this->Check_empty_liste() )
                 return response()->json(['ref'=>'yes']);
             return response()->json(['ref'=>'no']);
         }else{
