@@ -188,7 +188,7 @@ class CabinetController extends Controller
         $medcins = Medcin::select(DB::raw('count(*) as num'))->first()->num;
         $secs = Secretaire::select(DB::raw('count(*) as num'))->first()->num;
         $Sms = app(\App\Http\Controllers\RappelSmsController::class)->GetStats();
-        return view('admin.dashboard.index',[ 'name'=>'Administrateur', 'stockage'=>$stockage, 'medcins'=>$medcins, 'secs'=>$secs, 'Sms'=>$Sms]) ;
+        return view('Admin.dashboard.index',[ 'name'=>'Administrateur', 'stockage'=>$stockage, 'medcins'=>$medcins, 'secs'=>$secs, 'Sms'=>$Sms]) ;
     }
 
 

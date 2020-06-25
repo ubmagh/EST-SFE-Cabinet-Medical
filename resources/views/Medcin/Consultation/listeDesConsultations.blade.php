@@ -182,7 +182,7 @@ rgba(235,204,221,0.927608543417367) 100%);" role="alert" class="alert alert-dang
             var Deletedid = $('#id_delete').val();
             $.ajax({
                 type: "DELETE",
-                url: "/ListeConsultationCabinet/delete/" + Deletedid,
+                url: "./ListeConsultationCabinet/delete/" + Deletedid,
                 data: $('#deleteform').serialize(),
                 success: function (response) {
                     $("#msgSucc-delete").removeClass('d-none').addClass('d-block');

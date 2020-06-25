@@ -27,7 +27,7 @@ Route::get('/', function () {
         $nb_consultation=  app(\App\Http\Controllers\Dachboard\SecretaireController::class)->getNb_consultation();
         $rdv= app(\App\Http\Controllers\Dachboard\SecretaireController::class)->getListe_rdv();
 
-        return view('secretaire.dashboard.index' ,[  'name'        => $name ,
+        return view('Secretaire.dashboard.index' ,[  'name'        => $name ,
                                                       'nb_rdv'     => $nb_rdv,
                                                       'nb_attente' => $nb_attente,
                                                       'nb_urgence' => $nb_urgence,
@@ -46,7 +46,7 @@ Route::get('/', function () {
         $year_patient= app(\App\Http\Controllers\Dachboard\MedcinController::class)->getAll_year();
         $year_compta=  app(\App\Http\Controllers\Dachboard\MedcinController::class)->getAllYear_compta(); 
 
-        return view('medcin.dashboard.index',[  'name'        => $name ,
+        return view('Medcin.dashboard.index',[  'name'        => $name ,
                                                 'nb_rdv'     => $nb_rdv,
                                                 'nb_attente' => $nb_attente,
                                                 'nb_urgence' => $nb_urgence,

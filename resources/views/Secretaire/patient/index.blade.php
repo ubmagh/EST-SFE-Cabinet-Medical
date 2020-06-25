@@ -812,7 +812,7 @@ Gestion des patients
             var id = $('#id').val();
             $.ajax({
                 type: "PUT",
-                url: "/patient/" + id,
+                url: "./patient/" + id,
                 data: $('#editform').serialize(),
                 success: function (response) {
                     if(response.status=="good"){
@@ -896,7 +896,7 @@ Gestion des patients
             e.preventDefault();
             $.ajax({
                 type: "POST",
-                url: "/patient",
+                url: "./patient",
                 data: $('#Qaddform').serialize(),
                 success: function (response) {
                     if(response.status=="good"){
@@ -949,7 +949,7 @@ Gestion des patients
             e.preventDefault();
             $.ajax({
                 type: "POST",
-                url: "/patient",
+                url: "./patient",
                 data: $('#addform').serialize(),
                 success: function (response) {
                      if(response.status=="good"){
@@ -1040,7 +1040,7 @@ Gestion des patients
             var Deletedid = $('#id_delete').val();
             $.ajax({
                 type: "DELETE",
-                url: "/patient/" + Deletedid,
+                url: "./patient/" + Deletedid,
                 data: $('#deleteform').serialize(),
                 success: function (response) {
                     $("#msgSucc-delete").removeClass('d-none').addClass('d-block');

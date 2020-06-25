@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Patient;
 use Carbon\Carbon;
 use App\Rendezvous;
-use App\SalleAttente;
+use App\salleAttente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -32,7 +32,7 @@ class SalleAttenteController extends Controller
         #Cette Requette Avec Laravel Elequent a une ambiguité lors d'ordonnancements des lignes
         # J'utiliserai une requette sql normal pour ce prb
        #
-        $liste_attente = SalleAttente::select(DB::raw('salle_attentes.*, rendezvouses.id as RendezVousID, rendezvouses.DateTimeDebut, rendezvouses.DateTimeFin, rendezvouses.Description, rendezvouses.SecretaireId, rendezvouses.Statut')) 
+        $liste_attente = salleAttente::select(DB::raw('salle_attentes.*, rendezvouses.id as RendezVousID, rendezvouses.DateTimeDebut, rendezvouses.DateTimeFin, rendezvouses.Description, rendezvouses.SecretaireId, rendezvouses.Statut')) 
        ->leftJoin('rendezvouses','salle_attentes.rdvID','=','rendezvouses.id')
                                     ->whereNull('ConsultationID')// pas encore consulter 
                                     ->whereDate('DateArrive', '=' , Carbon::today()->toDateString() ) /// d'aujourd'hui 
@@ -50,7 +50,7 @@ class SalleAttenteController extends Controller
         SELECT salle_attentes.*, rendezvouses.id as RendezVousID, rendezvouses.DateTimeDebut, rendezvouses.DateTimeFin, rendezvouses.Description, rendezvouses.SecretaireId, rendezvouses.Statut FROM `salle_attentes` LEFT JOIN rendezvouses ON salle_attentes.rdvID=rendezvouses.id WHERE ConsultationID IS NULL AND CURDATE()=DATE(DateArrive) AND Quitte=0 ORDER BY startTime DESC, Urgent DESC, ( TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP,DateTimeDebut) <= 35) DESC, DateArrive ASC
         ");  
         
-        $QuiOntPasses =  SalleAttente::whereNotNull('ConsultationID')// Consulté
+        $QuiOntPasses =  salleAttente::whereNotNull('ConsultationID')// Consulté
                                      ->whereDate('DateArrive', '=' , Carbon::today()->toDateString() ) /// d'aujourd'hui 
                                      ->where('Quitte','=',0) // (and) et n'est pas quitté
                                      ->OrderBy('startTime','DESC') /// avoir en premier le dernier patient qui est consulté
@@ -84,7 +84,7 @@ class SalleAttenteController extends Controller
         
         $rdv->Statut = "present";
         $rdv->update();
-        $res=SalleAttente::create([
+        $res=salleAttente::create([
             "PatientId" => $rdv->PatientId,
             'ConsultationID'    =>  null,
             'rdvID' =>  $rdv->id,
@@ -113,7 +113,7 @@ class SalleAttenteController extends Controller
         $patient = Patient::where("id_civile",$request->input('id_civile'))->first();
 
         // vérifier si le patient existe déjà à la liste d'attente
-        $nbr = SalleAttente::where('PatientId',$patient->id)
+        $nbr = salleAttente::where('PatientId',$patient->id)
                                 ->whereDate('DateArrive', '=' , Carbon::today()->toDateString() ) /// venu aujourd'hui
                                 ->where('Quitte','=',0) //  n'a pas quitté
                                 ->whereNull('ConsultationID')// pas encore consulté 
@@ -123,7 +123,7 @@ class SalleAttenteController extends Controller
             return response()->json(['status'=>'error','message'=>'Patient existe déjà à la liste d\'attente. '],422);
                                 
 
-        $obj = new SalleAttente();
+        $obj = new salleAttente();
         $obj->PatientId = $patient->id;
         $obj->ConsultationID = null;
         $obj->rdvID = null;
@@ -148,12 +148,12 @@ class SalleAttenteController extends Controller
         if(!ctype_digit($id))
             return response()->json(['status'=>'error','message'=>'Données Reçues sont invalides !'],422);
 
-        $obj = SalleAttente::find($id);
+        $obj = salleAttente::find($id);
         if(empty($obj))
             return response()->json(['status'=>'error','message'=>'Patient Introuvable !'],422);
 
         # Avant de passer quelqu'un il faut vérifier la disponiblité
-        $Attendants= SalleAttente::whereNull('ConsultationID')// pas encore consulter 
+        $Attendants= salleAttente::whereNull('ConsultationID')// pas encore consulter 
                                 ->whereDate('DateArrive', '=' , Carbon::today()->toDateString() ) /// d'aujourd'hui 
                                 ->where('Quitte','=',0)
                                 ->whereNotNull('startTime')->get();
@@ -176,7 +176,7 @@ class SalleAttenteController extends Controller
         if(!ctype_digit($id))
             return response()->json(['status'=>'error','message'=>'Données Reçues sont invalides !'],422);
 
-        $obj = SalleAttente::find($id);
+        $obj = salleAttente::find($id);
         if(empty($obj))
             return response()->json(['status'=>'error','message'=>'Patient Introuvable !'],422);
 
@@ -200,7 +200,7 @@ class SalleAttenteController extends Controller
         if(!ctype_digit($id))
             return response()->json(['status'=>'error','message'=>'Données Reçues sont invalides !'],422);
 
-        $obj = SalleAttente::find($id);
+        $obj = salleAttente::find($id);
         if(empty($obj))
             return response()->json(['status'=>'error','message'=>'Patient Introuvable !'],422);
 
@@ -224,7 +224,7 @@ class SalleAttenteController extends Controller
         if(!ctype_digit($id))
             return response()->json(['status'=>'error','message'=>'Données Reçues sont invalides !'],422);
 
-        $obj = SalleAttente::find($id);
+        $obj = salleAttente::find($id);
         if(empty($obj))
             return response()->json(['status'=>'error','message'=>'Patient Introuvable !'],422);        
         // if no body there so add the requesteed one
@@ -242,7 +242,7 @@ class SalleAttenteController extends Controller
         if(!ctype_digit($id))
             return response()->json(['status'=>'error','message'=>'Données Reçues sont invalides !'],422);
         
-        $obj = SalleAttente::find($id);
+        $obj = salleAttente::find($id);
         
         if(!$obj->rdvID)
             return response()->json(['status'=>'error','message'=>' Le patient n\'a pas un rendez-vous. '],422);
@@ -261,7 +261,7 @@ class SalleAttenteController extends Controller
 
     
     public function Check_empty_liste(){
-        $tmp = SalleAttente::whereNull('ConsultationID')
+        $tmp = salleAttente::whereNull('ConsultationID')
                             ->whereDate( 'dateArrive', '=' , Carbon::today()->toDateString() )
                             ->get();
         if(! empty($tmp) )
@@ -278,7 +278,7 @@ class SalleAttenteController extends Controller
                 return response()->json(['ref'=>'yes']);
             return response()->json(['ref'=>'no']);
         }else{
-            $nextypatient = SalleAttente::whereNotNull('startTime')
+            $nextypatient = salleAttente::whereNotNull('startTime')
                                     ->whereNull('ConsultationID')
                                      ->whereDate('dateArrive', '=' , Carbon::today()->toDateString() )
                                      ->orderby('dateArrive' , 'desc')
@@ -294,13 +294,13 @@ class SalleAttenteController extends Controller
         $id= $request->input('pa');
         if(!ctype_digit($id))
             return response()->json(['error'=>'dataInvalide'],402);
-        $currentPatient = SalleAttente::find($id);
+        $currentPatient = salleAttente::find($id);
         if(empty($currentPatient))
             return response()->json(['error'=>'dataInvalide'],402);
         
         if($currentPatient->ConsultationID)
             return response()->json(['finished'=>'yes']);
-        return response()->json(['finished'=>'no'],);
+        return response()->json(['finished'=>'no']);
     }
 
 

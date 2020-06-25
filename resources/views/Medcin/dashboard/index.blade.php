@@ -168,7 +168,7 @@
                       tmp =$("#type button").eq(i).val();            
                       $.ajax({
                         type: 'GET',        
-                        url: '/MonthDayPatient',
+                        url: './MonthDayPatient',
                         data: 'tmp='+tmp,
                         success: function (response) {
                                   let poi =response.months,arr= [], arr_number=[];
@@ -256,7 +256,7 @@
                                               tmp_1 =$('#div2').find('#drop button').eq(k).val();  
                                               $.ajax({
                                                   type: 'GET',        
-                                                  url: '/MonthDayPatient',
+                                                  url: './MonthDayPatient',
                                                   data: {
                                                     'tmp': tmp,
                                                     'tmp_1': tmp_1                                              
@@ -375,7 +375,7 @@
                       a =$("#compta button").eq(i).val();          
                       $.ajax({
                         type: 'GET',        
-                        url: '/DetailYearCompta',
+                        url: './DetailYearCompta',
                         data: 'tmp='+a,
                         success: function (response) {           
                                 var new_component=`
@@ -428,7 +428,7 @@
                                               a_1 = $('#compta_1 button').eq(c).val(); 
                                               $.ajax({
                                                   type: 'GET',        
-                                                  url: '/DetailYearCompta',
+                                                  url: './DetailYearCompta',
                                                   data: {
                                                     'tmp': a,
                                                     'tmp_1': a_1                                              

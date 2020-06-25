@@ -200,7 +200,7 @@ $('#ModalDelete').on('show.bs.modal', function (event) {
             var Deletedid = $('#id_delete').val();
             $.ajax({
                 type: "DELETE",
-                url: "/Certificat/" + Deletedid,
+                url: "./Certificat/" + Deletedid,
                 data: $('#deleteform').serialize(),
                 success: function (response) {
                     $("#msgSucc-delete").removeClass('d-none').addClass('d-block');

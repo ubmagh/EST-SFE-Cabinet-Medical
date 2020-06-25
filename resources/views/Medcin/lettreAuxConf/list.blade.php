@@ -223,7 +223,7 @@ $('#ModalDelete').on('show.bs.modal', function (event) {
             var Deletedid = $('#id_delete').val();
             $.ajax({
                 type: "DELETE",
-                url: "/LettreAuConfrere/" + Deletedid,
+                url: "./LettreAuConfrere/" + Deletedid,
                 data: $('#deleteform').serialize(),
                 success: function (response) {
                     $("#msgSucc-delete").removeClass('d-none').addClass('d-block');

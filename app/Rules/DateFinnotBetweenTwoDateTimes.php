@@ -8,7 +8,7 @@ use Illuminate\Contracts\Validation\Rule;
 
 class DateFinnotBetweenTwoDateTimes implements Rule
 {
-    public string $dateTimeFin;
+    public  $dateTimeFin;
     public $rdvID;
     /**
      * Create a new rule instance.
@@ -16,7 +16,7 @@ class DateFinnotBetweenTwoDateTimes implements Rule
      * @param  int  $rdvID  en cas de modification d'un rdv
      * @return void
      */
-    public function __construct(string $dateTimeFin="",$rdvID=null)
+    public function __construct( $dateTimeFin="",$rdvID=null)
     {
         //  
 

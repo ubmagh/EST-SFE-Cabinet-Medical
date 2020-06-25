@@ -294,7 +294,7 @@ Secretaire : Paiement
         let id = $(this).data('idfacture');
         $.ajax({
             type: 'GET',
-            url: '/Details_paiement/' + id,
+            url: './Details_paiement/' + id,
 
             success: function (response) {
 
@@ -388,7 +388,7 @@ Secretaire : Paiement
                 e.preventDefault();
                 $.ajax({
                     type: "POST",
-                    url: '/paiement/' + id,
+                    url: './paiement/' + id,
                     data: $('#payerform').serialize(),
                     success: function (response) {
 

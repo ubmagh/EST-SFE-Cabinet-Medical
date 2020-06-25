@@ -24,7 +24,7 @@
             let formy = document.getElementById('example-vertical-wizard');
             var fd = new FormData(formy);
             $.ajax({
-                url: "/Consultation",
+                url: "./Consultation",
                 type: "POST",
                 data: fd,
                 contentType: false,

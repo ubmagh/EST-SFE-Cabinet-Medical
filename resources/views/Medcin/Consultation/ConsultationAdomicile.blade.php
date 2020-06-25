@@ -628,7 +628,7 @@ Consultation à domicile
 
             $.ajax({
                 type:"POST",
-                url: "/ADomicile",
+                url: "./ADomicile",
                 data: fd,
                 contentType: false,
                 processData: false,

@@ -368,7 +368,7 @@
         e.preventDefault();
         $.ajax({
             type: "GET",
-            url: "/Medicaments/create",
+            url: "./Medicaments/create",
             data: $(this).serialize(),
             success: function (resp) {
                 if (resp.status === "OK") {
@@ -433,7 +433,7 @@
         const id = $('#id').val();
         $.ajax({
             type: "PUT",
-            url: "/Medicaments/" + id,
+            url: "./Medicaments/" + id,
             data: $(this).serialize(),
             success: function (resp) {
                 if (resp.status === "OK") {
@@ -488,7 +488,7 @@ $('#DeleteModal').on('show.bs.modal', function (event) {
         e.preventDefault();
         $.ajax({
             type: "DELETE",
-            url: "/Medicaments/" + DeleteId,
+            url: "./Medicaments/" + DeleteId,
             data: $(this).serialize(),
             success: function (resp) {
                 if (resp.status === "OK") {

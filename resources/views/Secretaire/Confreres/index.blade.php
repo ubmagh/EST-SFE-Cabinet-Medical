@@ -600,7 +600,7 @@ Liste des confrères
             var id = $('#id').val();
             $.ajax({
                 type: "PUT",
-                url: "/Confreres/" + id,
+                url: "./Confreres/" + id,
                 data: $('#editform').serialize(),
                 success: function (response) {
 
@@ -669,7 +669,7 @@ Liste des confrères
             e.preventDefault();
             $.ajax({
                 type: "POST",
-                url: "/Confreres",
+                url: "./Confreres",
                 data: $('#addform').serialize(),
                 success: function (response) {
                     if(response.statut=="Good"){
@@ -741,7 +741,7 @@ Liste des confrères
             var Deletedid = $('#id_delete').val();
             $.ajax({
                 type: "DELETE",
-                url: "/Confreres/" + Deletedid,
+                url: "./Confreres/" + Deletedid,
                 data: $('#deleteform').serialize(),
                 success: function (response) {
                     $("#msgSucc-delete").removeClass('d-none').addClass('d-block');

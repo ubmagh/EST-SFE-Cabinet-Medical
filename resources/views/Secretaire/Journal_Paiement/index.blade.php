@@ -349,7 +349,7 @@ Secretaire : Journal des Paiements
         e.preventDefault();
         $.ajax({
             type: "GET",
-            url: "/JournalPaiement/createDepense",
+            url: "./JournalPaiement/createDepense",
             data: $(this).serialize(),
             success: function (resp) {
                 if (resp.status === "OK") {

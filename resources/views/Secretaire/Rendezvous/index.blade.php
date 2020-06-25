@@ -256,7 +256,7 @@
             editable: true, //ela wd modification f calendar
             selectable: false, // ela wd selection f calendar (zro9ia likatbanlik ila cliquiti)
             eventLimit: true, // ela wd bzzf d rdv f wahd nhar
-            events: '/Rendez-Vous/Ressource', // had api ela wd affichage f calendar
+            events: './Rendez-Vous/Ressource', // had api ela wd affichage f calendar
             eventClick: function (info) { // hadi ela wd ila clikiti ela shi rdv i2afichi lik delete..
                 const swalWithBootstrapButtons = Swal.mixin({
                     customClass: {
@@ -286,7 +286,7 @@
                         //console.log(Token);
                         $.ajax({
                             type: 'DELETE',
-                            url: '/Rendez-Vous/Ressource/' + info.event.id,
+                            url: './Rendez-Vous/Ressource/' + info.event.id,
                             data: {
                                 _token: Token
                             },
@@ -314,7 +314,7 @@
                 });
                 $.ajax({
                     type: 'PUT',
-                    url: '/Rendez-Vous/Update',
+                    url: './Rendez-Vous/Update',
 
                     data: {
                         rdvID: info.event.id,
@@ -372,7 +372,7 @@
                 });
                 $.ajax({
                     type: 'PUT',
-                    url: '/Rendez-Vous/Update',
+                    url: './Rendez-Vous/Update',
 
                     data: {
                         rdvID: info.event.id,
