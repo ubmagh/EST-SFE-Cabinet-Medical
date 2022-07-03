@@ -1,0 +1,68 @@
+version: "3.8"
+services:
+  db:
+    image: mariadb:10.3
+    container_name: db
+    ports:
+      - 3306:3306
+    networks:
+      - app-db-network
+    volumes:
+      - ./cabinet.sql:/docker-entrypoint-initdb.d/cabinet.sql # cannot migrate, so i imported migration result !
+    restart: unless-stopped
+    tty: true
+    environment:
+      MYSQL_DATABASE: cabinet
+      MYSQL_USER: user
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+
+  app:
+    container_name: app
+    image: scoma/estsfecabinetmedical:latest
+    ports:
+      - 80:8000
+    depends_on:
+      - db
+    volumes:
+      - app-volume:/app
+    environment:
+      APP_NAME: CabinetApp
+      APP_ENV: production
+      APP_KEY: base64:fmcfjZ/jfv/8uGBB+gK3b3RlYk6FRddwnGeApjn9Nvs=
+      APP_DEBUG: false
+      APP_URL: app
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: cabinet
+      DB_USERNAME: root
+      DB_PASSWORD: secret
+      DEFAULT_DISK_NAME: "/"
+
+      MAIL_MAILER: smtp
+      MAIL_HOST: smtp.mailtrap.io
+      MAIL_PORT: 2525
+      MAIL_USERNAME: 8f53321b983d5a
+      MAIL_PASSWORD: 4a3a923c9581e8
+      MAIL_ENCRYPTION=: tls
+      MAIL_FROM_ADDRESS: CabinetApp@localhost.com
+      MAIL_FROM_NAME: CabinetApp
+
+      NEXMO_KEY: 78c4a463
+      NEXMO_SECRET: v0XeEFzuQGWFBjj2
+
+    networks:
+      - app-db-network
+
+volumes:
+  db-volume:
+    driver: local
+  app-volume:
+    driver: local
+
+networks:
+  app-db-network:
+    driver: bridge
