@@ -4,6 +4,10 @@
 
 ### this Application is built using Laravel 6.x
 
+## Quick run ; 
+
+* run docker compose up on `compose.yaml`
+
 # About: 
 
 This project is about a web application that manages Medical rooms, it offers a lot of features, like : 
@@ -12,6 +16,8 @@ This project is about a web application that manages Medical rooms, it offers a 
 	-   Sms notify patients
 	-   documents printing
 	-    and other....
+
+-> get logins & passwords from seeders ! 
 
 # Installation:
 	
